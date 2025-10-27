@@ -1,0 +1,174 @@
+/* Cursor blink animation */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Main container for the entire terminal window */
+.terminal-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  background: #000;
+  font-family: monospace;
+  font-size: 0.875rem;
+  border: 2px solid #22c55e;
+}
+
+/* Header bar at the top */
+.terminal-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background: #000;
+  border-bottom: 2px solid #22c55e;
+}
+
+/* Window control dots */
+.window-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+}
+.dot-red    { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green  { background: #22c55e; }
+
+/* Navigation bar in the header */
+.terminal-nav {
+  flex-grow: 1;
+  text-align: center;
+  color: #22c55e;
+}
+
+/* Buttons within the navigation bar */
+.nav-button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #10b981;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+.nav-button:hover {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #22c55e;
+  color: #34d399;
+  box-shadow:
+    0 0 12px rgba(34, 197, 94, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+.nav-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Main content area of the terminal */
+.terminal-body {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* History lines */
+.history-line { margin-bottom: 0.5rem; }
+
+/* Prompt styles */
+.prompt-user      { color: #3b82f6; }
+.prompt-separator,
+.prompt-symbol   { color: #e5e7eb; }
+.prompt-directory { color: #a78bfa; }
+.command-text     { color: #22c55e; }
+.output-line      { color: #ffffff; }
+
+/* Help command output */
+.help-command {
+  color: #ffffff;
+}
+.help-command p {
+  margin-bottom: 0.5rem;
+}
+.help-command ul {
+  list-style: disc inside;
+  margin: 0;
+  padding: 0;
+}
+.help-command li {
+  margin-bottom: 0.25rem;
+}
+.help-command li span {
+  color: #00ff00;
+  font-weight: bold;
+}
+
+/* Input form and cursor */
+.input-form {
+  display: flex;
+  align-items: center;
+}
+.terminal-input {
+  position: relative;
+  margin-left: 0.5rem;
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #22c55e;
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+  outline: none;
+}
+.cursor {
+  animation: blink-cursor 1s infinite;
+  color: #00ff00;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .terminal-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+  }
+  .nav-button {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-nav {
+    gap: 0.25rem;
+    padding: 0 0.5rem;
+  }
+  .nav-button {
+    flex: 1 1 calc(50% - 0.5rem);
+    text-align: center;
+    min-width: 70px;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-button {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.5rem;
+    min-width: 60px;
+  }
+}
