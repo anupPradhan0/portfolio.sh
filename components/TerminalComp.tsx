@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import "@/public/css/TerminalComp.css";
 
@@ -32,6 +34,102 @@ interface HelpItem {
 interface TerminalProps {
   onFirstCommand?: () => void;
 }
+
+// ============ NEW: AI Rate Limiting Helper ============
+const AI_RATE_LIMIT = {
+  maxRequests: 10,
+  maxOutputTokens: 1000,
+  timeWindow: 24 * 60 * 60 * 1000,
+};
+
+const getAIUsage = (): { count: number; timestamp: number } => {
+  if (typeof window === "undefined") return { count: 0, timestamp: Date.now() };
+
+  const stored = localStorage.getItem("ai_usage");
+  if (!stored) return { count: 0, timestamp: Date.now() };
+
+  return JSON.parse(stored);
+};
+
+const incrementAIUsage = (): boolean => {
+  const usage = getAIUsage();
+  const now = Date.now();
+
+  // Reset if 24 hours have passed
+  if (now - usage.timestamp > AI_RATE_LIMIT.timeWindow) {
+    localStorage.setItem(
+      "ai_usage",
+      JSON.stringify({ count: 1, timestamp: now })
+    );
+    return true;
+  }
+
+  // Check if limit reached
+  if (usage.count >= AI_RATE_LIMIT.maxRequests) {
+    return false;
+  }
+
+  // Increment count
+  localStorage.setItem(
+    "ai_usage",
+    JSON.stringify({ count: usage.count + 1, timestamp: usage.timestamp })
+  );
+  return true;
+};
+
+const getRemainingRequests = (): number => {
+  const usage = getAIUsage();
+  const now = Date.now();
+
+  if (now - usage.timestamp > AI_RATE_LIMIT.timeWindow) {
+    return AI_RATE_LIMIT.maxRequests;
+  }
+
+  return Math.max(0, AI_RATE_LIMIT.maxRequests - usage.count);
+};
+
+// ============ NEW: AI Response Component with Typewriter ============
+const AIResponse: React.FC<{ text: string }> = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
+      }, 20); // Fast typewriter speed
+
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text]);
+
+  return (
+    <div className="ai-response">
+      <div className="flex items-center space-x-2 mb-2">
+        <span className="text-cyan-400 font-mono text-sm">
+          🤖 AI Assistant:
+        </span>
+      </div>
+      <div className="text-gray-300 font-mono text-sm leading-relaxed whitespace-pre-wrap">
+        {displayedText}
+        {currentIndex < text.length && (
+          <span className="animate-pulse text-cyan-400">|</span>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ============ NEW: Loading Indicator ============
+const AILoading: React.FC = () => {
+  return (
+    <div className="flex items-center space-x-2 text-cyan-400 font-mono text-sm">
+      <span>🤖 AI thinking</span>
+      <span className="animate-pulse">...</span>
+    </div>
+  );
+};
 
 const Prompt: React.FC<PromptProps> = ({ user, host }) => (
   <span
@@ -85,6 +183,11 @@ const Help: React.FC = () => {
     },
     {
       type: "command",
+      command: "ai <question>",
+      description: "Chat with AI assistant (10 requests/day).",
+    },
+    {
+      type: "command",
       command: "clear",
       description: "Clear the terminal screen.",
     },
@@ -132,6 +235,7 @@ const Welcome: React.FC = () => {
     "Hi, I'm Anup Pradhan (Mors), a Full-Stack Developer.",
     "Welcome to my interactive portfolio terminal!",
     "Type 'help' or 'ls' to see available commands.",
+    "✨ NEW: Try 'ai <your question>' to chat with AI assistant!",
   ];
 
   useEffect(() => {
@@ -162,11 +266,94 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
   const [history, setHistory] = useState<HistoryLine[]>([]);
   const [input, setInput] = useState<string>("");
   const [isFirstUserCommand, setIsFirstUserCommand] = useState<boolean>(true);
+  const [isAILoading, setIsAILoading] = useState<boolean>(false);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const user = "mors";
   const host = "ruki";
+
+  // ============ NEW: AI Command Handler ============
+  const handleAICommand = async (question: string): Promise<void> => {
+    const trimmedQuestion = question.trim();
+
+    if (!trimmedQuestion) {
+      const newHist = [...history];
+      newHist.push({
+        type: "output",
+        content: "❌ Please provide a question. Usage: ai <your question>",
+      });
+      setHistory(newHist);
+      return;
+    }
+
+    // Check rate limit
+    const remaining = getRemainingRequests();
+    if (remaining <= 0) {
+      const newHist = [...history];
+      newHist.push({
+        type: "output",
+        content:
+          "⚠️ Daily AI request limit reached (10/day). Try again tomorrow!",
+      });
+      setHistory(newHist);
+      return;
+    }
+
+    // Show loading
+    setIsAILoading(true);
+    const loadingHist = [...history];
+    loadingHist.push({
+      type: "output",
+      content: <AILoading key={Date.now()} />,
+    });
+    setHistory(loadingHist);
+
+    try {
+      // Call API
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmedQuestion }),
+      });
+
+      const data = await response.json();
+
+      // Remove loading indicator
+      setIsAILoading(false);
+      const newHist = [...history];
+
+      if (data.success) {
+        // Increment usage
+        incrementAIUsage();
+        const newRemaining = getRemainingRequests();
+
+        newHist.push({
+          type: "output",
+          content: <AIResponse key={Date.now()} text={data.response} />,
+        });
+        newHist.push({
+          type: "output",
+          content: `\n💡 Remaining AI requests today: ${newRemaining}/10`,
+        });
+      } else {
+        newHist.push({
+          type: "output",
+          content: `❌ AI Error: ${data.error}`,
+        });
+      }
+
+      setHistory(newHist);
+    } catch (error) {
+      setIsAILoading(false);
+      const newHist = [...history];
+      newHist.push({
+        type: "output",
+        content: "❌ Failed to connect to AI. Please try again.",
+      });
+      setHistory(newHist);
+    }
+  };
 
   const processCommand = (cmd: string, isAuto: boolean = false): void => {
     const newHist: HistoryLine[] = [
@@ -179,7 +366,17 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
       setIsFirstUserCommand(false);
     }
 
-    switch (cmd.trim().toLowerCase()) {
+    const trimmedCmd = cmd.trim().toLowerCase();
+
+    // ============ NEW: Check for AI command ============
+    if (trimmedCmd.startsWith("ai ")) {
+      const question = cmd.substring(3); // Remove 'ai ' prefix
+      setHistory(newHist);
+      handleAICommand(question);
+      return;
+    }
+
+    switch (trimmedCmd) {
       case "help":
       case "ls":
         newHist.push({ type: "output", content: <Help key={Date.now()} /> });
@@ -224,6 +421,7 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    if (isAILoading) return; // Prevent new commands while AI is loading
     processCommand(input);
     setInput("");
   };
@@ -329,6 +527,7 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
             autoComplete="off"
             spellCheck="false"
             aria-label="Terminal command input"
+            disabled={isAILoading}
           />
         </form>
       </main>
