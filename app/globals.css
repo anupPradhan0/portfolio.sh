@@ -306,3 +306,25 @@ body, html {
     min-height: 100vh;
   }
 }
+
+
+/* Highlight color when user selects/copies text */
+::selection {
+  background: #00ff00;
+  color: #000000;
+}
+
+::-moz-selection {
+  background: #00ff00;
+  color: #000000;
+}
+
+
+@keyframes matrix-fall {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
