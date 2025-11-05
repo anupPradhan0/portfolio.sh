@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import type { ReactNode } from 'react';
 
 // SEO Metadata
 export const metadata: Metadata = {
@@ -63,7 +64,7 @@ interface SkillsCategory {
 interface CategoryConfig {
   key: keyof SkillsCategory;
   title: string;
-  icon: JSX.Element;
+  icon: ReactNode;
   skills: string[];
 }
 
@@ -198,7 +199,7 @@ const TerminalWindow = ({
 }: {
   title: string;
   command: string;
-  icon: JSX.Element;
+  icon: ReactNode;
   skills: string[];
 }) => {
   return (

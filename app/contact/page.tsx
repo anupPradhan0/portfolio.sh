@@ -342,7 +342,7 @@ export default function Contact() {
               <section className="space-y-4 sm:space-y-6">
                 <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                   <h2 className="text-base sm:text-xl font-mono text-green-400 font-semibold">
-                    // Direct.Contact
+                    {"// Direct.Contact"}
                   </h2>
                 </div>
 
@@ -425,7 +425,7 @@ export default function Contact() {
               <section className="space-y-4 sm:space-y-6">
                 <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                   <h2 className="text-base sm:text-xl font-mono text-green-400 font-semibold">
-                    // Social.Links
+                    {"// Social.Links"}
                   </h2>
                 </div>
 
