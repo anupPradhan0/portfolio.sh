@@ -1,0 +1,24 @@
+{
+  "name": "Anup Pradhan - Full Stack Developer",
+  "short_name": "Mors Dev",
+  "description": "Full Stack MERN Developer specializing in backend development and Machine Learning",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#22c55e",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
