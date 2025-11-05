@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-// SEO Metadata
+// Enhanced SEO Metadata
 export const metadata: Metadata = {
   title: "Skills & Tech Stack | MERN Stack Developer",
   description:
@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     "Docker Containers",
     "Full Stack Technologies",
     "Web Development Skills",
+    "REST API Development",
+    "Git Version Control",
+    "Cloud Deployment Skills",
   ],
   authors: [{ name: "MERN Stack Developer" }],
   openGraph: {
@@ -28,6 +31,7 @@ export const metadata: Metadata = {
       "Expert in MERN stack, TypeScript, Python, AI/ML tools, and modern web development technologies",
     type: "website",
     siteName: "Developer Portfolio",
+    locale: "en_US",
   },
   twitter: {
     card: "summary",
@@ -95,7 +99,7 @@ const terminalCommands: Record<keyof SkillsCategory, string> = {
   ai_ml: "python -m pip list | grep ai",
 };
 
-// SVG Icons as Server Components
+// Simplified SVG Icons
 const CodeIcon = () => (
   <svg
     className="w-5 h-5"
@@ -162,7 +166,7 @@ const BrainIcon = () => (
   </svg>
 );
 
-// JSON-LD Structured Data for SEO
+// Enhanced JSON-LD Structured Data
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -187,10 +191,17 @@ const structuredData = {
       credentialCategory: "Web Development",
       competencyRequired: "React, Node.js, MongoDB, Express.js",
     },
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "DevOps & Tools",
+      competencyRequired: "Git, Docker, Linux",
+    },
   ],
+  skills:
+    "Full Stack Development, Backend Development, Frontend Development, Database Management, Machine Learning",
 };
 
-// Terminal Window Component (Server Component)
+// Lightweight Terminal Window Component
 const TerminalWindow = ({
   title,
   command,
@@ -203,7 +214,7 @@ const TerminalWindow = ({
   skills: string[];
 }) => {
   return (
-    <div className="relative overflow-hidden rounded-lg transition-all duration-500 bg-black/40 backdrop-blur-xl border border-green-400/50 shadow-lg shadow-green-400/20 hover:scale-[1.02] hover:border-green-400/70">
+    <div className="overflow-hidden rounded-lg bg-black/40 border border-green-400/50">
       {/* Terminal header */}
       <div className="flex items-center justify-between p-3 bg-black/30 border-b border-green-400/20">
         <div className="flex items-center space-x-2">
@@ -217,7 +228,7 @@ const TerminalWindow = ({
           </span>
         </div>
         <div
-          className="w-2 h-2 rounded-full bg-green-400 animate-pulse"
+          className="w-2 h-2 rounded-full bg-green-400"
           aria-hidden="true"
         ></div>
       </div>
@@ -246,7 +257,7 @@ const TerminalWindow = ({
             {skills.map((skill) => (
               <span
                 key={skill}
-                className="inline-block bg-gradient-to-r from-green-400/20 to-emerald-400/20 backdrop-blur-sm text-green-300 text-xs font-mono py-1.5 px-3 rounded-md border border-green-400/30 hover:border-green-400/60 hover:bg-green-400/10 hover:text-green-200 hover:shadow-md hover:shadow-green-400/20 transition-all duration-300"
+                className="inline-block bg-green-400/20 text-green-300 text-xs font-mono py-1.5 px-3 rounded border border-green-400/30"
                 role="listitem"
               >
                 {skill}
@@ -255,14 +266,11 @@ const TerminalWindow = ({
           </div>
         </div>
       </div>
-
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 via-transparent to-green-400/10 pointer-events-none"></div>
     </div>
   );
 };
 
-// Main Server Component
+// Main Server Component - Lightweight Version
 export default function Skills() {
   const categories: CategoryConfig[] = [
     {

@@ -1,25 +1,29 @@
 import { Metadata } from "next";
 
-// SEO Metadata
+// Enhanced SEO Metadata
 export const metadata: Metadata = {
   title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
   description:
-    "I'm a MERN Stack Developer with backend focus, building reliable RESTful APIs and full-stack applications using MongoDB, Express.js, React, Node.js, and TypeScript. Currently learning Machine Learning with TensorFlow and scikit-learn.",
+    "Experienced MERN Stack Developer specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment.",
   keywords: [
     "MERN Stack Developer",
     "Full Stack Developer",
-    "MongoDB",
+    "Backend Developer",
+    "MongoDB Developer",
     "Express.js",
-    "React",
-    "Node.js",
-    "TypeScript",
+    "React Developer",
+    "Node.js Developer",
+    "TypeScript Developer",
     "Machine Learning",
     "TensorFlow",
-    "Backend Developer",
-    "RESTful API",
+    "RESTful API Development",
     "JWT Authentication",
     "Tailwind CSS",
+    "Docker",
+    "Cloud Deployment",
     "Amity University BCA",
+    "Web Developer India",
+    "API Development",
   ],
   authors: [{ name: "MERN Stack Developer" }],
   openGraph: {
@@ -28,6 +32,7 @@ export const metadata: Metadata = {
       "MERN Stack Developer specializing in backend development, RESTful APIs, and full-stack applications. Learning Machine Learning and sharing my journey through content creation.",
     type: "profile",
     siteName: "Developer Portfolio",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
@@ -51,34 +56,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Matrix Rain Component (Server Component)
-const MatrixRain = () => {
-  const chars = "01";
-  const columns = 50;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5">
-      {Array.from({ length: columns }).map((_, i) => (
-        <div
-          key={i}
-          className="absolute text-green-400 text-xs font-mono animate-[matrix-fall_10s_linear_infinite]"
-          style={{
-            left: `${(i * 100) / columns}%`,
-            animationDelay: `${Math.random() * 5}s`,
-          }}
-        >
-          {Array.from({ length: 20 }).map((_, j) => (
-            <div key={j} className="opacity-20">
-              {chars[Math.floor(Math.random() * chars.length)]}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
-
-// SVG Icons as Server Components
+// Simplified SVG Icons
 const CodeIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +68,7 @@ const CodeIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-3 text-green-400 group-hover:text-green-300 transition-all duration-300 group-hover:scale-110"
+    className="w-8 h-8 mb-2 text-green-400"
     aria-label="Code icon"
   >
     <polyline points="16 18 22 12 16 6"></polyline>
@@ -109,7 +87,7 @@ const YoutubeIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-3 text-green-400 group-hover:text-green-300 transition-all duration-300 group-hover:scale-110"
+    className="w-8 h-8 mb-2 text-green-400"
     aria-label="YouTube icon"
   >
     <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
@@ -117,7 +95,7 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-// JSON-LD Structured Data for SEO
+// Enhanced JSON-LD Structured Data
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -139,15 +117,20 @@ const structuredData = {
     "Tailwind CSS",
     "Docker",
     "Git",
+    "Cloudinary",
+    "Vercel",
+    "Render",
   ],
   alumniOf: {
     "@type": "EducationalOrganization",
     name: "Amity University",
   },
-  sameAs: [],
+  educationalCredentialAwarded: "Bachelor of Computer Application",
+  skills:
+    "Full Stack Development, Backend Development, API Development, Machine Learning",
 };
 
-// Main Server Component
+// Main Server Component - Lightweight Version
 export default function About() {
   return (
     <>
@@ -157,36 +140,28 @@ export default function About() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <div className="relative min-h-screen bg-black text-white overflow-hidden">
-        {/* Matrix background effect */}
-        <MatrixRain />
-
-        {/* Main content - Mobile responsive container */}
-        <main className="relative z-10 max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
-          {/* Terminal header - Mobile responsive */}
-          <header className="mb-6 sm:mb-8 border border-green-800 bg-black/50 backdrop-blur-sm rounded-lg p-3 sm:p-4">
-            <div>
-              <h1 className="text-green-400 font-mono text-sm sm:text-base">
-                Loading developer profile...
-              </h1>
-            </div>
+      <div className="min-h-screen bg-black text-white">
+        {/* Main content */}
+        <main className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+          {/* Header */}
+          <header className="mb-6 sm:mb-8 border border-green-800 bg-black rounded-lg p-3 sm:p-4">
+            <h1 className="text-green-400 font-mono text-sm sm:text-base">
+              Developer Profile
+            </h1>
           </header>
 
           <div className="space-y-8 sm:space-y-12">
-            {/* About Me Section - Mobile optimized */}
-            <section className="border border-green-800/30 bg-gradient-to-br from-green-900/10 to-black/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8 shadow-2xl shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-500">
+            {/* About Me Section */}
+            <section className="border border-green-800/30 bg-green-900/5 rounded-xl p-4 sm:p-6 lg:p-8">
               <div className="flex items-center mb-4 sm:mb-6">
                 <span className="text-green-400 font-mono mr-2 sm:mr-4">$</span>
-                <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
-                  ABOUT_ME.exe
+                <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono">
+                  ABOUT_ME
                 </h2>
-                <div className="ml-auto">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                </div>
               </div>
 
               <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6">
-                <p className="text-gray-300 leading-relaxed text-sm sm:text-lg font-light">
+                <p className="text-gray-300 leading-relaxed text-sm sm:text-lg">
                   I'm a{" "}
                   <strong className="text-green-400 font-semibold">
                     MERN Stack Developer
@@ -220,7 +195,7 @@ export default function About() {
                     <span
                       key={tech}
                       role="listitem"
-                      className="px-2 py-1 sm:px-3 bg-green-900/30 border border-green-800/50 rounded-full text-green-400 text-xs sm:text-sm font-mono hover:bg-green-800/30 transition-colors duration-300"
+                      className="px-2 py-1 sm:px-3 bg-green-900/30 border border-green-800/50 rounded text-green-400 text-xs sm:text-sm font-mono"
                     >
                       {tech}
                     </span>
@@ -229,16 +204,13 @@ export default function About() {
               </div>
             </section>
 
-            {/* Education Section - Mobile optimized */}
-            <section className="border border-green-800/30 bg-gradient-to-br from-green-900/10 to-black/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8 shadow-2xl shadow-green-900/20 hover:shadow-green-900/40 transition-all duration-500">
+            {/* Education Section */}
+            <section className="border border-green-800/30 bg-green-900/5 rounded-xl p-4 sm:p-6 lg:p-8">
               <div className="flex items-center mb-4 sm:mb-6">
                 <span className="text-green-400 font-mono mr-2 sm:mr-4">$</span>
-                <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
-                  EDUCATION.log
+                <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono">
+                  EDUCATION
                 </h2>
-                <div className="ml-auto">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                </div>
               </div>
 
               <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6 space-y-6">
@@ -260,7 +232,7 @@ export default function About() {
                     academic performance.
                   </p>
                   <div className="mt-2">
-                    <span className="px-2 py-1 bg-green-900/30 border border-green-800/50 rounded-full text-green-400 text-xs font-mono">
+                    <span className="px-2 py-1 bg-green-900/30 border border-green-800/50 rounded text-green-400 text-xs font-mono">
                       CGPA: 8.96
                     </span>
                   </div>
@@ -306,72 +278,61 @@ export default function About() {
               </div>
             </section>
 
-            {/* Skills Section - Mobile responsive grid */}
+            {/* Skills Section */}
             <section>
               <div className="flex items-center mb-6 sm:mb-8">
                 <span className="text-green-400 font-mono mr-2 sm:mr-4">$</span>
-                <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
+                <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono">
                   What I'm Doing
                 </h2>
               </div>
 
-              {/* Responsive grid: 1 column on mobile, 2 on tablet+ */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 {/* Machine Learning Card */}
-                <article className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-3 sm:mb-4">
-                      <CodeIcon />
-                    </div>
-                    <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
-                      Learning Machine Learning
-                    </h3>
-                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                      Driven by a deep passion for technology's potential, I am
-                      on an exciting and immersive journey into the field of
-                      machine learning. My current focus is on building hands-on
-                      projects to deepen my understanding of the entire ML
-                      pipeline, from data preprocessing to model deployment. I
-                      am mastering essential tools like scikit-learn and
-                      TensorFlow to build and refine models, with the ultimate
-                      goal of creating elegant and effective solutions to
-                      real-world challenges.
-                    </p>
+                <article className="border border-green-800/40 bg-green-900/10 p-4 sm:p-6 rounded-xl">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <CodeIcon />
                   </div>
+                  <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
+                    Learning Machine Learning
+                  </h3>
+                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                    Driven by a deep passion for technology's potential, I am on
+                    an exciting and immersive journey into the field of machine
+                    learning. My current focus is on building hands-on projects
+                    to deepen my understanding of the entire ML pipeline, from
+                    data preprocessing to model deployment. I am mastering
+                    essential tools like scikit-learn and TensorFlow to build
+                    and refine models, with the ultimate goal of creating
+                    elegant and effective solutions to real-world challenges.
+                  </p>
                 </article>
 
                 {/* YouTube Card */}
-                <article className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-3 sm:mb-4">
-                      <YoutubeIcon />
-                    </div>
-                    <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
-                      Content Creation
-                    </h3>
-                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
-                      Beyond coding, I am passionate about sharing my
-                      experiences. Once a month, I create and upload a video
-                      that offers a look into my life as a developer—from the
-                      technical challenges of a new project to the personal
-                      lessons learned along the way. My goal is to build in
-                      public and share my process with the community.
-                    </p>
+                <article className="border border-green-800/40 bg-green-900/10 p-4 sm:p-6 rounded-xl">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <YoutubeIcon />
                   </div>
+                  <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
+                    Content Creation
+                  </h3>
+                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                    Beyond coding, I am passionate about sharing my experiences.
+                    Once a month, I create and upload a video that offers a look
+                    into my life as a developer—from the technical challenges of
+                    a new project to the personal lessons learned along the way.
+                    My goal is to build in public and share my process with the
+                    community.
+                  </p>
                 </article>
               </div>
             </section>
 
-            {/* Status footer - Mobile responsive */}
+            {/* Status footer */}
             <footer className="mt-8 sm:mt-12 border-t border-green-800/30 pt-4 sm:pt-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-green-400/70 font-mono text-xs sm:text-sm space-y-2 sm:space-y-0">
                 <span>Status: Ready for new challenges</span>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span>Online</span>
-                </div>
+                <span>Online</span>
               </div>
             </footer>
           </div>

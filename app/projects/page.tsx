@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-// SEO Metadata
+// Enhanced SEO Metadata
 export const metadata: Metadata = {
   title: "Projects | Full-Stack MERN Developer Portfolio",
   description:
@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "Machine Learning Projects",
     "Python Neural Network",
     "Web Development Portfolio",
+    "Node.js Projects",
+    "REST API Projects",
+    "Full Stack Developer Portfolio India",
   ],
   authors: [{ name: "MERN Stack Developer" }],
   openGraph: {
@@ -27,6 +30,7 @@ export const metadata: Metadata = {
       "Portfolio showcasing full-stack web applications, AI projects, and machine learning implementations using MERN stack, TypeScript, and Python.",
     type: "website",
     siteName: "Developer Portfolio",
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
@@ -152,7 +156,7 @@ const projectsData: Project[] = [
   },
 ];
 
-// SVG Icons as Server Components
+// Simplified SVG Icons
 const GitHubIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -202,10 +206,12 @@ const TerminalIcon = () => (
   </svg>
 );
 
-// JSON-LD Structured Data for SEO
+// Enhanced JSON-LD Structured Data
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ItemList",
+  name: "Full-Stack Development Projects",
+  description: "Portfolio of MERN stack and machine learning projects",
   itemListElement: projectsData.map((project, index) => ({
     "@type": "ListItem",
     position: index + 1,
@@ -221,11 +227,12 @@ const structuredData = {
         priceCurrency: "USD",
       },
       url: project.liveUrl !== "#" ? project.liveUrl : project.githubUrl,
+      programmingLanguage: project.tech,
     },
   })),
 };
 
-// Main Server Component
+// Main Server Component - Lightweight Version
 export default function Projects() {
   return (
     <>
@@ -237,7 +244,7 @@ export default function Projects() {
 
       <section className="min-h-screen bg-black text-white pb-16">
         <div className="text-white space-y-4 sm:space-y-8 max-w-7xl mx-auto p-3 sm:p-4">
-          {/* Header with terminal-style decoration */}
+          {/* Header */}
           <header className="flex items-center space-x-2 sm:space-x-4 mb-4 sm:mb-8 pt-6">
             <TerminalIcon />
             <h1 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
@@ -249,12 +256,12 @@ export default function Projects() {
             </span>
           </header>
 
-          {/* Projects Grid - All projects visible, no pagination */}
+          {/* Projects Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
             {projectsData.map((project, index) => (
-              <article key={index} className="relative group">
-                {/* Glassmorphism card */}
-                <div className="backdrop-blur-md bg-gray-900/30 border border-green-500/20 rounded-lg sm:rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02] hover:border-green-400/40 hover:shadow-2xl hover:shadow-green-500/10">
+              <article key={index} className="relative">
+                {/* Card */}
+                <div className="bg-gray-900/30 border border-green-500/20 rounded-lg sm:rounded-xl overflow-hidden">
                   {/* Terminal header bar */}
                   <header className="bg-gray-800/50 px-3 sm:px-4 py-2 border-b border-green-500/20 flex items-center space-x-2">
                     <div
@@ -272,27 +279,22 @@ export default function Projects() {
                     </div>
                   </header>
 
-                  {/* Project Image with overlay */}
+                  {/* Project Image */}
                   <div className="relative h-40 sm:h-56 overflow-hidden">
                     <Image
                       src={project.imageUrl}
                       alt={`${project.name} - Full-stack web application screenshot`}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"></div>
-
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-cyan-400/10"></div>
-                    </div>
                   </div>
 
                   {/* Project Content */}
                   <div className="p-4 sm:p-8 space-y-3 sm:space-y-5">
                     <div className="flex items-start justify-between">
-                      <h2 className="font-semibold text-green-400 text-base sm:text-xl mb-2 sm:mb-3 font-mono group-hover:text-green-300 transition-colors leading-tight">
+                      <h2 className="font-semibold text-green-400 text-base sm:text-xl mb-2 sm:mb-3 font-mono leading-tight">
                         {project.name}
                       </h2>
                     </div>
@@ -307,7 +309,7 @@ export default function Projects() {
                         <span
                           key={techIndex}
                           role="listitem"
-                          className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs bg-green-500/20 text-green-400 rounded-full border border-green-500/30 font-mono"
+                          className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs bg-green-500/20 text-green-400 rounded border border-green-500/30 font-mono"
                         >
                           {tech}
                         </span>
@@ -318,8 +320,8 @@ export default function Projects() {
                       {project.description}
                     </p>
 
-                    {/* Terminal-style command line */}
-                    <div className="bg-gray-800/50 rounded-md p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden">
+                    {/* Terminal command */}
+                    <div className="bg-gray-800/50 rounded p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden">
                       <div className="flex items-center space-x-1 sm:space-x-2 text-green-400">
                         <span className="text-green-500 flex-shrink-0">$</span>
                         <span className="text-gray-400 flex-shrink-0">
@@ -341,7 +343,7 @@ export default function Projects() {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-sm sm:text-base"
+                          className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 font-mono text-sm sm:text-base"
                           aria-label={`View ${project.name} live demo`}
                         >
                           <ExternalLinkIcon />
@@ -351,7 +353,7 @@ export default function Projects() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-sm sm:text-base"
+                          className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 font-mono text-sm sm:text-base"
                           aria-label={`View ${project.name} source code on GitHub`}
                         >
                           <GitHubIcon />
@@ -361,7 +363,7 @@ export default function Projects() {
 
                       {/* Status indicator */}
                       <div className="flex items-center space-x-2">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                         <span className="text-green-400 text-xs font-mono">
                           active
                         </span>
@@ -369,9 +371,6 @@ export default function Projects() {
                     </footer>
                   </div>
                 </div>
-
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 rounded-lg sm:rounded-xl transition-all duration-300 pointer-events-none group-hover:shadow-xl sm:group-hover:shadow-2xl group-hover:shadow-green-500/20 group-hover:ring-1 group-hover:ring-green-500/20"></div>
               </article>
             ))}
           </div>
@@ -381,7 +380,7 @@ export default function Projects() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-green-400/70 font-mono text-xs sm:text-sm space-y-2 sm:space-y-0">
               <span>Total projects: {projectsData.length}</span>
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                 <span>All repositories active</span>
               </div>
             </div>
