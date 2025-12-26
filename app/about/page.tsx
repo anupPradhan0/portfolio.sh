@@ -2,18 +2,22 @@ import { Metadata } from "next";
 
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.morscode.site"),
   title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
   description:
-    "Experienced MERN Stack Developer specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment.",
+    "Experienced MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment. Pursuing BCA at Amity University with CGPA 8.96.",
   keywords: [
     "MERN Stack Developer",
     "Full Stack Developer",
+    "Full Stack Developer Bhubaneswar",
+    "Full Stack Developer India",
     "Backend Developer",
     "MongoDB Developer",
-    "Express.js",
+    "Express.js Developer",
     "React Developer",
     "Node.js Developer",
     "TypeScript Developer",
+    "Machine Learning Developer",
     "Machine Learning",
     "TensorFlow",
     "RESTful API Development",
@@ -24,25 +28,45 @@ export const metadata: Metadata = {
     "Amity University BCA",
     "Web Developer India",
     "API Development",
+    "Next.js Developer",
+    "Python Developer",
+    "Developer Portfolio",
+    "Freelance Developer",
   ],
-  authors: [{ name: "MERN Stack Developer" }],
+  authors: [{ name: "Anup Pradhan (Mors)", url: "https://www.morscode.site" }],
+  creator: "Anup Pradhan (Mors)",
+  publisher: "Anup Pradhan (Mors)",
   openGraph: {
     title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
     description:
-      "MERN Stack Developer specializing in backend development, RESTful APIs, and full-stack applications. Learning Machine Learning and sharing my journey through content creation.",
+      "MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and full-stack applications. Learning Machine Learning and sharing my journey through content creation. Pursuing BCA at Amity University.",
     type: "profile",
-    siteName: "Developer Portfolio",
-    locale: "en_US",
+    url: "https://www.morscode.site/about",
+    siteName: "Anup Pradhan (Mors) - Developer Portfolio",
+    locale: "en_IN",
+    images: [
+      {
+        url: "https://www.morscode.site/images/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Anup Pradhan - MERN Stack Developer & Machine Learning Enthusiast",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Me | MERN Stack Developer",
+    site: "@AnupPradhan0",
+    creator: "@AnupPradhan0",
+    title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
     description:
-      "Full-stack MERN developer focused on backend development and machine learning",
+      "Full-stack MERN developer from Bhubaneswar, India focused on backend development and machine learning. Pursuing BCA at Amity University.",
+    images: ["https://www.morscode.site/images/logo.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -52,8 +76,13 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/about",
+    canonical: "https://www.morscode.site/about",
+    languages: {
+      en: "https://www.morscode.site/about",
+    },
   },
+  category: "Technology",
+  classification: "Developer Portfolio",
 };
 
 // Simplified SVG Icons
@@ -68,7 +97,6 @@ const CodeIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-8 h-8 mb-2 text-green-400"
     aria-label="Code icon"
   >
     <polyline points="16 18 22 12 16 6"></polyline>
@@ -87,7 +115,6 @@ const YoutubeIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-8 h-8 mb-2 text-green-400"
     aria-label="YouTube icon"
   >
     <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
@@ -99,10 +126,19 @@ const YoutubeIcon = () => (
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "MERN Stack Developer",
-  jobTitle: "Full Stack Developer",
+  name: "Anup Pradhan",
+  alternateName: "Mors",
+  url: "https://www.morscode.site",
+  image: "https://www.morscode.site/images/logo.jpg",
+  jobTitle: "Full Stack MERN Developer",
   description:
-    "MERN Stack Developer specializing in backend development, RESTful APIs, and machine learning",
+    "MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and machine learning. Currently pursuing BCA at Amity University.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bhubaneswar",
+    addressRegion: "Odisha",
+    addressCountry: "IN",
+  },
   knowsAbout: [
     "MongoDB",
     "Express.js",
@@ -120,14 +156,57 @@ const structuredData = {
     "Cloudinary",
     "Vercel",
     "Render",
+    "Next.js",
+    "Python",
+    "scikit-learn",
+    "NumPy",
+    "pandas",
   ],
-  alumniOf: {
-    "@type": "EducationalOrganization",
-    name: "Amity University",
-  },
-  educationalCredentialAwarded: "Bachelor of Computer Application",
+  alumniOf: [
+    {
+      "@type": "EducationalOrganization",
+      name: "Amity University",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "IN",
+      },
+    },
+  ],
+  hasCredential: [
+    {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      educationalLevel: "Bachelor's Degree",
+      about: "Bachelor of Computer Application (BCA)",
+      recognizedBy: {
+        "@type": "EducationalOrganization",
+        name: "Amity University",
+      },
+    },
+  ],
   skills:
-    "Full Stack Development, Backend Development, API Development, Machine Learning",
+    "Full Stack Development, Backend Development, API Development, Machine Learning, MongoDB, Express.js, React, Node.js, TypeScript, Python, TensorFlow",
+  sameAs: ["https://twitter.com/AnupPradhan0"],
+};
+
+// Breadcrumb Structured Data
+const breadcrumbStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.morscode.site",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "About",
+      item: "https://www.morscode.site/about",
+    },
+  ],
 };
 
 // Main Server Component - Lightweight Version
@@ -139,58 +218,46 @@ export default function About() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
 
-      <div className="min-h-screen bg-black text-white">
+      <div lang="en">
         {/* Main content */}
-        <main className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+        <main>
           {/* Header */}
-          <header className="mb-6 sm:mb-8 border border-green-800 bg-black rounded-lg p-3 sm:p-4">
-            <h1 className="text-green-400 font-mono text-lg sm:text-2xl">
-              About Me
-            </h1>
+          <header>
+            <h1 itemProp="name">About Me</h1>
           </header>
 
-          <div className="space-y-8 sm:space-y-12">
+          <div>
             {/* About Me Section */}
-            <section
-              id="about-section"
-              aria-labelledby="about-heading"
-              className="border border-green-800/30 bg-green-900/5 rounded-xl p-4 sm:p-6 lg:p-8"
-            >
-              <div className="flex items-center mb-4 sm:mb-6">
-                <span className="text-green-400 font-mono mr-2 sm:mr-4">$</span>
-                <h2
-                  id="about-heading"
-                  className="text-lg sm:text-2xl text-green-400 font-bold font-mono"
-                >
-                  About Me
-                </h2>
+            <section id="about-section" aria-labelledby="about-heading">
+              <div>
+                <span>$</span>
+                <h2 id="about-heading">About Me</h2>
               </div>
 
-              <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6">
-                <p className="text-gray-300 leading-relaxed text-sm sm:text-lg">
-                  I&apos;m a{" "}
-                  <strong className="text-green-400 font-semibold">
-                    MERN Stack Developer
-                  </strong>{" "}
-                  with a backend focus, building reliable RESTful APIs and
-                  full‑stack applications using MongoDB, Express.js, React,
-                  Node.js, and TypeScript, with JWT‑based authentication and
-                  responsive interfaces in React, Tailwind, HTML/CSS, and EJS.
-                  Strong in data modeling with Mongoose, media handling via
-                  Cloudinary integration (storage/CDN), and pragmatic tooling
-                  across Git/GitHub, Docker, Postman, and API testing for robust
+              <div>
+                <p>
+                  I&apos;m a <strong>MERN Stack Developer</strong> with a
+                  backend focus, building reliable RESTful APIs and full‑stack
+                  applications using MongoDB, Express.js, React, Node.js, and
+                  TypeScript, with JWT‑based authentication and responsive
+                  interfaces in React, Tailwind, HTML/CSS, and EJS. Strong in
+                  data modeling with Mongoose, media handling via Cloudinary
+                  integration (storage/CDN), and pragmatic tooling across
+                  Git/GitHub, Docker, Postman, and API testing for robust
                   delivery. Comfortable augmenting products with AI/ML libraries
                   (TensorFlow, NumPy, pandas) and shipping to Vercel/Render,
                   guided by a build‑to‑learn mindset and ongoing BCA studies
                   (CGPA 8.96).
                 </p>
 
-                <div
-                  className="mt-4 sm:mt-6 flex flex-wrap gap-2"
-                  role="list"
-                  aria-label="Technical skills"
-                >
+                <div role="list" aria-label="Technical skills">
                   {[
                     "MongoDB",
                     "Express",
@@ -199,11 +266,7 @@ export default function About() {
                     "JavaScript",
                     "TypeScript",
                   ].map((tech) => (
-                    <span
-                      key={tech}
-                      role="listitem"
-                      className="px-2 py-1 sm:px-3 bg-green-900/30 border border-green-800/50 rounded text-green-400 text-xs sm:text-sm font-mono"
-                    >
+                    <span key={tech} role="listitem">
                       {tech}
                     </span>
                   ))}
@@ -212,94 +275,74 @@ export default function About() {
             </section>
 
             {/* Education Section */}
-            <section
-              id="education-section"
-              aria-labelledby="education-heading"
-              className="border border-green-800/30 bg-green-900/5 rounded-xl p-4 sm:p-6 lg:p-8"
-            >
-              <div className="flex items-center mb-4 sm:mb-6">
-                <span className="text-green-400 font-mono mr-2 sm:mr-4">$</span>
-                <h2
-                  id="education-heading"
-                  className="text-lg sm:text-2xl text-green-400 font-bold font-mono"
-                >
-                  Education
-                </h2>
+            <section id="education-section" aria-labelledby="education-heading">
+              <div>
+                <span>$</span>
+                <h2 id="education-heading">Education</h2>
               </div>
 
-              <div className="ml-3 sm:ml-6 border-l-2 border-green-800/30 pl-3 sm:pl-6 space-y-6">
+              <div
+                itemScope
+                itemType="https://schema.org/EducationalOccupationalCredential"
+              >
                 {/* Amity University */}
                 <article
-                  className="border-b border-green-800/20 pb-4"
                   aria-labelledby="amity-heading"
+                  itemScope
+                  itemType="https://schema.org/EducationalOrganization"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <h3
-                      id="amity-heading"
-                      className="text-green-400 font-semibold text-base sm:text-lg font-mono"
-                    >
+                  <div>
+                    <h3 id="amity-heading" itemProp="name">
                       Amity University
                     </h3>
-                    <time
-                      className="text-gray-400 text-sm font-mono"
-                      dateTime="2024/2027"
-                    >
+                    <time dateTime="2024/2027" itemProp="temporalCoverage">
                       2024 — 2027
                     </time>
                   </div>
-                  <p className="text-gray-300 text-sm sm:text-base">
+                  <p itemProp="description">
                     Pursuing Bachelor of Computer Application (BCA) with strong
                     academic performance.
                   </p>
-                  <div className="mt-2">
-                    <span className="px-2 py-1 bg-green-900/30 border border-green-800/50 rounded text-green-400 text-xs font-mono">
-                      CGPA: 8.96
-                    </span>
+                  <div>
+                    <span itemProp="credentialCategory">CGPA: 8.96</span>
                   </div>
                 </article>
 
                 {/* Autonomous College Khariar */}
                 <article
-                  className="border-b border-green-800/20 pb-4"
                   aria-labelledby="ack-heading"
+                  itemScope
+                  itemType="https://schema.org/EducationalOrganization"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <h3
-                      id="ack-heading"
-                      className="text-green-400 font-semibold text-base sm:text-lg font-mono"
-                    >
+                  <div>
+                    <h3 id="ack-heading" itemProp="name">
                       Autonomous College Khariar
                     </h3>
-                    <time
-                      className="text-gray-400 text-sm font-mono"
-                      dateTime="2022/2024"
-                    >
+                    <time dateTime="2022/2024" itemProp="temporalCoverage">
                       2022 — 2024
                     </time>
                   </div>
-                  <p className="text-gray-300 text-sm sm:text-base">
+                  <p itemProp="description">
                     Completed higher secondary education (11th and 12th grade)
                     specializing in Information Technology.
                   </p>
                 </article>
 
                 {/* High School */}
-                <article aria-labelledby="highschool-heading">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                    <h3
-                      id="highschool-heading"
-                      className="text-green-400 font-semibold text-base sm:text-lg font-mono"
-                    >
+                <article
+                  aria-labelledby="highschool-heading"
+                  itemScope
+                  itemType="https://schema.org/EducationalOrganization"
+                >
+                  <div>
+                    <h3 id="highschool-heading" itemProp="name">
                       High School
                     </h3>
-                    <time
-                      className="text-gray-400 text-sm font-mono"
-                      dateTime="2009/2022"
-                    >
+                    <time dateTime="2009/2022" itemProp="temporalCoverage">
                       2009 — 2022
                     </time>
                   </div>
-                  <p className="text-gray-300 text-sm sm:text-base">
+                  <p itemProp="description">
                     Completed primary and secondary education, building
                     foundational knowledge.
                   </p>
@@ -309,26 +352,19 @@ export default function About() {
 
             {/* Skills Section */}
             <section id="skills-section" aria-labelledby="skills-heading">
-              <div className="flex items-center mb-6 sm:mb-8">
-                <span className="text-green-400 font-mono mr-2 sm:mr-4">$</span>
-                <h2
-                  id="skills-heading"
-                  className="text-lg sm:text-2xl text-green-400 font-bold font-mono"
-                >
-                  What I&apos;m Doing
-                </h2>
+              <div>
+                <span>$</span>
+                <h2 id="skills-heading">What I&apos;m Doing</h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div>
                 {/* Machine Learning Card */}
-                <article className="border border-green-800/40 bg-green-900/10 p-4 sm:p-6 rounded-xl">
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <article>
+                  <div>
                     <CodeIcon />
                   </div>
-                  <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
-                    Learning Machine Learning
-                  </h3>
-                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                  <h3>Learning Machine Learning</h3>
+                  <p>
                     Driven by a deep passion for technology&apos;s potential, I
                     am on an exciting and immersive journey into the field of
                     machine learning. My current focus is on building hands-on
@@ -342,14 +378,12 @@ export default function About() {
                 </article>
 
                 {/* YouTube Card */}
-                <article className="border border-green-800/40 bg-green-900/10 p-4 sm:p-6 rounded-xl">
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <article>
+                  <div>
                     <YoutubeIcon />
                   </div>
-                  <h3 className="font-bold text-green-400 text-lg sm:text-xl mb-2 sm:mb-3 font-mono">
-                    Content Creation
-                  </h3>
-                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                  <h3>Content Creation</h3>
+                  <p>
                     Beyond coding, I am passionate about sharing my experiences.
                     Once a month, I create and upload a video that offers a look
                     into my life as a developer—from the technical challenges of
@@ -362,8 +396,8 @@ export default function About() {
             </section>
 
             {/* Status footer */}
-            <footer className="mt-8 sm:mt-12 border-t border-green-800/30 pt-4 sm:pt-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-green-400/70 font-mono text-xs sm:text-sm space-y-2 sm:space-y-0">
+            <footer>
+              <div>
                 <span>Status: Ready for new challenges</span>
                 <span>Online</span>
               </div>

@@ -2,15 +2,17 @@ import { Metadata } from "next";
 
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.morscode.site"),
   title: "Contact | Get in Touch with MERN Stack Developer",
   description:
-    "Connect with me for collaboration opportunities, project inquiries, and technical discussions. MERN stack developer based in Bhubaneswar, Odisha. Available for full-stack development projects and machine learning collaborations.",
+    "Connect with Anup Pradhan (Mors) for collaboration opportunities, project inquiries, and technical discussions. MERN stack developer based in Bhubaneswar, Odisha, India. Available for full-stack development projects, API development, and machine learning collaborations. Response time less than 24 hours.",
   keywords: [
     "Contact MERN Developer",
     "Hire Full Stack Developer",
     "MERN Stack Developer Contact",
     "Web Development Services",
     "Full Stack Developer Bhubaneswar",
+    "Full Stack Developer India",
     "TypeScript Developer Contact",
     "MongoDB Expert Contact",
     "React Developer Hire",
@@ -18,33 +20,60 @@ export const metadata: Metadata = {
     "Freelance Developer India",
     "Backend Developer Odisha",
     "API Development Services",
+    "Next.js Developer Contact",
+    "Machine Learning Developer Contact",
+    "Developer Portfolio Contact",
   ],
-  authors: [{ name: "MERN Stack Developer" }],
+  authors: [{ name: "Anup Pradhan (Mors)", url: "https://www.morscode.site" }],
+  creator: "Anup Pradhan (Mors)",
+  publisher: "Anup Pradhan (Mors)",
   openGraph: {
-    title: "Contact | MERN Stack Developer",
+    title: "Contact | Get in Touch with MERN Stack Developer",
     description:
-      "Let's collaborate on innovative web projects. Available for full-stack development, API development, and machine learning projects.",
+      "Connect with Anup Pradhan (Mors) for collaboration opportunities. Available for full-stack development, API development, and machine learning projects. Based in Bhubaneswar, Odisha, India.",
     type: "website",
-    siteName: "Developer Portfolio",
-    locale: "en_US",
+    url: "https://www.morscode.site/contact",
+    siteName: "Anup Pradhan (Mors) - Developer Portfolio",
+    locale: "en_IN",
+    images: [
+      {
+        url: "https://www.morscode.site/images/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Anup Pradhan - Contact MERN Stack Developer",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "Contact | MERN Stack Developer",
+    card: "summary_large_image",
+    site: "@AnupPradhan0",
+    creator: "@AnupPradhan0",
+    title: "Contact | Get in Touch with MERN Stack Developer",
     description:
-      "Get in touch for project collaborations and development opportunities",
+      "Connect with Anup Pradhan (Mors) for project collaborations and development opportunities. Available for hire.",
+    images: ["https://www.morscode.site/images/logo.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   alternates: {
-    canonical: "/contact",
+    canonical: "https://www.morscode.site/contact",
+    languages: {
+      en: "https://www.morscode.site/contact",
+    },
   },
+  category: "Technology",
+  classification: "Contact Page",
 };
 
 // Type definitions
@@ -224,7 +253,10 @@ const ResumeIcon = () => (
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "MERN Stack Developer",
+  name: "Anup Pradhan",
+  alternateName: "Mors",
+  url: "https://www.morscode.site",
+  image: "https://www.morscode.site/images/logo.jpg",
   email: "anuppradhan929@gmail.com",
   address: {
     "@type": "PostalAddress",
@@ -240,9 +272,9 @@ const structuredData = {
     "https://github.com/M0rs-Ruki",
     "https://leetcode.com/u/Anuppradhan/",
   ],
-  jobTitle: "Full Stack Developer",
+  jobTitle: "Full Stack MERN Developer",
   description:
-    "MERN Stack Developer specializing in full-stack web applications",
+    "MERN Stack Developer from Bhubaneswar, India specializing in full-stack web applications, RESTful APIs, and machine learning. Available for collaboration and hire.",
   availability: "Available for hire",
   workLocation: {
     "@type": "Place",
@@ -253,6 +285,33 @@ const structuredData = {
       addressCountry: "IN",
     },
   },
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: "anuppradhan929@gmail.com",
+    contactType: "Professional",
+    areaServed: "Worldwide",
+    availableLanguage: ["English"],
+  },
+};
+
+// Breadcrumb Structured Data
+const breadcrumbStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.morscode.site",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Contact",
+      item: "https://www.morscode.site/contact",
+    },
+  ],
 };
 
 // Main Server Component - Lightweight Version
@@ -303,77 +362,56 @@ export default function Contact() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
 
-      <div className="min-h-screen bg-black text-white flex items-center p-3 sm:p-6">
-        <div className="text-white max-w-5xl mx-auto relative w-full">
-          {/* Simplified background */}
-          <div className="absolute inset-0" aria-hidden="true">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-cyan-500/10 rounded-3xl"></div>
-          </div>
-
-          <article
-            className="relative w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8"
-            aria-labelledby="contact-heading"
-          >
-            {/* Header with terminal styling */}
-            <header className="flex items-center mb-6 sm:mb-8">
-              <div
-                className="flex space-x-1.5 sm:space-x-2 mr-3 sm:mr-4"
-                aria-hidden="true"
-              >
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
-              </div>
-              <h1
-                id="contact-heading"
-                className="text-lg sm:text-2xl font-mono text-green-400 font-bold tracking-wider"
-              >
-                <span className="text-gray-500">$</span> Contact
+      <div lang="en">
+        <div>
+          <article aria-labelledby="contact-heading">
+            {/* Header */}
+            <header>
+              <h1 id="contact-heading" itemProp="name">
+                <span>$</span> Contact
               </h1>
             </header>
 
-            {/* Terminal cursor */}
-            <div className="mb-4 sm:mb-6">
-              <p className="text-gray-300 font-mono text-xs sm:text-sm leading-relaxed">
-                <span className="text-green-400">&gt;</span> Establishing secure
-                connection...
-                <span className="inline-block w-1.5 h-3 sm:w-2 sm:h-4 bg-green-400 ml-1"></span>
+            {/* Status message */}
+            <div>
+              <p>
+                <span>&gt;</span> Establishing secure connection...
               </p>
-              <p className="text-gray-400 font-mono text-xs sm:text-sm mt-1 sm:mt-2">
+              <p>
                 Ready to collaborate on innovative projects and opportunities.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+            <div>
               {/* Direct Contact Section */}
               <section
                 id="direct-contact"
                 aria-labelledby="direct-contact-heading"
-                className="space-y-4 sm:space-y-6"
+                itemScope
+                itemType="https://schema.org/ContactPage"
               >
-                <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                  <h2
-                    id="direct-contact-heading"
-                    className="text-base sm:text-xl font-mono text-green-400 font-semibold"
-                  >
-                    Direct Contact
-                  </h2>
+                <div>
+                  <h2 id="direct-contact-heading">Direct Contact</h2>
                 </div>
 
                 {/* Email */}
-                <div className="relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl">
-                  <div className="flex items-center">
-                    <div className="p-2 bg-green-400/20 rounded-lg mr-3 sm:mr-4">
+                <div itemScope itemType="https://schema.org/ContactPoint">
+                  <div>
+                    <div>
                       <MailIcon />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-gray-400 text-xs sm:text-sm font-mono">
-                        EMAIL
-                      </p>
+                    <div>
+                      <p>EMAIL</p>
                       <a
                         href="mailto:anuppradhan929@gmail.com"
-                        className="text-white font-mono text-sm sm:text-base hover:text-green-400 block truncate"
+                        itemProp="email"
                       >
                         anuppradhan929@gmail.com
                       </a>
@@ -382,17 +420,17 @@ export default function Contact() {
                 </div>
 
                 {/* Location */}
-                <div className="relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl">
-                  <div className="flex items-center">
-                    <div className="p-2 bg-blue-400/20 rounded-lg mr-3 sm:mr-4">
+                <div itemScope itemType="https://schema.org/PostalAddress">
+                  <div>
+                    <div>
                       <LocationIcon />
                     </div>
                     <div>
-                      <p className="text-gray-400 text-xs sm:text-sm font-mono">
-                        LOCATION
-                      </p>
-                      <p className="text-white font-mono text-sm sm:text-base">
-                        Bhubaneswar, Odisha, India
+                      <p>LOCATION</p>
+                      <p>
+                        <span itemProp="addressLocality">Bhubaneswar</span>,{" "}
+                        <span itemProp="addressRegion">Odisha</span>,{" "}
+                        <span itemProp="addressCountry">India</span>
                       </p>
                     </div>
                   </div>
@@ -403,22 +441,17 @@ export default function Contact() {
                   href="https://drive.google.com/file/d/1s4BHphGSLMZjhUY5IXJbxySOiKFUaaAZ/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:border-orange-400/50 block"
                   aria-label="Download resume (opens in new tab)"
                 >
-                  <div className="flex items-center">
-                    <div className="p-2 bg-orange-400/20 rounded-lg mr-3 sm:mr-4">
+                  <div>
+                    <div>
                       <ResumeIcon />
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-gray-400 text-xs sm:text-sm font-mono">
-                        RESUME
-                      </p>
-                      <p className="text-white font-mono text-sm sm:text-base hover:text-orange-400">
-                        Download CV
-                      </p>
+                    <div>
+                      <p>RESUME</p>
+                      <p>Download CV</p>
                     </div>
-                    <div className="text-gray-500 flex-shrink-0">
+                    <div>
                       <svg
                         width="14"
                         height="14"
@@ -437,40 +470,25 @@ export default function Contact() {
               </section>
 
               {/* Social Links Section */}
-              <section
-                id="social-links"
-                aria-labelledby="social-links-heading"
-                className="space-y-4 sm:space-y-6"
-              >
-                <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
-                  <h2
-                    id="social-links-heading"
-                    className="text-base sm:text-xl font-mono text-green-400 font-semibold"
-                  >
-                    Social Links
-                  </h2>
+              <section id="social-links" aria-labelledby="social-links-heading">
+                <div>
+                  <h2 id="social-links-heading">Social Links</h2>
                 </div>
 
-                <nav
-                  className="grid grid-cols-1 gap-3 sm:gap-4"
-                  aria-label="Social media links"
-                >
+                <nav aria-label="Social media links">
                   {socialLinks.map((social) => (
                     <a
                       key={social.name}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10"
                       aria-label={`Visit ${social.name} profile (opens in new tab)`}
                     >
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-green-400/20 rounded-lg">
+                      <div>
+                        <div>
                           <social.icon />
                         </div>
-                        <span className="font-mono text-sm sm:text-base hover:text-green-400">
-                          {social.name}
-                        </span>
+                        <span>{social.name}</span>
                       </div>
                     </a>
                   ))}
@@ -478,21 +496,16 @@ export default function Contact() {
               </section>
             </div>
 
-            {/* Terminal status bar */}
-            <footer className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm font-mono space-y-2 sm:space-y-0">
-                <div className="flex items-center space-x-2 sm:space-x-4">
-                  <span className="text-green-400">
-                    ✓ Available for collaboration
-                  </span>
-                  <span className="text-gray-500 hidden sm:inline">|</span>
-                  <span className="text-gray-400">
-                    Response time: &lt;24hrs
-                  </span>
+            {/* Status footer */}
+            <footer>
+              <div>
+                <div>
+                  <span>✓ Available for collaboration</span>
+                  <span>|</span>
+                  <span>Response time: &lt;24hrs</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-gray-400">Online</span>
+                <div>
+                  <span>Online</span>
                 </div>
               </div>
             </footer>

@@ -3,9 +3,10 @@ import Image from "next/image";
 
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.morscode.site"),
   title: "Projects | Full-Stack MERN Developer Portfolio",
   description:
-    "Explore my portfolio of full-stack web applications including WhatsApp Campaign Management, AI-powered finance tracker, neural networks, and more. Built with MERN stack, TypeScript, Python, and modern web technologies.",
+    "Explore Anup Pradhan's (Mors) portfolio of full-stack web applications including WhatsApp Campaign Management, AI-powered finance tracker, neural networks, and more. Built with MERN stack, TypeScript, Python, and modern web technologies. All projects are open-source and available on GitHub.",
   keywords: [
     "MERN Stack Projects",
     "Full Stack Portfolio",
@@ -22,25 +23,44 @@ export const metadata: Metadata = {
     "Node.js Projects",
     "REST API Projects",
     "Full Stack Developer Portfolio India",
+    "Next.js Projects",
+    "Open Source Projects",
+    "GitHub Portfolio",
   ],
-  authors: [{ name: "MERN Stack Developer" }],
+  authors: [{ name: "Anup Pradhan (Mors)", url: "https://www.morscode.site" }],
+  creator: "Anup Pradhan (Mors)",
+  publisher: "Anup Pradhan (Mors)",
   openGraph: {
     title: "Projects | Full-Stack MERN Developer Portfolio",
     description:
-      "Portfolio showcasing full-stack web applications, AI projects, and machine learning implementations using MERN stack, TypeScript, and Python.",
+      "Portfolio showcasing full-stack web applications, AI projects, and machine learning implementations by Anup Pradhan (Mors). Built with MERN stack, TypeScript, and Python. All projects open-source on GitHub.",
     type: "website",
-    siteName: "Developer Portfolio",
-    locale: "en_US",
+    url: "https://www.morscode.site/projects",
+    siteName: "Anup Pradhan (Mors) - Developer Portfolio",
+    locale: "en_IN",
+    images: [
+      {
+        url: "https://www.morscode.site/images/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Anup Pradhan - Full-Stack MERN Developer Projects Portfolio",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Projects | Full-Stack Developer Portfolio",
+    site: "@AnupPradhan0",
+    creator: "@AnupPradhan0",
+    title: "Projects | Full-Stack MERN Developer Portfolio",
     description:
-      "Full-stack MERN projects, AI applications, and machine learning implementations",
+      "Full-stack MERN projects, AI applications, and machine learning implementations. All projects open-source on GitHub.",
+    images: ["https://www.morscode.site/images/logo.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -50,8 +70,13 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/projects",
+    canonical: "https://www.morscode.site/projects",
+    languages: {
+      en: "https://www.morscode.site/projects",
+    },
   },
+  category: "Technology",
+  classification: "Portfolio",
 };
 
 // Type definitions
@@ -210,8 +235,15 @@ const TerminalIcon = () => (
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Full-Stack Development Projects",
-  description: "Portfolio of MERN stack and machine learning projects",
+  name: "Full-Stack Development Projects Portfolio",
+  description:
+    "Portfolio of MERN stack, AI, and machine learning projects by Anup Pradhan (Mors)",
+  author: {
+    "@type": "Person",
+    name: "Anup Pradhan",
+    alternateName: "Mors",
+    url: "https://www.morscode.site",
+  },
   itemListElement: projectsData.map((project, index) => ({
     "@type": "ListItem",
     position: index + 1,
@@ -227,9 +259,35 @@ const structuredData = {
         priceCurrency: "USD",
       },
       url: project.liveUrl !== "#" ? project.liveUrl : project.githubUrl,
+      codeRepository: project.githubUrl,
       programmingLanguage: project.tech,
+      creator: {
+        "@type": "Person",
+        name: "Anup Pradhan",
+        alternateName: "Mors",
+      },
     },
   })),
+};
+
+// Breadcrumb Structured Data
+const breadcrumbStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.morscode.site",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Projects",
+      item: "https://www.morscode.site/projects",
+    },
+  ],
 };
 
 // Main Server Component - Lightweight Version
@@ -241,124 +299,115 @@ export default function Projects() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
 
       <section
         id="projects-section"
         aria-labelledby="projects-heading"
-        className="min-h-screen bg-black text-white pb-16"
+        itemScope
+        itemType="https://schema.org/ItemList"
       >
-        <div className="text-white space-y-4 sm:space-y-8 max-w-7xl mx-auto p-3 sm:p-4">
+        <div lang="en">
           {/* Header */}
-          <header className="flex items-center space-x-2 sm:space-x-4 mb-4 sm:mb-8 pt-6">
+          <header>
             <TerminalIcon />
-            <h1
-              id="projects-heading"
-              className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider"
-            >
+            <h1 id="projects-heading" itemProp="name">
               Projects
             </h1>
-            <div className="flex-1 h-px bg-gradient-to-r from-green-400/50 to-transparent"></div>
-            <span className="text-green-400/60 text-xs sm:text-sm font-mono">
-              {projectsData.length} repos
-            </span>
+            <span>{projectsData.length} repos</span>
           </header>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
+          <div>
             {projectsData.map((project, index) => (
               <article
                 key={index}
-                className="relative"
                 aria-labelledby={`project-${index}-title`}
+                itemScope
+                itemType="https://schema.org/SoftwareApplication"
               >
                 {/* Card */}
-                <div className="bg-gray-900/30 border border-green-500/20 rounded-lg sm:rounded-xl overflow-hidden">
+                <div>
                   {/* Terminal header bar */}
-                  <header className="bg-gray-800/50 px-3 sm:px-4 py-2 border-b border-green-500/20 flex items-center space-x-2">
-                    <div
-                      className="flex space-x-1 sm:space-x-2"
-                      aria-hidden="true"
-                    >
-                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/60"></div>
-                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500/60"></div>
-                      <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500/60"></div>
+                  <header>
+                    <div aria-hidden="true">
+                      <div></div>
+                      <div></div>
+                      <div></div>
                     </div>
-                    <div className="flex-1 text-center overflow-hidden">
-                      <span className="text-green-400/70 text-xs font-mono block truncate">
+                    <div>
+                      <span>
                         {project.name.toLowerCase().replace(/\s+/g, "-")}
                       </span>
                     </div>
                   </header>
 
                   {/* Project Image */}
-                  <div className="relative h-40 sm:h-56 overflow-hidden">
+                  <div
+                    style={{
+                      position: "relative",
+                      width: "100%",
+                      height: "300px",
+                      overflow: "hidden",
+                    }}
+                  >
                     <Image
                       src={project.imageUrl}
                       alt={`${project.name} - Full-stack web application screenshot`}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover"
+                      style={{ objectFit: "cover" }}
+                      priority
+                      loading="eager"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"></div>
                   </div>
 
                   {/* Project Content */}
-                  <div className="p-4 sm:p-8 space-y-3 sm:space-y-5">
-                    <div className="flex items-start justify-between">
-                      <h2
-                        id={`project-${index}-title`}
-                        className="font-semibold text-green-400 text-base sm:text-xl mb-2 sm:mb-3 font-mono leading-tight"
-                      >
+                  <div>
+                    <div>
+                      <h2 id={`project-${index}-title`} itemProp="name">
                         {project.name}
                       </h2>
                     </div>
 
                     {/* Tech stack badges */}
-                    <div
-                      className="flex flex-wrap gap-1 sm:gap-2"
-                      role="list"
-                      aria-label="Technologies used"
-                    >
+                    <div role="list" aria-label="Technologies used">
                       {project.tech.map((tech, techIndex) => (
                         <span
                           key={techIndex}
                           role="listitem"
-                          className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs bg-green-500/20 text-green-400 rounded border border-green-500/30 font-mono"
+                          itemProp="programmingLanguage"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
 
-                    <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                      {project.description}
-                    </p>
+                    <p itemProp="description">{project.description}</p>
 
                     {/* Terminal command */}
-                    <div className="bg-gray-800/50 rounded p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden">
-                      <div className="flex items-center space-x-1 sm:space-x-2 text-green-400">
-                        <span className="text-green-500 flex-shrink-0">$</span>
-                        <span className="text-gray-400 flex-shrink-0">
-                          git clone
-                        </span>
-                        <span className="text-blue-400 truncate min-w-0">
-                          {project.githubUrl.split("/").pop()}.git
-                        </span>
+                    <div>
+                      <div>
+                        <span>$</span>
+                        <span>git clone</span>
+                        <span>{project.githubUrl.split("/").pop()}.git</span>
                       </div>
                     </div>
 
                     {/* Links Section */}
-                    <footer className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 border-t border-gray-700/30 space-y-2 sm:space-y-0">
-                      <nav
-                        className="flex space-x-4 sm:space-x-6"
-                        aria-label="Project links"
-                      >
+                    <footer>
+                      <nav aria-label="Project links">
                         <a
                           href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 font-mono text-sm sm:text-base"
                           aria-label={`View ${project.name} live demo`}
+                          itemProp="url"
                         >
                           <ExternalLinkIcon />
                           <span>live</span>
@@ -367,8 +416,8 @@ export default function Projects() {
                           href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 font-mono text-sm sm:text-base"
                           aria-label={`View ${project.name} source code on GitHub`}
+                          itemProp="codeRepository"
                         >
                           <GitHubIcon />
                           <span>code</span>
@@ -376,11 +425,9 @@ export default function Projects() {
                       </nav>
 
                       {/* Status indicator */}
-                      <div className="flex items-center space-x-2">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
-                        <span className="text-green-400 text-xs font-mono">
-                          active
-                        </span>
+                      <div>
+                        <div></div>
+                        <span>active</span>
                       </div>
                     </footer>
                   </div>
@@ -390,11 +437,11 @@ export default function Projects() {
           </div>
 
           {/* Summary footer */}
-          <footer className="mt-8 sm:mt-12 border-t border-green-800/30 pt-4 sm:pt-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-green-400/70 font-mono text-xs sm:text-sm space-y-2 sm:space-y-0">
+          <footer>
+            <div>
               <span>Total projects: {projectsData.length}</span>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+              <div>
+                <div></div>
                 <span>All repositories active</span>
               </div>
             </div>

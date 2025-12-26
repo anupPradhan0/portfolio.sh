@@ -3,9 +3,10 @@ import type { ReactNode } from "react";
 
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.morscode.site"),
   title: "Skills & Tech Stack | MERN Stack Developer",
   description:
-    "Comprehensive technical skills including JavaScript, TypeScript, Python, React, Node.js, MongoDB, Express, Next.js, Docker, TensorFlow, and modern web development tools. Full-stack MERN developer with AI/ML capabilities.",
+    "Comprehensive technical skills of Anup Pradhan (Mors) including JavaScript, TypeScript, Python, React, Node.js, MongoDB, Express, Next.js, Docker, TensorFlow, and modern web development tools. Full-stack MERN developer from Bhubaneswar, India with AI/ML capabilities.",
   keywords: [
     "MERN Stack Skills",
     "JavaScript Developer",
@@ -23,25 +24,45 @@ export const metadata: Metadata = {
     "REST API Development",
     "Git Version Control",
     "Cloud Deployment Skills",
+    "Full Stack Developer Bhubaneswar",
+    "Full Stack Developer India",
+    "AI ML Developer",
+    "Machine Learning Skills",
   ],
-  authors: [{ name: "MERN Stack Developer" }],
+  authors: [{ name: "Anup Pradhan (Mors)", url: "https://www.morscode.site" }],
+  creator: "Anup Pradhan (Mors)",
+  publisher: "Anup Pradhan (Mors)",
   openGraph: {
     title: "Skills & Tech Stack | MERN Stack Developer",
     description:
-      "Expert in MERN stack, TypeScript, Python, AI/ML tools, and modern web development technologies",
+      "Expert in MERN stack, TypeScript, Python, AI/ML tools, and modern web development technologies. Full-stack developer from Bhubaneswar, India.",
     type: "website",
-    siteName: "Developer Portfolio",
-    locale: "en_US",
+    url: "https://www.morscode.site/skills",
+    siteName: "Anup Pradhan (Mors) - Developer Portfolio",
+    locale: "en_IN",
+    images: [
+      {
+        url: "https://www.morscode.site/images/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Anup Pradhan - Skills & Tech Stack",
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "Skills & Tech Stack | MERN Developer",
+    card: "summary_large_image",
+    site: "@AnupPradhan0",
+    creator: "@AnupPradhan0",
+    title: "Skills & Tech Stack | MERN Stack Developer",
     description:
-      "Full-stack expertise in MERN, TypeScript, Python, and machine learning",
+      "Full-stack expertise in MERN, TypeScript, Python, and machine learning. Comprehensive technical skills portfolio.",
+    images: ["https://www.morscode.site/images/logo.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -51,8 +72,13 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "/skills",
+    canonical: "https://www.morscode.site/skills",
+    languages: {
+      en: "https://www.morscode.site/skills",
+    },
   },
+  category: "Technology",
+  classification: "Skills Portfolio",
 };
 
 // Type definitions
@@ -102,7 +128,6 @@ const terminalCommands: Record<keyof SkillsCategory, string> = {
 // Simplified SVG Icons
 const CodeIcon = () => (
   <svg
-    className="w-5 h-5"
     fill="currentColor"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -113,7 +138,6 @@ const CodeIcon = () => (
 
 const LayersIcon = () => (
   <svg
-    className="w-5 h-5"
     fill="currentColor"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -124,7 +148,6 @@ const LayersIcon = () => (
 
 const ServerIcon = () => (
   <svg
-    className="w-5 h-5"
     fill="currentColor"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -135,7 +158,6 @@ const ServerIcon = () => (
 
 const DatabaseIcon = () => (
   <svg
-    className="w-5 h-5"
     fill="currentColor"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -146,7 +168,6 @@ const DatabaseIcon = () => (
 
 const ToolIcon = () => (
   <svg
-    className="w-5 h-5"
     fill="currentColor"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -157,7 +178,6 @@ const ToolIcon = () => (
 
 const BrainIcon = () => (
   <svg
-    className="w-5 h-5"
     fill="currentColor"
     viewBox="0 0 24 24"
     aria-hidden="true"
@@ -170,7 +190,10 @@ const BrainIcon = () => (
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "MERN Stack Developer",
+  name: "Anup Pradhan",
+  alternateName: "Mors",
+  url: "https://www.morscode.site",
+  image: "https://www.morscode.site/images/logo.jpg",
   knowsAbout: [
     ...skillsData.languages,
     ...skillsData.frontend,
@@ -179,7 +202,13 @@ const structuredData = {
     ...skillsData.tools,
     ...skillsData.ai_ml,
   ],
-  jobTitle: "Full Stack Developer",
+  jobTitle: "Full Stack MERN Developer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bhubaneswar",
+    addressRegion: "Odisha",
+    addressCountry: "IN",
+  },
   hasCredential: [
     {
       "@type": "EducationalOccupationalCredential",
@@ -198,7 +227,27 @@ const structuredData = {
     },
   ],
   skills:
-    "Full Stack Development, Backend Development, Frontend Development, Database Management, Machine Learning",
+    "Full Stack Development, Backend Development, Frontend Development, Database Management, Machine Learning, AI Development",
+};
+
+// Breadcrumb Structured Data
+const breadcrumbStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.morscode.site",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Skills",
+      item: "https://www.morscode.site/skills",
+    },
+  ],
 };
 
 // Lightweight Terminal Window Component
@@ -214,51 +263,48 @@ const TerminalWindow = ({
   skills: string[];
 }) => {
   return (
-    <div className="overflow-hidden rounded-lg bg-black/40 border border-green-400/50">
+    <div itemScope itemType="https://schema.org/ItemList">
       {/* Terminal header */}
-      <div className="flex items-center justify-between p-3 bg-black/30 border-b border-green-400/20">
-        <div className="flex items-center space-x-2">
-          <div className="flex space-x-1.5" aria-hidden="true">
-            <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+      <div>
+        <div>
+          <div aria-hidden="true">
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-          <span className="text-green-400 text-sm font-mono ml-2">
+          <span>
             ~ {title}
           </span>
         </div>
-        <div
-          className="w-2 h-2 rounded-full bg-green-400"
-          aria-hidden="true"
-        ></div>
+        <div aria-hidden="true"></div>
       </div>
 
       {/* Terminal content */}
-      <div className="p-4 space-y-3">
+      <div>
         {/* Command line */}
-        <div className="flex items-center space-x-2 text-green-400 font-mono text-sm">
-          <span className="text-green-300">$</span>
-          <span className="text-green-400">{command}</span>
+        <div>
+          <span>$</span>
+          <span>{command}</span>
         </div>
 
         {/* Skills output */}
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2 text-green-400 mb-3">
+        <div>
+          <div>
             {icon}
-            <span className="font-mono text-sm">
+            <span>
               {title.toLowerCase()}_modules:
             </span>
           </div>
           <div
-            className="flex flex-wrap gap-2"
             role="list"
             aria-label={`${title} skills`}
+            itemProp="itemListElement"
           >
             {skills.map((skill) => (
               <span
                 key={skill}
-                className="inline-block bg-green-400/20 text-green-300 text-xs font-mono py-1.5 px-3 rounded border border-green-400/30"
                 role="listitem"
+                itemProp="name"
               >
                 {skill}
               </span>
@@ -318,39 +364,37 @@ export default function Skills() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
 
       <section
         id="skills-section"
         aria-labelledby="skills-heading"
-        className="relative min-h-screen bg-black p-6 pb-16"
+        itemScope
+        itemType="https://schema.org/ItemList"
       >
-        {/* Background effect */}
-        <div
-          className="fixed inset-0 pointer-events-none overflow-hidden opacity-10"
-          aria-hidden="true"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-black to-emerald-900/20"></div>
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto">
+        <div lang="en">
           {/* Header */}
-          <header className="text-center mb-12">
+          <header>
             <h1
               id="skills-heading"
-              className="text-4xl md:text-6xl font-bold font-mono"
+              itemProp="name"
             >
-              <span className="text-green-400">&lt;</span>
-              <span className="text-white"> Skills & Tech Stack </span>
-              <span className="text-green-400">/&gt;</span>
+              <span>&lt;</span>
+              <span> Skills & Tech Stack </span>
+              <span>/&gt;</span>
             </h1>
-            <div className="mt-4 text-green-300/80 font-mono">
-              <span className="text-green-400">$</span> ./skills --interactive
-              --display-all
+            <div>
+              <span>$</span> ./skills --interactive --display-all
             </div>
           </header>
 
           {/* Terminal Windows Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div>
             {categories.map((category) => (
               <TerminalWindow
                 key={category.key}
@@ -363,9 +407,9 @@ export default function Skills() {
           </div>
 
           {/* Footer */}
-          <footer className="text-center mt-12">
-            <p className="text-green-300/60 font-mono text-sm">
-              <span className="text-green-400">└─$</span>{" "}
+          <footer>
+            <p>
+              <span>└─$</span>{" "}
               {skillsData.languages.length +
                 skillsData.frontend.length +
                 skillsData.backend.length +
