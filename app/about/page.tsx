@@ -3,14 +3,13 @@ import { Metadata } from "next";
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anuppradhan.in"),
-  title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
+  title: "About Me | Software Developer & Machine Learning Enthusiast",
   description:
-    "Experienced MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment. Pursuing BCA at Amity University with CGPA 8.96.",
+    "Experienced Software Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment. Pursuing BCA at Amity University with CGPA 8.96.",
   keywords: [
-    "MERN Stack Developer",
-    "Full Stack Developer",
-    "Full Stack Developer Bhubaneswar",
-    "Full Stack Developer India",
+    "Software Developer",
+    "Software Developer Bhubaneswar",
+    "Software Developer India",
     "Backend Developer",
     "MongoDB Developer",
     "Express.js Developer",
@@ -37,9 +36,9 @@ export const metadata: Metadata = {
   creator: "Anup Pradhan",
   publisher: "Anup Pradhan",
   openGraph: {
-    title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
+    title: "About Me | Software Developer & Machine Learning Enthusiast",
     description:
-      "MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and full-stack applications. Learning Machine Learning and sharing my journey through content creation. Pursuing BCA at Amity University.",
+      "Software Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and full-stack applications. Learning Machine Learning and sharing my journey through content creation. Pursuing BCA at Amity University.",
     type: "profile",
     url: "https://www.anuppradhan.in/about",
     siteName: "Anup Pradhan - Developer Portfolio",
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
         url: "https://www.anuppradhan.in/images/logo.jpg",
         width: 1200,
         height: 630,
-        alt: "Anup Pradhan - MERN Stack Developer & Machine Learning Enthusiast",
+        alt: "Anup Pradhan - Software Developer & Machine Learning Enthusiast",
         type: "image/jpeg",
       },
     ],
@@ -58,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@AnupPradhan0",
     creator: "@AnupPradhan0",
-    title: "About Me | MERN Stack Developer & Machine Learning Enthusiast",
+    title: "About Me | Software Developer & Machine Learning Enthusiast",
     description:
       "Full-stack MERN developer from Bhubaneswar, India focused on backend development and machine learning. Pursuing BCA at Amity University.",
     images: ["https://www.anuppradhan.in/images/logo.jpg"],
@@ -129,9 +128,9 @@ const structuredData = {
   name: "Anup Pradhan",
   url: "https://www.anuppradhan.in",
   image: "https://www.anuppradhan.in/images/logo.jpg",
-  jobTitle: "Full Stack MERN Developer",
+  jobTitle: "Software Developer",
   description:
-    "MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and machine learning. Currently pursuing BCA at Amity University.",
+    "Software Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and machine learning. Currently pursuing BCA at Amity University.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Bhubaneswar",
@@ -184,7 +183,7 @@ const structuredData = {
     },
   ],
   skills:
-    "Full Stack Development, Backend Development, API Development, Machine Learning, MongoDB, Express.js, React, Node.js, TypeScript, Python, TensorFlow",
+    "Software Development, Backend Development, API Development, Machine Learning, MongoDB, Express.js, React, Node.js, TypeScript, Python, TensorFlow",
   sameAs: ["https://twitter.com/AnupPradhan0"],
 };
 
@@ -242,7 +241,7 @@ export default function About() {
 
               <div>
                 <p>
-                  I&apos;m a <strong>MERN Stack Developer</strong> with a
+                  I&apos;m a <strong>Software Developer</strong> with a
                   backend focus, building reliable RESTful APIs and full‑stack
                   applications using MongoDB, Express.js, React, Node.js, and
                   TypeScript, with JWT‑based authentication and responsive

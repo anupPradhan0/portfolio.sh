@@ -3,16 +3,16 @@ import { Metadata } from "next";
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anuppradhan.in"),
-  title: "Contact | Get in Touch with MERN Stack Developer",
+  title: "Contact | Get in Touch with Software Developer",
   description:
-    "Connect with Anup Pradhan for collaboration opportunities, project inquiries, and technical discussions. MERN stack developer based in Bhubaneswar, Odisha, India. Available for full-stack development projects, API development, and machine learning collaborations. Response time less than 24 hours.",
+    "Connect with Anup Pradhan for collaboration opportunities, project inquiries, and technical discussions. Software developer based in Bhubaneswar, Odisha, India. Available for development projects, API development, and machine learning collaborations. Response time less than 24 hours.",
   keywords: [
-    "Contact MERN Developer",
-    "Hire Full Stack Developer",
-    "MERN Stack Developer Contact",
+    "Contact Software Developer",
+    "Hire Software Developer",
+    "Software Developer Contact",
     "Web Development Services",
-    "Full Stack Developer Bhubaneswar",
-    "Full Stack Developer India",
+    "Software Developer Bhubaneswar",
+    "Software Developer India",
     "TypeScript Developer Contact",
     "MongoDB Expert Contact",
     "React Developer Hire",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   creator: "Anup Pradhan",
   publisher: "Anup Pradhan",
   openGraph: {
-    title: "Contact | Get in Touch with MERN Stack Developer",
+    title: "Contact | Get in Touch with Software Developer",
     description:
       "Connect with Anup Pradhan for collaboration opportunities. Available for full-stack development, API development, and machine learning projects. Based in Bhubaneswar, Odisha, India.",
     type: "website",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         url: "https://www.anuppradhan.in/images/logo.jpg",
         width: 1200,
         height: 630,
-        alt: "Anup Pradhan - Contact MERN Stack Developer",
+        alt: "Anup Pradhan - Contact Software Developer",
         type: "image/jpeg",
       },
     ],
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@AnupPradhan0",
     creator: "@AnupPradhan0",
-    title: "Contact | Get in Touch with MERN Stack Developer",
+    title: "Contact | Get in Touch with Software Developer",
     description:
       "Connect with Anup Pradhan for project collaborations and development opportunities. Available for hire.",
     images: ["https://www.anuppradhan.in/images/logo.jpg"],
@@ -271,9 +271,9 @@ const structuredData = {
     "https://github.com/anupPradhan0",
     "https://leetcode.com/u/Anuppradhan/",
   ],
-  jobTitle: "Full Stack MERN Developer",
+  jobTitle: "Software Developer",
   description:
-    "MERN Stack Developer from Bhubaneswar, India specializing in full-stack web applications, RESTful APIs, and machine learning. Available for collaboration and hire.",
+    "Software Developer from Bhubaneswar, India specializing in web applications, RESTful APIs, and machine learning. Available for collaboration and hire.",
   availability: "Available for hire",
   workLocation: {
     "@type": "Place",

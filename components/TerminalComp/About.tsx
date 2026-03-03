@@ -151,7 +151,7 @@ const About: React.FC = () => {
               <p className="text-gray-300 leading-relaxed text-sm sm:text-lg font-light">
                 I&apos;m a{" "}
                 <span className="text-green-400 font-semibold">
-                  MERN Stack Developer
+                  Software Developer
                 </span>{" "}
                 with a backend focus, building reliable RESTful APIs and
                 full‑stack applications using MongoDB, Express.js, React,
@@ -262,7 +262,7 @@ const About: React.FC = () => {
 
             {/* Responsive grid: 1 column on mobile, 2 on tablet+ */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              {/* Full Stack Developer Card - Mobile optimized */}
+              {/* Software Developer Card - Mobile optimized */}
               <div className="group border border-green-800/40 bg-gradient-to-br from-green-900/20 to-black/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:scale-[1.02] sm:hover:scale-105 hover:shadow-2xl hover:shadow-green-900/30 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">

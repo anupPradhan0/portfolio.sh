@@ -18,9 +18,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Anup Pradhan",
-    jobTitle: "Full Stack Developer",
+    jobTitle: "Software Developer",
     description:
-      "Full-stack developer specializing in MERN stack and Next.js with backend focus and machine learning exploration",
+      "Software developer specializing in full-stack development and Next.js with backend focus and machine learning exploration",
     image: "https://www.anuppradhan.in/images/logo.jpg",
     email: "anuppradhan929@gmail.com",
     address: {
@@ -44,7 +44,7 @@ export default function Home() {
       "Docker",
       "Git",
       "Backend Development",
-      "Full Stack Development",
+      "Software Development",
     ],
     sameAs: [
       "https://www.linkedin.com/in/anup-pradhan77",
@@ -91,7 +91,7 @@ export default function Home() {
     name: "Anup Pradhan Portfolio",
     url: "https://www.anuppradhan.in",
     description:
-      "Full Stack MERN Developer portfolio showcasing projects, skills, and experience",
+      "Software Developer portfolio showcasing projects, skills, and experience",
     creator: {
       "@type": "Person",
       name: "Anup Pradhan",
@@ -131,7 +131,7 @@ export default function Home() {
             className={`identity-pane border-2 border-green-400 ${
               firstCommandExecuted ? "hide-on-mobile" : ""
             }`}
-            aria-label="Developer Identity Card - Anup Pradhan MERN Stack Developer specializing in backend development and machine learning"
+            aria-label="Developer Identity Card - Anup Pradhan Software Developer specializing in backend development and machine learning"
           >
             <IdentityComp />
           </section>
@@ -157,7 +157,7 @@ export default function Home() {
               if (!metaDescription) {
                 const meta = document.createElement('meta');
                 meta.name = 'description';
-                meta.content = 'Full Stack MERN Developer from Bhubaneswar, India. Specializing in backend development, RESTful APIs, React, Node.js, MongoDB, TypeScript, and exploring Machine Learning with TensorFlow.';
+                meta.content = 'Software Developer from Bhubaneswar, India. Specializing in backend development, RESTful APIs, React, Node.js, MongoDB, TypeScript, and exploring Machine Learning with TensorFlow.';
                 document.head.appendChild(meta);
               }
             }

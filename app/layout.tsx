@@ -22,16 +22,15 @@ export const metadata: Metadata = {
   },
   title: {
     default:
-      "Anup Pradhan | Full Stack MERN Developer & Machine Learning Enthusiast",
+      "Anup Pradhan | Software Developer & Machine Learning Enthusiast",
     template: "%s | Anup Pradhan",
   },
   description:
-    "MERN Stack Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and full-stack applications using MongoDB, Express.js, React, Next.js, Node.js, and TypeScript. Currently learning Machine Learning with TensorFlow and scikit-learn.",
+    "Software Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, and full-stack applications using MongoDB, Express.js, React, Next.js, Node.js, and TypeScript. Currently learning Machine Learning with TensorFlow and scikit-learn.",
   keywords: [
-    "MERN Stack Developer",
-    "Full Stack Developer",
-    "Full Stack Developer Bhubaneswar",
-    "Full Stack Developer India",
+    "Software Developer",
+    "Software Developer Bhubaneswar",
+    "Software Developer India",
     "TypeScript Developer",
     "Node.js Developer",
     "React Developer",
@@ -58,15 +57,15 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://www.anuppradhan.in",
     siteName: "Anup Pradhan - Developer Portfolio",
-    title: "Anup Pradhan | Full Stack MERN Developer",
+    title: "Anup Pradhan | Software Developer",
     description:
-      "Full Stack MERN Developer specializing in backend development, RESTful APIs, and Machine Learning. Based in Bhubaneswar, Odisha, India.",
+      "Software Developer specializing in backend development, RESTful APIs, and Machine Learning. Based in Bhubaneswar, Odisha, India.",
     images: [
       {
         url: "https://www.anuppradhan.in/images/logo.jpg",
         width: 1200,
         height: 630,
-        alt: "Anup Pradhan - Full Stack Developer",
+        alt: "Anup Pradhan - Software Developer",
         type: "image/jpeg",
       },
     ],
@@ -75,9 +74,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@AnupPradhan0",
     creator: "@AnupPradhan0",
-    title: "Anup Pradhan | Full Stack MERN Developer",
+    title: "Anup Pradhan | Software Developer",
     description:
-      "MERN Stack Developer with backend focus, building RESTful APIs and full-stack applications. Learning Machine Learning.",
+      "Software Developer with backend focus, building RESTful APIs and full-stack applications. Learning Machine Learning.",
     images: ["https://www.anuppradhan.in/images/logo.jpg"],
   },
   robots: {

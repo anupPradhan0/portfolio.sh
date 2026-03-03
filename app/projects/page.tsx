@@ -4,12 +4,12 @@ import Image from "next/image";
 // Enhanced SEO Metadata
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anuppradhan.in"),
-  title: "Projects | Full-Stack MERN Developer Portfolio",
+  title: "Projects | Software Developer Portfolio",
   description:
-    "Explore Anup Pradhan's portfolio of full-stack web applications including WhatsApp Campaign Management, AI-powered finance tracker, neural networks, and more. Built with MERN stack, TypeScript, Python, and modern web technologies. All projects are open-source and available on GitHub.",
+    "Explore Anup Pradhan's portfolio of web applications including WhatsApp Campaign Management, AI-powered finance tracker, neural networks, and more. Built with TypeScript, Python, and modern web technologies. All projects are open-source and available on GitHub.",
   keywords: [
-    "MERN Stack Projects",
-    "Full Stack Portfolio",
+    "Software Developer Projects",
+    "Developer Portfolio",
     "WhatsApp Campaign Management",
     "AI Finance Tracker",
     "Neural Network Projects",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "Web Development Portfolio",
     "Node.js Projects",
     "REST API Projects",
-    "Full Stack Developer Portfolio India",
+    "Software Developer Portfolio India",
     "Next.js Projects",
     "Open Source Projects",
     "GitHub Portfolio",
@@ -31,9 +31,9 @@ export const metadata: Metadata = {
   creator: "Anup Pradhan",
   publisher: "Anup Pradhan",
   openGraph: {
-    title: "Projects | Full-Stack MERN Developer Portfolio",
+    title: "Projects | Software Developer Portfolio",
     description:
-      "Portfolio showcasing full-stack web applications, AI projects, and machine learning implementations by Anup Pradhan. Built with MERN stack, TypeScript, and Python. All projects open-source on GitHub.",
+      "Portfolio showcasing web applications, AI projects, and machine learning implementations by Anup Pradhan. Built with TypeScript, Python, and modern web technologies. All projects open-source on GitHub.",
     type: "website",
     url: "https://www.anuppradhan.in/projects",
     siteName: "Anup Pradhan - Developer Portfolio",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
         url: "https://www.anuppradhan.in/images/logo.jpg",
         width: 1200,
         height: 630,
-        alt: "Anup Pradhan - Full-Stack MERN Developer Projects Portfolio",
+        alt: "Anup Pradhan - Software Developer Projects Portfolio",
         type: "image/jpeg",
       },
     ],
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@AnupPradhan0",
     creator: "@AnupPradhan0",
-    title: "Projects | Full-Stack MERN Developer Portfolio",
+    title: "Projects | Software Developer Portfolio",
     description:
       "Full-stack MERN projects, AI applications, and machine learning implementations. All projects open-source on GitHub.",
     images: ["https://www.anuppradhan.in/images/logo.jpg"],
@@ -235,9 +235,9 @@ const TerminalIcon = () => (
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Full-Stack Development Projects Portfolio",
+  name: "Software Development Projects Portfolio",
   description:
-    "Portfolio of MERN stack, AI, and machine learning projects by Anup Pradhan",
+    "Portfolio of web applications, AI, and machine learning projects by Anup Pradhan",
   author: {
     "@type": "Person",
     name: "Anup Pradhan",

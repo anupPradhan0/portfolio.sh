@@ -3,7 +3,7 @@
 # Site
 Author: Anup Pradhan
 Site: https://www.anuppradhan.in
-Description: Full Stack MERN Developer portfolio – projects, skills, contact. Built with Next.js, React, TypeScript.
+Description: Software Developer portfolio – projects, skills, contact. Built with Next.js, React, TypeScript.
 
 # Crawl rules
 User-agent: *

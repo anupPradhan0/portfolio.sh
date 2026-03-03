@@ -5,7 +5,7 @@ const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey || "");
 
 const CONTEXT_PARTS = {
-  base: `You are Anup's AI assistant. Answer concisely (2-3 sentences). Anup Pradhan is a Full-Stack MERN Developer with Next.js, BCA student at Amity University (CGPA: 8.96).`,
+  base: `You are Anup's AI assistant. Answer concisely (2-3 sentences). Anup Pradhan is a Software Developer with Next.js, BCA student at Amity University (CGPA: 8.96).`,
 
   skills: `Tech Stack: JavaScript/TypeScript, Python, React, Next.js, Node.js, Express, MongoDB, Tailwind, Docker, Git, TensorFlow, Cohere AI.`,
 
