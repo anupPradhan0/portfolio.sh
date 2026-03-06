@@ -9,6 +9,7 @@
 .terminal-container {
   --terminal-font: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
     "Liberation Mono", Monaco, "DejaVu Sans Mono", monospace;
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -17,6 +18,34 @@
   font-family: var(--terminal-font);
   font-size: 0.875rem;
   border: 2px solid #22c55e;
+}
+
+/* CRT scanlines: subtle horizontal lines overlay (old monitor look) */
+.terminal-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 1px,
+    rgba(0, 0, 0, 0.12) 1px,
+    rgba(0, 0, 0, 0.12) 2px
+  );
+}
+
+/* CRT noise: light texture overlay (physical screen grain) */
+.terminal-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
 }
 
 /* Header bar at the top */
