@@ -567,20 +567,26 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
             Terminal command input
           </label>
           <Prompt user={user} host={host} />
-          <input
-            id="terminal-input"
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="terminal-input"
-            onFocus={focusInput}
-            autoComplete="off"
-            spellCheck="false"
-            aria-label="Terminal command input"
-            disabled={isAILoading}
-          />
+          <div className="input-area">
+            <span className="input-value" aria-hidden="true">
+              {input}
+            </span>
+            <span className="cursor-block" aria-hidden="true" />
+            <input
+              id="terminal-input"
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="terminal-input"
+              onFocus={focusInput}
+              autoComplete="off"
+              spellCheck="false"
+              aria-label="Terminal command input"
+              disabled={isAILoading}
+            />
+          </div>
         </form>
       </main>
     </div>

@@ -1,4 +1,4 @@
-/* Cursor blink animation */
+/* Terminal block cursor: solid block that pulses (classic "waiting for instructions" feel) */
 @keyframes blink-cursor {
   0%, 100% { opacity: 1; }
   50%      { opacity: 0; }
@@ -114,25 +114,54 @@
   font-weight: bold;
 }
 
-/* Input form and cursor */
+/* Input form and block cursor */
 .input-form {
   display: flex;
   align-items: center;
 }
-.terminal-input {
+.input-area {
   position: relative;
   margin-left: 0.5rem;
   flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom, 1rem);
+}
+.input-value {
+  font-family: inherit;
+  font-size: inherit;
+  color: #22c55e;
+  white-space: pre;
+  min-height: 1.25em;
+  line-height: 1.25;
+}
+/* Solid block cursor that pulses (opacity 0 ↔ 1) - dark green */
+.cursor-block {
+  display: inline-block;
+  width: 0.6em;
+  min-width: 8px;
+  height: 1.1em;
+  background: #12e860;
+  vertical-align: middle;
+  margin-left: 1px;
+  animation: blink-cursor 1s step-end infinite;
+}
+.terminal-input {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
   background: transparent;
   border: none;
-  color: #22c55e;
-  padding-bottom: env(safe-area-inset-bottom, 1rem);
+  color: transparent;
+  caret-color: transparent;
   outline: none;
-}
-.cursor {
-  animation: blink-cursor 1s infinite;
-  color: #00ff00;
-  font-weight: bold;
+  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 /* Responsive adjustments */
