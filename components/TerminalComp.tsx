@@ -199,6 +199,31 @@ const WELCOME_LINES: string[] = [
   "✨ NEW: Try 'ai <your question>' to chat with AI assistant!",
 ];
 
+// Tab completion: commands that can be completed when user presses Tab
+const TAB_COMPLETIONS: string[] = [
+  "cd welcome",
+  "cd about",
+  "cd projects",
+  "cd skills",
+  "cd experience",
+  "cd contact",
+  "help",
+  "ls",
+  "clear",
+  "refresh",
+];
+
+function getCommonPrefix(strings: string[]): string {
+  if (strings.length === 0) return "";
+  let i = 0;
+  while (i < strings[0].length) {
+    const c = strings[0][i];
+    if (strings.every((s) => s[i] === c)) i++;
+    else break;
+  }
+  return strings[0].slice(0, i);
+}
+
 const Help: React.FC = () => {
   const [displayedItems, setDisplayedItems] = useState<HelpItem[]>([]);
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -456,6 +481,21 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
     }, 300);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key !== "Tab") return;
+    e.preventDefault();
+    const raw = input.trim();
+    const matches = TAB_COMPLETIONS.filter((cmd) => cmd.startsWith(raw));
+    if (matches.length === 1) {
+      setInput(matches[0]);
+    } else if (matches.length > 1) {
+      const prefix = getCommonPrefix(matches);
+      if (prefix.length > raw.length) {
+        setInput(prefix);
+      }
+    }
+  };
+
   useEffect(() => {
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -538,6 +578,7 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
             className="terminal-input"
             onFocus={focusInput}
             autoComplete="off"
