@@ -188,8 +188,12 @@ const HELP_ITEMS: HelpItem[] = [
   { type: "command", command: "cd experience", description: "View my professional experience." },
   { type: "command", command: "cd contact", description: "Get my contact information." },
   { type: "command", command: "ai <question>", description: "Chat with AI assistant (10 requests/day)." },
+  { type: "command", command: "whoami", description: "Print current user (flavor)." },
+  { type: "command", command: "date", description: "Print current system date and time." },
+  { type: "command", command: "echo <text>", description: "Print the given text (flavor)." },
   { type: "command", command: "clear", description: "Clear the terminal screen." },
   { type: "command", command: "refresh", description: "Reload the page." },
+  { type: "command", command: "exit", description: "Close this tab/window." },
 ];
 
 const WELCOME_LINES: string[] = [
@@ -209,8 +213,12 @@ const TAB_COMPLETIONS: string[] = [
   "cd contact",
   "help",
   "ls",
+  "whoami",
+  "date",
+  "echo",
   "clear",
   "refresh",
+  "exit",
 ];
 
 function getCommonPrefix(strings: string[]): string {
@@ -421,6 +429,21 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
       return;
     }
 
+    // echo: repeat what the user typed (flavor command)
+    if (trimmedCmd.toLowerCase().startsWith("echo ")) {
+      newHist.push({
+        type: "output",
+        content: trimmedCmd.slice(5).trim() || " ",
+      });
+      setHistory(newHist);
+      return;
+    }
+    if (trimmedCmd.toLowerCase() === "echo") {
+      newHist.push({ type: "output", content: " " });
+      setHistory(newHist);
+      return;
+    }
+
     switch (trimmedCmd.toLowerCase()) {
       case "help":
       case "ls":
@@ -443,6 +466,15 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
         break;
       case "cd contact":
         newHist.push({ type: "output", content: <Contact /> });
+        break;
+      case "whoami":
+        newHist.push({ type: "output", content: user });
+        break;
+      case "date":
+        newHist.push({
+          type: "output",
+          content: new Date().toString(),
+        });
         break;
       case "clear":
         setHistory([]);
