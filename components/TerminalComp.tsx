@@ -485,7 +485,11 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
       default:
         newHist.push({
           type: "output",
-          content: `Command not found: ${cmd}. Type 'help' or 'ls' for commands. Use 'cd <name>' to open sections (e.g. cd about, cd projects).`,
+          content: (
+            <span className="terminal-stderr">
+              bash: command not found: {cmd}
+            </span>
+          ),
         });
         break;
     }
@@ -596,7 +600,12 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
   }, []);
 
   useEffect(() => {
-    terminalRef.current?.scrollTo(0, terminalRef.current.scrollHeight);
+    const el = terminalRef.current;
+    if (!el) return;
+    const id = requestAnimationFrame(() => {
+      el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    });
+    return () => cancelAnimationFrame(id);
   }, [history]);
 
   return (

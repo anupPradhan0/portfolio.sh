@@ -86,6 +86,13 @@
 /* History lines */
 .history-line { margin-bottom: 0.5rem; }
 
+/* Stderr: error output (e.g. command not found) - red so it reads as "that didn't work" */
+.terminal-stderr {
+  color: #ef4444;
+  font-family: inherit;
+  font-size: inherit;
+}
+
 /* Prompt styles */
 .prompt-user      { color: #3b82f6; }
 .prompt-separator,
