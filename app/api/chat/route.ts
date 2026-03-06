@@ -2,22 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const apiKey = process.env.GEMINI_API_KEY;
+const modelId = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
 const genAI = new GoogleGenerativeAI(apiKey || "");
 
 const CONTEXT_PARTS = {
-  base: `You are Anup's AI assistant. Answer concisely (2-3 sentences). Anup Pradhan is a Software Developer with Next.js, BCA student at Amity University (CGPA: 8.96).`,
+  base: `You are Anup Pradhan's AI assistant on his portfolio terminal. CRITICAL: Reply in 2–3 short sentences only. Never write long paragraphs or list everything—give a direct, brief answer to what was asked. Anup is a Software Developer (backend focus): RESTful APIs, MERN/TypeScript, JWT, Cloudinary, Vercel/Render; exploring AI/ML. Based in Bhubaneswar, India.`,
 
-  skills: `Tech Stack: JavaScript/TypeScript, Python, React, Next.js, Node.js, Express, MongoDB, Tailwind, Docker, Git, TensorFlow, Cohere AI.`,
+  skills: `Tech: Languages — JavaScript, TypeScript, Python, C++, HTML5, CSS3. Frontend — React, Next.js, Tailwind CSS, EJS, Vite. Backend — Node.js, Express.js, REST APIs. Databases — MongoDB, Mongoose, MongoDB Atlas. Tools — Git & GitHub, Docker, Postman, Linux/CLI. AI/ML — Cohere API, TensorFlow (basics), Pandas, NumPy.`,
 
-  projects: `Key Projects:
-1. WhatsApp Campaign (MERN+TS, admin system) - github.com/anupPradhan0/WhatsApp-Campaigner
-2. RukiAI (AI finance tracker) - rukiai.online
-3. Neural Network from scratch (Python/NumPy)
-Type 'projects' to see all.`,
+  projects: `Projects (type 'cd projects' to see all): 1) WhatsApp Campaign Management — MERN + TypeScript, admin/reseller roles, Cloudinary; live: whats-app-campaigner.vercel.app, GitHub: anupPradhan0/WhatsApp-Campaigner. 2) RukiAI — AI personal finance tracker with Cohere API; rukiai.online, GitHub: AI-Personal-Finance-Tracker. 3) Neural Network from scratch (Python/NumPy); digit-recognizer-fullstack.vercel.app. 4) Network Marketing full‑stack (MLM); GitHub: Network-Marketing. 5) YouTube Backend (Node, Express, MongoDB, JWT); GitHub: YouTube-Clone-Backend. 6) AI Madness — compare ChatGPT, Claude, Gemini, etc. on one dashboard; ai-madness.onrender.com, GitHub: AI-Madness.`,
 
-  contact: `Contact: anuppradhan929@gmail.com | GitHub: anupPradhan0 | LinkedIn: anup-pradhan77 | Bhubaneswar, India. Type 'contact' for full info.`,
+  experience: `Current roles: (1) CHATI — Software Developer (Internship), Oct 2025–Present, Bhubaneswar. Work: AI meeting assistant (joins calls, transcripts, summaries), Zoom/Teams/Google Meet, custom CMS, data pipeline migrating 1.2M+ records. (2) Prominds Digital — Software Developer (Part-time), Jul 2024–Present, Bhubaneswar. Work: SaaS showroom visitor management for dealerships, 5+ deployments, 5k+ entries/month, WhatsApp integration, lead pipelines, CRM migration.`,
 
-  education: `Education: BCA at Amity University (2024-27, CGPA 8.96), I.T. at Autonomous College Khariar (2022-24).`,
+  contact: `Contact: Email anuppradhan929@gmail.com. LinkedIn linkedin.com/in/anup-pradhan77. GitHub github.com/anupPradhan0. Twitter/X x.com/AnupPradhan0. Instagram instagram.com/mors.365. YouTube youtube.com/@morscode7. LeetCode leetcode.com/u/Anuppradhan. Resume: Google Drive link on his contact page. Location: Bhubaneswar, Odisha, India.`,
+
+  education: `Education: BCA at Amity University (2024–2027, CGPA 8.96). Higher secondary (11th & 12th, I.T.) at Autonomous College Khariar (2022–2024). Schooling from village school (2009–2022).`,
 };
 
 function getRelevantContext(question: string): string {
@@ -27,8 +26,10 @@ function getRelevantContext(question: string): string {
   if (
     q.includes("skill") ||
     q.includes("tech") ||
+    q.includes("stack") ||
     q.includes("know") ||
-    q.includes("language")
+    q.includes("language") ||
+    q.includes("tool")
   ) {
     context += "\n" + CONTEXT_PARTS.skills;
   }
@@ -36,17 +37,34 @@ function getRelevantContext(question: string): string {
   if (
     q.includes("project") ||
     q.includes("built") ||
-    q.includes("work") ||
-    q.includes("portfolio")
+    q.includes("portfolio") ||
+    q.includes("github") ||
+    q.includes("app")
   ) {
     context += "\n" + CONTEXT_PARTS.projects;
+  }
+
+  if (
+    q.includes("experience") ||
+    q.includes("job") ||
+    q.includes("work") ||
+    q.includes("company") ||
+    q.includes("chati") ||
+    q.includes("prominds") ||
+    q.includes("internship") ||
+    q.includes("role")
+  ) {
+    context += "\n" + CONTEXT_PARTS.experience;
   }
 
   if (
     q.includes("contact") ||
     q.includes("reach") ||
     q.includes("email") ||
-    q.includes("linkedin")
+    q.includes("linkedin") ||
+    q.includes("resume") ||
+    q.includes("hire") ||
+    q.includes("connect")
   ) {
     context += "\n" + CONTEXT_PARTS.contact;
   }
@@ -55,7 +73,9 @@ function getRelevantContext(question: string): string {
     q.includes("study") ||
     q.includes("education") ||
     q.includes("university") ||
-    q.includes("college")
+    q.includes("college") ||
+    q.includes("bca") ||
+    q.includes("cgpa")
   ) {
     context += "\n" + CONTEXT_PARTS.education;
   }
@@ -63,9 +83,16 @@ function getRelevantContext(question: string): string {
   if (
     q.includes("who") ||
     q.includes("about anup") ||
-    q.includes("tell me about")
+    q.includes("tell me about") ||
+    q.includes("introduce")
   ) {
-    context += "\n" + CONTEXT_PARTS.skills + "\n" + CONTEXT_PARTS.projects;
+    context +=
+      "\n" +
+      CONTEXT_PARTS.skills +
+      "\n" +
+      CONTEXT_PARTS.experience +
+      "\n" +
+      CONTEXT_PARTS.projects;
   }
 
   return context;
@@ -94,10 +121,10 @@ export async function POST(request: NextRequest) {
     console.log("📊 Context tokens (approx):", relevantContext.length / 4);
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash-lite",
+      model: modelId,
       generationConfig: {
-        maxOutputTokens: 250,
-        temperature: 0.7,
+        maxOutputTokens: 150,
+        temperature: 0.6,
       },
       systemInstruction: relevantContext,
     });
@@ -115,6 +142,24 @@ export async function POST(request: NextRequest) {
       error instanceof Error ? error.message : typeof error === "string" ? error : String(error);
 
     console.error("Gemini Error:", error);
+
+    // Rate limit / quota exceeded (429) – show friendly message, don't expose raw API error
+    const isRateLimit =
+      errMsg.includes("429") ||
+      errMsg.includes("Too Many Requests") ||
+      errMsg.includes("quota") ||
+      errMsg.includes("rate limit");
+
+    if (isRateLimit) {
+      return NextResponse.json(
+        {
+          error: "Rate limit reached. Please try again in a few minutes.",
+          success: false,
+        },
+        { status: 429 }
+      );
+    }
+
     return NextResponse.json(
       {
         error: "AI temporarily unavailable",

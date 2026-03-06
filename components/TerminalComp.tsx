@@ -297,43 +297,43 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
   const user = "anup";
   const host = "ruki";
 
-  // ============ NEW: AI Command Handler ============
-  const handleAICommand = async (question: string): Promise<void> => {
+  // ============ AI Command Handler: shows user question (prompt) + AI response ============
+  const handleAICommand = async (
+    question: string,
+    historyWithPrompt: HistoryLine[]
+  ): Promise<void> => {
     const trimmedQuestion = question.trim();
 
     if (!trimmedQuestion) {
-      const newHist = [...history];
-      newHist.push({
-        type: "output",
-        content: "Please provide a question. Usage: ai <your question>",
-      });
-      setHistory(newHist);
+      setHistory([
+        ...historyWithPrompt,
+        {
+          type: "output",
+          content: "Please provide a question. Usage: ai <your question>",
+        },
+      ]);
       return;
     }
 
-    // Check rate limit
     const remaining = getRemainingRequests();
     if (remaining <= 0) {
-      const newHist = [...history];
-      newHist.push({
-        type: "output",
-        content: "Daily AI request limit reached (10/day). Try again tomorrow!",
-      });
-      setHistory(newHist);
+      setHistory([
+        ...historyWithPrompt,
+        {
+          type: "output",
+          content: "Daily AI request limit reached (10/day). Try again tomorrow!",
+        },
+      ]);
       return;
     }
 
-    // Show loading
     setIsAILoading(true);
-    const loadingHist = [...history];
-    loadingHist.push({
-      type: "output",
-      content: <AILoading />,
-    });
-    setHistory(loadingHist);
+    setHistory([
+      ...historyWithPrompt,
+      { type: "output", content: <AILoading /> },
+    ]);
 
     try {
-      // Call API with correct payload
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -341,40 +341,36 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
       });
 
       const data = await response.json();
-
-      // Remove loading indicator
       setIsAILoading(false);
-      const newHist = [...history];
 
-      if (data.success) {
-        // Increment usage
-        incrementAIUsage();
-        const newRemaining = getRemainingRequests();
-
-        newHist.push({
-          type: "output",
-          content: <AIResponse text={data.response} />,
-        });
-        newHist.push({
-          type: "output",
-          content: `\n Remaining AI requests today: ${newRemaining}/10`,
-        });
-      } else {
-        newHist.push({
-          type: "output",
-          content: `AI Error: ${data.error}`,
-        });
-      }
-
-      setHistory(newHist);
+      setHistory((prev) => {
+        const withoutLoading = prev.slice(0, -1);
+        if (data.success) {
+          incrementAIUsage();
+          const newRemaining = getRemainingRequests();
+          return [
+            ...withoutLoading,
+            { type: "output", content: <AIResponse text={data.response} /> },
+            {
+              type: "output",
+              content: `\n Remaining AI requests today: ${newRemaining}/10`,
+            },
+          ];
+        }
+        return [
+          ...withoutLoading,
+          { type: "output", content: `AI Error: ${data.error}` },
+        ];
+      });
     } catch {
       setIsAILoading(false);
-      const newHist = [...history];
-      newHist.push({
-        type: "output",
-        content: "Failed to connect to AI. Please try again.",
-      });
-      setHistory(newHist);
+      setHistory((prev) => [
+        ...prev.slice(0, -1),
+        {
+          type: "output",
+          content: "Failed to connect to AI. Please try again.",
+        },
+      ]);
     }
   };
 
@@ -394,11 +390,10 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
 
     const trimmedCmd = cmd.trim();
 
-    // ============ FIXED: Check for AI command (case insensitive) ============
+    // ============ AI command: show user prompt + response (handleAICommand adds prompt so it stays visible) ============
     if (trimmedCmd.toLowerCase().startsWith("ai ")) {
-      const question = trimmedCmd.substring(3);
-      setHistory(newHist);
-      await handleAICommand(question);
+      const question = trimmedCmd.substring(3).trim();
+      await handleAICommand(question, newHist);
       return;
     }
 
