@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Script from "next/script";
-import IdentityComp from "@/components/IdentityComp";
+import Tag from "@/components/Tag";
 import TerminalComp from "@/components/TerminalComp";
 
 export default function Home() {
@@ -133,7 +133,7 @@ export default function Home() {
             }`}
             aria-label="Developer Identity Card - Anup Pradhan Software Developer specializing in backend development and machine learning"
           >
-            <IdentityComp />
+            <Tag />
           </section>
 
           {/* Terminal Section */}

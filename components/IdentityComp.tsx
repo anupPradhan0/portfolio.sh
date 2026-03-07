@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import * as THREE from "three";
 import { Canvas, extend, useThree, useFrame } from "@react-three/fiber";
-import { useTexture, Environment, Lightformer, Html } from "@react-three/drei";
+import { Environment, Lightformer, Html, useTexture, useGLTF } from "@react-three/drei";
 import {
   BallCollider,
   CuboidCollider,
@@ -17,6 +17,8 @@ import { MeshLineGeometry, MeshLineMaterial } from "meshline";
 import "@/public/css/IdentityComp.css";
 
 extend({ MeshLineGeometry, MeshLineMaterial });
+useGLTF.preload("/models/card.glb");
+useTexture.preload("/images/lanyard.jpg");
 
 interface IdentityCompProps {
   name?: string;
@@ -65,6 +67,8 @@ function Band({
   };
 
   const { width, height } = useThree((state) => state.size);
+  const { nodes, materials } = useGLTF("/models/card.glb") as any;
+  const texture = useTexture("/images/lanyard.jpg");
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([
@@ -77,10 +81,12 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.5]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.5]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.5]);
-  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.4, 0]]);
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.45, 0]]);
 
   useEffect(() => {
     if (hovered) {
@@ -133,26 +139,26 @@ function Band({
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0, -0.5, 0]} ref={j1} {...segmentProps}>
-          <BallCollider args={[0.05]} />
+        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+          <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1, 0]} ref={j2} {...segmentProps}>
-          <BallCollider args={[0.05]} />
+        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+          <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1.5, 0]} ref={j3} {...segmentProps}>
-          <BallCollider args={[0.05]} />
+        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+          <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={[0, -2, 0]}
+          position={[2, 0, 0]}
           ref={card}
           {...segmentProps}
           type={dragged ? "kinematicPosition" : "dynamic"}
           colliders={false}
         >
-          <CuboidCollider args={[0.8, 1.2, 0.01]} />
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
             scale={2.25}
-            position={[0, -1.4, 0]}
+            position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => {
@@ -168,15 +174,30 @@ function Band({
               );
             }}
           >
+            {/* Clip piece - the metal connector (moved to top of card) */}
+            <mesh
+              geometry={nodes.clip.geometry}
+              material={materials.metal}
+              material-roughness={0.3}
+              position={[0, 0.95, 0]}
+            />
+            {/* Clamp piece - the holder (moved to top of card) */}
+            <mesh 
+              geometry={nodes.clamp.geometry} 
+              material={materials.metal} 
+              position={[0, 0.95, 0]}
+            />
+            
+            {/* Card with HTML content */}
             <Html
               transform
               occlude="blending"
-              distanceFactor={isMobile ? 1.8 : 1.6}
-              position={[0, 0.6, 0]}
+              distanceFactor={isMobile ? 2.2 : 2.0}
+              position={[0, 0.35, 0.01]}
               style={{
                 pointerEvents: "none",
                 userSelect: "none",
-                width: isMobile ? "280px" : "320px",
+                width: isMobile ? "220px" : "260px",
               }}
             >
               <article
@@ -188,8 +209,8 @@ function Band({
                 itemType="https://schema.org/Person"
                 style={{
                   margin: 0,
-                  width: isMobile ? "280px" : "320px",
-                  height: isMobile ? "360px" : "420px",
+                  width: isMobile ? "220px" : "260px",
+                  height: isMobile ? "290px" : "340px",
                 }}
               >
                 <div aria-hidden="true" className="backdrop-glow" />
@@ -258,12 +279,14 @@ function Band({
       </group>
       <mesh ref={band}>
         <meshLineGeometry />
-        <meshLineMaterial 
-          color="#10b981" 
-          opacity={0.95} 
-          transparent 
-          lineWidth={0.25}
-          depthWrite={false}
+        <meshLineMaterial
+          color="white"
+          depthTest={false}
+          resolution={[width, height]}
+          useMap
+          map={texture}
+          repeat={[-3, 1]}
+          lineWidth={1}
         />
       </mesh>
     </>
@@ -293,7 +316,7 @@ const IdentityComp: React.FC<IdentityCompProps> = ({
   return (
     <div
       className="identity-container"
-      style={{ height: "600px", width: "100%", position: "relative" }}
+      style={{ height: "100%", width: "100%", position: "relative" }}
     >
       <Canvas camera={{ position: [0, 0, 13], fov: 25 }} style={{ touchAction: "none" }}>
         <ambientLight intensity={Math.PI} />
@@ -307,7 +330,8 @@ const IdentityComp: React.FC<IdentityCompProps> = ({
             isMobile={isMobile}
           />
         </Physics>
-        <Environment background={false}>
+        <Environment background blur={0.75}>
+          <color attach="background" args={["black"]} />
           <Lightformer
             intensity={2}
             color="white"
@@ -349,6 +373,7 @@ const IdentityComp: React.FC<IdentityCompProps> = ({
           bottom: "1rem",
           left: "50%",
           transform: "translateX(-50%)",
+          zIndex: 10,
         }}
       >
         {isMobile
