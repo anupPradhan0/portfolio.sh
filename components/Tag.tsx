@@ -56,34 +56,34 @@ export default function Tag() {
         }}
       >
         <BlackBackground />
-        <ambientLight intensity={Math.PI} />
+        <ambientLight intensity={5} />
         <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
           <Band />
         </Physics>
       <Environment environmentIntensity={0} background={false}>
         <Lightformer
-          intensity={2}
+          intensity={4}
           color="white"
           position={[0, -1, 5]}
           rotation={[0, 0, Math.PI / 3]}
           scale={[100, 0.1, 1]}
         />
         <Lightformer
-          intensity={3}
+          intensity={6}
           color="white"
           position={[-1, -1, 1]}
           rotation={[0, 0, Math.PI / 3]}
           scale={[100, 0.1, 1]}
         />
         <Lightformer
-          intensity={3}
+          intensity={6}
           color="white"
           position={[1, 1, 1]}
           rotation={[0, 0, Math.PI / 3]}
           scale={[100, 0.1, 1]}
         />
         <Lightformer
-          intensity={10}
+          intensity={18}
           color="white"
           position={[-10, 0, 14]}
           rotation={[0, Math.PI / 2, Math.PI / 3]}

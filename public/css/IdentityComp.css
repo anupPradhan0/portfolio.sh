@@ -1,4 +1,4 @@
-/* Container - Same look as terminal: #000 + scanlines + noise */
+/* Container - Same as terminal: #000, no inner border (pane has the green border) */
 .identity-container { 
   perspective: 800px;
   position: relative;
@@ -7,7 +7,11 @@
   align-items: center;
   padding: 1rem 0.5rem 2rem;
   background: #000;
-
+  color: #22c55e;
+  font-family: Consolas, Menlo, monospace;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 
 /* Same CRT scanlines as terminal */
@@ -426,10 +430,11 @@
   }
 }
 
-/* Interactive Label - neutral (no green) */
+/* Interactive Label - same green as terminal (#22c55e) */
 .interaction-label {
   font-family: Consolas, Menlo, monospace;
   font-size: 10px;
+  color: #22c55e;
   margin-top: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
