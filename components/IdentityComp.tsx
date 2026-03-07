@@ -61,7 +61,7 @@ function Band({
   const segmentProps = {
     type: "dynamic" as const,
     canSleep: true,
-    colliders: false,
+    colliders: false as const,
     angularDamping: 2,
     linearDamping: 2,
   };
