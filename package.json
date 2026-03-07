@@ -16,6 +16,7 @@
     "@react-three/rapier": "^2.2.0",
     "@types/three": "^0.183.1",
     "@use-gesture/react": "^10.3.1",
+    "@vercel/analytics": "^1.6.1",
     "framer-motion": "^12.35.0",
     "meshline": "^3.3.1",
     "next": "^16.0.1",
