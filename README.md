@@ -1,4 +1,4 @@
-# 🖥️ Terminal Portfolio
+# 🖥️ Portfolio.sh
 
 A modern, interactive terminal-themed portfolio website built with Next.js 16, React 19, TypeScript, and Tailwind CSS. Features a unique terminal interface with matrix-style animations and AI-powered chat functionality.
 
@@ -50,7 +50,7 @@ Visit the live site: [Your Vercel URL](https://www.anuppradhan.in/)
 ## 📁 Project Structure
 
 ```
-terminal/
+portfolio.sh/
 ├── app/                          # Next.js App Router directory
 │   ├── about/                    # About page
 │   │   └── page.tsx
@@ -104,8 +104,8 @@ terminal/
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/anupPradhan0/terminal.git
-cd terminal
+git clone https://github.com/anupPradhan0/portfolio.sh.git
+cd portfolio.sh
 ```
 
 2. **Install dependencies**
@@ -211,7 +211,7 @@ This project is deployed on **Vercel** for optimal performance and seamless CI/C
 
 ### Deploy Your Own
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/anupPradhan0/terminal)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/anupPradhan0/portfolio.sh)
 
 ### Manual Deployment
 
@@ -293,7 +293,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🐛 Bug Reports
 
-Found a bug? Please open an issue on [GitHub Issues](https://github.com/anupPradhan0/terminal/issues).
+Found a bug? Please open an issue on [GitHub Issues](https://github.com/anupPradhan0/portfolio.sh/issues).
 
 ## ⭐ Show Your Support
 
