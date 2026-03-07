@@ -266,7 +266,7 @@ const structuredData = {
   sameAs: [
     "https://www.youtube.com/@morscode7",
     "https://x.com/AnupPradhan0",
-    "https://www.instagram.com/mors.365/",
+    "https://www.instagram.com/anup.pradhan_",
     "https://www.linkedin.com/in/anup-pradhan77",
     "https://github.com/anupPradhan0",
     "https://leetcode.com/u/Anuppradhan/",
@@ -331,7 +331,7 @@ export default function Contact() {
     {
       icon: InstagramIcon,
       name: "Instagram",
-      href: "https://www.instagram.com/mors.365/",
+      href: "https://www.instagram.com/anup.pradhan_",
       color: "pink",
     },
     {

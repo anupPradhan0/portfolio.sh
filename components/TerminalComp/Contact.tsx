@@ -234,7 +234,7 @@ const Contact: React.FC = () => {
     {
       icon: InstagramIcon,
       name: "Instagram",
-      href: "https://www.instagram.com/mors.365/",
+      href: "https://www.instagram.com/anup.pradhan_",
       color: "pink",
     },
     {
@@ -261,9 +261,8 @@ const Contact: React.FC = () => {
     <div className="text-white max-w-5xl mx-auto p-3 sm:p-6 relative min-h-screen flex items-center">
       {/* Background gradient effects with animation */}
       <div
-        className={`absolute inset-0 transition-all duration-1000 ease-out ${
-          mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        }`}
+        className={`absolute inset-0 transition-all duration-1000 ease-out ${mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          }`}
         aria-hidden="true"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 via-transparent to-cyan-500/10 rounded-3xl blur-xl"></div>
@@ -272,17 +271,15 @@ const Contact: React.FC = () => {
       </div>
 
       <article
-        className={`relative w-full backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl transition-all duration-700 ease-out ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
+        className={`relative w-full backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl transition-all duration-700 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
       >
         {/* Header with terminal styling - Animated */}
         <header
-          className={`flex items-center mb-6 sm:mb-8 transition-all duration-500 ease-out ${
-            headerVisible
+          className={`flex items-center mb-6 sm:mb-8 transition-all duration-500 ease-out ${headerVisible
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-4"
-          }`}
+            }`}
         >
           <div
             className="flex space-x-1.5 sm:space-x-2 mr-3 sm:mr-4"
@@ -299,11 +296,10 @@ const Contact: React.FC = () => {
 
         {/* Terminal cursor animation */}
         <div
-          className={`mb-4 sm:mb-6 transition-all duration-500 ease-out delay-200 ${
-            headerVisible
+          className={`mb-4 sm:mb-6 transition-all duration-500 ease-out delay-200 ${headerVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-2"
-          }`}
+            }`}
         >
           <p className="text-gray-300 font-mono text-xs sm:text-sm leading-relaxed">
             <span className="text-green-400">&gt;</span> Establishing secure
@@ -321,11 +317,10 @@ const Contact: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
           {/* Direct Contact Section - Animated */}
           <section
-            className={`space-y-4 sm:space-y-6 transition-all duration-600 ease-out ${
-              contentVisible
+            className={`space-y-4 sm:space-y-6 transition-all duration-600 ease-out ${contentVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 -translate-x-6"
-            }`}
+              }`}
           >
             <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
               <h3 className="text-base sm:text-xl font-mono text-green-400 font-semibold">
@@ -455,11 +450,10 @@ const Contact: React.FC = () => {
 
           {/* Social Links Section - Animated */}
           <section
-            className={`space-y-4 sm:space-y-6 transition-all duration-600 ease-out delay-300 ${
-              socialsVisible
+            className={`space-y-4 sm:space-y-6 transition-all duration-600 ease-out delay-300 ${socialsVisible
                 ? "opacity-100 translate-x-0"
                 : "opacity-0 translate-x-6"
-            }`}
+              }`}
           >
             <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
               <h3 className="text-base sm:text-xl font-mono text-green-400 font-semibold">
@@ -477,9 +471,8 @@ const Contact: React.FC = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-[1.03] hover:shadow-lg hover:shadow-green-400/10 active:scale-[0.98] ${
-                    socialsVisible ? "animate-fade-in-up" : ""
-                  }`}
+                  className={`group relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 transform hover:scale-[1.03] hover:shadow-lg hover:shadow-green-400/10 active:scale-[0.98] ${socialsVisible ? "animate-fade-in-up" : ""
+                    }`}
                   style={{
                     animationDelay: `${index * 100 + 400}ms`,
                   }}
@@ -509,11 +502,10 @@ const Contact: React.FC = () => {
 
         {/* Terminal status bar - Animated */}
         <footer
-          className={`mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10 transition-all duration-700 ease-out delay-500 ${
-            socialsVisible
+          className={`mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/10 transition-all duration-700 ease-out delay-500 ${socialsVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-4"
-          }`}
+            }`}
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs sm:text-sm font-mono space-y-2 sm:space-y-0">
             <div className="flex items-center space-x-2 sm:space-x-4">

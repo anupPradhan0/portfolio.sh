@@ -16,7 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.anuppradhan.in"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL ||
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://www.anuppradhan.in")
+  ),
   icons: {
     icon: "/images/logo.jpg",
     apple: "/images/logo.jpg",
@@ -57,13 +62,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     url: "https://www.anuppradhan.in",
-    siteName: "Anup Pradhan - Developer Portfolio",
+    siteName: "Anup Pradhan",
     title: "Anup Pradhan | Software Developer",
     description:
       "Software Developer specializing in backend development, RESTful APIs, and Machine Learning. Based in Bhubaneswar, Odisha, India.",
     images: [
       {
-        url: "https://www.anuppradhan.in/images/logo.jpg",
+        url: "/images/logo.jpg",
         width: 1200,
         height: 630,
         alt: "Anup Pradhan - Software Developer",
@@ -78,7 +83,7 @@ export const metadata: Metadata = {
     title: "Anup Pradhan | Software Developer",
     description:
       "Software Developer with backend focus, building RESTful APIs and full-stack applications. Learning Machine Learning.",
-    images: ["https://www.anuppradhan.in/images/logo.jpg"],
+    images: ["/images/logo.jpg"],
   },
   robots: {
     index: true,

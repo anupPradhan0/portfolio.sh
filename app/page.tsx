@@ -51,7 +51,7 @@ export default function Home() {
       "https://github.com/anupPradhan0",
       "https://x.com/AnupPradhan0",
       "https://www.youtube.com/@morscode7",
-      "https://www.instagram.com/mors.365/",
+      "https://www.instagram.com/anup.pradhan_",
       "https://leetcode.com/u/Anuppradhan/",
     ],
     alumniOf: {
@@ -128,9 +128,8 @@ export default function Home() {
         <div className="main-content-area">
           {/* Identity Card Section */}
           <section
-            className={`identity-pane ${
-              firstCommandExecuted ? "hide-on-mobile" : ""
-            }`}
+            className={`identity-pane ${firstCommandExecuted ? "hide-on-mobile" : ""
+              }`}
             aria-label="Developer Identity Card - Anup Pradhan Software Developer specializing in backend development and machine learning"
           >
             <Tag />
