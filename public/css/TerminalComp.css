@@ -1,7 +1,14 @@
 /* Terminal block cursor: solid block that pulses (classic "waiting for instructions" feel) */
 @keyframes blink-cursor {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Main container for the entire terminal window */
@@ -27,13 +34,11 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent 0,
-    transparent 1px,
-    rgba(0, 0, 0, 0.12) 1px,
-    rgba(0, 0, 0, 0.12) 2px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent 0,
+      transparent 1px,
+      rgba(0, 0, 0, 0.12) 1px,
+      rgba(0, 0, 0, 0.12) 2px);
 }
 
 /* CRT noise: light texture overlay (physical screen grain) */
@@ -63,14 +68,24 @@
   display: flex;
   gap: 0.5rem;
 }
+
 .dot {
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 9999px;
 }
-.dot-red    { background: #ef4444; }
-.dot-yellow { background: #f59e0b; }
-.dot-green  { background: #22c55e; }
+
+.dot-red {
+  background: #ef4444;
+}
+
+.dot-yellow {
+  background: #f59e0b;
+}
+
+.dot-green {
+  background: #22c55e;
+}
 
 /* Navigation bar in the header */
 .terminal-nav {
@@ -93,6 +108,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
+
 .nav-button:hover {
   background: rgba(16, 185, 129, 0.15);
   border-color: #22c55e;
@@ -102,6 +118,7 @@
     0 2px 8px rgba(0, 0, 0, 0.3);
   transform: translateY(-1px);
 }
+
 .nav-button:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -116,7 +133,9 @@
 }
 
 /* History lines */
-.history-line { margin-bottom: 0.5rem; }
+.history-line {
+  margin-bottom: 0.5rem;
+}
 
 /* Stderr: error output (e.g. command not found) - red so it reads as "that didn't work" */
 .terminal-stderr {
@@ -126,28 +145,46 @@
 }
 
 /* Prompt styles */
-.prompt-user      { color: #3b82f6; }
+.prompt-user {
+  color: #3b82f6;
+}
+
 .prompt-separator,
-.prompt-symbol   { color: #e5e7eb; }
-.prompt-directory { color: #a78bfa; }
-.command-text     { color: #22c55e; }
-.output-line      { color: #ffffff; }
+.prompt-symbol {
+  color: #e5e7eb;
+}
+
+.prompt-directory {
+  color: #a78bfa;
+}
+
+.command-text {
+  color: #22c55e;
+}
+
+.output-line {
+  color: #ffffff;
+}
 
 /* Help command output */
 .help-command {
   color: #ffffff;
 }
+
 .help-command p {
   margin-bottom: 0.5rem;
 }
+
 .help-command ul {
   list-style: disc inside;
   margin: 0;
   padding: 0;
 }
+
 .help-command li {
   margin-bottom: 0.25rem;
 }
+
 .help-command li span {
   color: #00ff00;
   font-weight: bold;
@@ -158,6 +195,7 @@
   display: flex;
   align-items: center;
 }
+
 .input-area {
   position: relative;
   margin-left: 0.5rem;
@@ -167,6 +205,7 @@
   align-items: center;
   padding-bottom: env(safe-area-inset-bottom, 1rem);
 }
+
 .input-value {
   font-family: inherit;
   font-size: inherit;
@@ -175,6 +214,7 @@
   min-height: 1.25em;
   line-height: 1.25;
 }
+
 /* Solid block cursor that pulses (opacity 0 ↔ 1) - dark green */
 .cursor-block {
   display: inline-block;
@@ -186,6 +226,7 @@
   margin-left: 1px;
   animation: blink-cursor 1s step-end infinite;
 }
+
 .terminal-input {
   position: absolute;
   left: 0;
@@ -211,6 +252,7 @@
     gap: 0.5rem;
     padding: 0 1rem;
   }
+
   .nav-button {
     margin-right: 0;
     margin-bottom: 0.5rem;
@@ -223,6 +265,7 @@
     gap: 0.25rem;
     padding: 0 0.5rem;
   }
+
   .nav-button {
     flex: 1 1 calc(50% - 0.5rem);
     text-align: center;

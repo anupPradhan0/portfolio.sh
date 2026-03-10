@@ -2,7 +2,8 @@
 
 @import "tailwindcss";
 
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -58,23 +59,24 @@ body, html {
 
 /* Auto-hide scrollbar when not hovering */
 @media screen and (min-width: 769px) {
+
   .identity-pane::-webkit-scrollbar,
   .terminal-pane::-webkit-scrollbar {
     opacity: 0;
     transition: opacity 0.3s ease;
   }
-  
+
   .identity-pane:hover::-webkit-scrollbar,
   .terminal-pane:hover::-webkit-scrollbar {
     opacity: 1;
   }
-  
+
   .identity-pane::-webkit-scrollbar-thumb,
   .terminal-pane::-webkit-scrollbar-thumb {
     opacity: 0.7;
     transition: all 0.3s ease;
   }
-  
+
   .identity-pane:hover::-webkit-scrollbar-thumb,
   .terminal-pane:hover::-webkit-scrollbar-thumb {
     opacity: 1;
@@ -120,7 +122,7 @@ body, html {
   flex-grow: 1;
   box-sizing: border-box;
   background-color: #000;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 /* === Footer Styles === */
@@ -150,40 +152,48 @@ body, html {
     height: 100vh;
     overflow: hidden;
   }
-  
+
   .main-content-area {
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
   }
-  
+
   .identity-pane {
     width: 100%;
-    height: 35vh; /* Exactly 35% of viewport */
-    max-height: 35vh; /* Force maximum height */
-    min-height: 35vh; /* Force minimum height */
+    height: 35vh;
+    /* Exactly 35% of viewport */
+    max-height: 35vh;
+    /* Force maximum height */
+    min-height: 35vh;
+    /* Force minimum height */
     flex-shrink: 0;
     flex-grow: 0;
     border: 2px solid #22c55e;
     padding: 0.75rem;
-    overflow: hidden; /* Hide all overflow */
+    overflow: hidden;
+    /* Hide all overflow */
     position: relative;
   }
-  
+
   .terminal-pane {
     width: 100%;
-    height: 65vh; /* Exactly 65% of viewport */
-    max-height: 65vh; /* Force maximum height */
-    min-height: 65vh; /* Force minimum height */
+    height: 65vh;
+    /* Exactly 65% of viewport */
+    max-height: 65vh;
+    /* Force maximum height */
+    min-height: 65vh;
+    /* Force minimum height */
     flex-grow: 0;
     flex-shrink: 0;
-    overflow: hidden; /* Hide all overflow */
+    overflow: hidden;
+    /* Hide all overflow */
     position: relative;
   }
-  
+
   /* Ensure child components don't overflow */
-  .identity-pane > *,
-  .terminal-pane > * {
+  .identity-pane>*,
+  .terminal-pane>* {
     max-height: 100%;
     overflow: hidden;
   }
@@ -191,10 +201,12 @@ body, html {
 
 /* Mobile Phones (480px and down) */
 @media screen and (max-width: 480px) {
-  body, html {
+
+  body,
+  html {
     font-size: 14px;
   }
-  
+
   .identity-pane {
     height: 35vh;
     max-height: 35vh;
@@ -203,7 +215,7 @@ body, html {
     overflow: hidden;
     border: 2px solid #22c55e;
   }
-  
+
   .terminal-pane {
     height: 65vh;
     max-height: 65vh;
@@ -211,7 +223,7 @@ body, html {
     padding: 4px;
     overflow: hidden;
   }
-  
+
   .status-footer {
     font-size: 10px;
     padding: 4px 8px;
@@ -229,7 +241,7 @@ body, html {
     overflow: hidden;
     border: 2px solid #22c55e;
   }
-  
+
   .terminal-pane {
     height: 65vh;
     max-height: 65vh;
@@ -237,7 +249,7 @@ body, html {
     padding: 2px;
     overflow: hidden;
   }
-  
+
   .status-footer {
     font-size: 9px;
     padding: 3px 6px;
@@ -250,7 +262,7 @@ body, html {
     flex-direction: row;
     height: 100vh;
   }
-  
+
   .identity-pane {
     width: 35%;
     height: 100vh;
@@ -260,7 +272,7 @@ body, html {
     overflow: hidden;
     border: 2px solid #22c55e;
   }
-  
+
   .terminal-pane {
     width: 65%;
     height: 100vh;
@@ -272,6 +284,7 @@ body, html {
 
 /* === DISABLE SCROLLING ON MOBILE === */
 @media screen and (max-width: 768px) {
+
   /* Prevent body scroll */
   body {
     overflow: hidden;
@@ -279,7 +292,7 @@ body, html {
     width: 100%;
     height: 100%;
   }
-  
+
   /* Force all child elements to respect container bounds */
   .identity-pane *,
   .terminal-pane * {
@@ -290,8 +303,11 @@ body, html {
 }
 
 /* === HIGH DPI SCREENS === */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  body, html {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+  body,
+  html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -302,9 +318,9 @@ body, html {
   .identity-pane.hide-on-mobile {
     display: none;
   }
-  
+
   /* Adjust terminal pane to full height when identity is hidden */
-  .identity-pane.hide-on-mobile + .terminal-pane {
+  .identity-pane.hide-on-mobile+.terminal-pane {
     height: 100vh;
     max-height: 100vh;
     min-height: 100vh;
@@ -328,6 +344,7 @@ body, html {
   0% {
     transform: translateY(-100vh);
   }
+
   100% {
     transform: translateY(100vh);
   }
