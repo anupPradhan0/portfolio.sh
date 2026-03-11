@@ -198,16 +198,15 @@ export function getBanner(text: string, maxChars: number = 10): string {
   return a.join("") + "\n" + b.join("");
 }
 
-export function getNeofetch(user: string, host: string): string {
-  const now = new Date();
-  return `
-    .................       ${user}@${host}
-   :::::::::::::::::       ---------------
-   :::::::::::::::::       OS: Portfolio Terminal
-   ''::::::::::::''        Host: ${host}
-     '':''''''''           Kernel: JavaScript (Next.js)
-                          Uptime: Always on
-                          Shell: /bin/bash
-                          Theme: Green on dark
-`;
-};
+/** Data for neofetch-style output (rendered by Neofetch component for alignment). */
+export function getNeofetchData(user: string, host: string) {
+  return {
+    user: `${user}@${host}`,
+    host,
+    os: "Portfolio Terminal",
+    kernel: "TypeScript (Next.js)",
+    uptime: "Always on",
+    shell: "/bin/bash",
+    theme: "Green on dark",
+  };
+}

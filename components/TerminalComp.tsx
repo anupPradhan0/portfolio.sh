@@ -18,7 +18,7 @@ import {
   getFortune,
   getCowsay,
   getBanner,
-  getNeofetch,
+  getNeofetchData,
 } from "./TerminalComp/commands/virtualFs";
 
 // Type definitions
@@ -165,6 +165,57 @@ const AILoading: React.FC = () => {
     <div className="flex items-center space-x-2 text-green-400 font-mono text-sm">
       <span>AI thinking</span>
       <span className="animate-pulse">...</span>
+    </div>
+  );
+};
+
+// Neofetch-style output: responsive two-column layout (logo left, info right)
+const Neofetch: React.FC<{ user: string; host: string }> = ({ user, host }) => {
+  const d = getNeofetchData(user, host);
+  return (
+    <div className="neofetch">
+      <div className="neofetch-art">
+        <pre className="neofetch-logo" aria-hidden="true">
+{["  .--------------.",
+  "  |  portfolio   |",
+  "  |   terminal   |",
+  "  '--------------'",
+  "         |",
+  "    .----+----.",
+  "    |  ~ $     |",
+  "    '----------'"].join("\n")}
+        </pre>
+      </div>
+      <div className="neofetch-info">
+        <div className="neofetch-user">{d.user}</div>
+        <div className="neofetch-divider">───────────────</div>
+        <dl className="neofetch-rows">
+          <div className="neofetch-row">
+            <dt>OS:</dt>
+            <dd>{d.os}</dd>
+          </div>
+          <div className="neofetch-row">
+            <dt>Host:</dt>
+            <dd>{d.host}</dd>
+          </div>
+          <div className="neofetch-row">
+            <dt>Kernel:</dt>
+            <dd>{d.kernel}</dd>
+          </div>
+          <div className="neofetch-row">
+            <dt>Uptime:</dt>
+            <dd>{d.uptime}</dd>
+          </div>
+          <div className="neofetch-row">
+            <dt>Shell:</dt>
+            <dd>{d.shell}</dd>
+          </div>
+          <div className="neofetch-row">
+            <dt>Theme:</dt>
+            <dd>{d.theme}</dd>
+          </div>
+        </dl>
+      </div>
     </div>
   );
 };
@@ -723,7 +774,7 @@ export default function Terminal({ onFirstCommand }: TerminalProps) {
 
     // neofetch, fortune, cowsay, banner, yes
     if (commandName === "neofetch") {
-      newHist.push({ type: "output", content: <pre className="pre-output">{getNeofetch(user, host)}</pre> });
+      newHist.push({ type: "output", content: <Neofetch user={user} host={host} /> });
       setHistory(newHist);
       return;
     }
