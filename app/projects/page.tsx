@@ -92,21 +92,23 @@ interface Project {
 // Projects data
 const projectsData: Project[] = [
   {
-    name: "WhatsApp Campaign Management Platform",
+    name: "AutoPulse",
     description:
-      "A full-stack MERN application for managing WhatsApp marketing campaigns with role-based access for admins and resellers. Features include client onboarding, financial transaction tracking with credit/debit records, and an integrated complaint management system. Built with React and TypeScript, featuring hierarchical user tree visualization with collapsible nodes and modal views. Backend powered by Node.js, Express, and MongoDB with Mongoose ODM for handling transactions, user management, and campaign operations. Integrated Cloudinary for image storage with automated cleanup scheduling.",
-    imageUrl: "/images/whatsApp-Campaign.png",
-    liveUrl: "https://whats-app-campaigner.vercel.app",
-    githubUrl: "https://github.com/anupPradhan0/WhatsApp-Campaigner",
+      "A multi-tenant dealership and automotive management application for showroom visitor management with WhatsApp integration, digital & field enquiries, delivery updates, vehicle models, lead sources, and templates. Includes RBAC, organization-level feature toggles, lead/CRM workflows, and has been deployed to 5+ showrooms with 5000+ visitor entries.",
+    imageUrl: "/images/autopulse.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/anupPradhan0/AutoPulseOLD",
     tech: [
-      "React",
-      "Tailwind CSS",
+      "Next.js 16",
+      "React 19",
+      "Tailwind CSS 4",
+      "Radix UI",
+      "Express.js",
       "TypeScript",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Mongoose(ODM)",
-      "Cloudinary",
+      "Prisma",
+      "PostgreSQL",
+      "JWT",
+      "RabbitMQ",
     ],
   },
   {
@@ -127,6 +129,24 @@ const projectsData: Project[] = [
     ],
   },
   {
+    name: "WhatsApp Campaign Management Platform",
+    description:
+      "A full-stack MERN application for managing WhatsApp marketing campaigns with role-based access for admins and resellers. Features include client onboarding, financial transaction tracking with credit/debit records, and an integrated complaint management system. Built with React and TypeScript, featuring hierarchical user tree visualization with collapsible nodes and modal views. Backend powered by Node.js, Express, and MongoDB with Mongoose ODM for handling transactions, user management, and campaign operations. Integrated Cloudinary for image storage with automated cleanup scheduling.",
+    imageUrl: "/images/whatsApp-Campaign.png",
+    liveUrl: "https://whats-app-campaigner.vercel.app",
+    githubUrl: "https://github.com/anupPradhan0/WhatsApp-Campaigner",
+    tech: [
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Mongoose(ODM)",
+      "Cloudinary",
+    ],
+  },
+  {
     name: "Neural Network From Scratch (in Python)",
     description:
       "Tech: Python, NumPy, Matplotlib, Tensorflow. Implemented a basic neural network from the ground up using only Python and NumPy—no external ML libraries. Designed input, hidden, and output layers; implemented forward propagation, activation functions (Sigmoid/ReLU), and backpropagation manually. Trained on sample data to demonstrate model learning.",
@@ -134,6 +154,15 @@ const projectsData: Project[] = [
     liveUrl: "https://digit-recognizer-fullstack.vercel.app/",
     githubUrl: "https://github.com/anupPradhan0/digit-recognition-neural-network",
     tech: ["Python", "NumPy", "Matplotlib", "Tensorflow", "Jupyter Notebook"],
+  },
+  {
+    name: "YouTube Backend",
+    description:
+      "Designed and built a backend system simulating YouTube features using Node.js, Express, and MongoDB. Implemented video upload, metadata storage, user registration & login with JWT auth. Structured REST APIs to handle likes, comments, views, and subscriptions. Deployed with Postman testing and MongoDB Atlas.",
+    imageUrl: "/images/youtube-backend-project.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/anupPradhan0/YouTube-Clone-Backend",
+    tech: ["Node.js", "Express", "MongoDB", "JWT", "Postman", "MongoDB Atlas"],
   },
   {
     name: "Network Marketing Full-stack",
@@ -151,15 +180,6 @@ const projectsData: Project[] = [
       "JavaScript",
       "Tailwind",
     ],
-  },
-  {
-    name: "YouTube Backend",
-    description:
-      "Designed and built a backend system simulating YouTube features using Node.js, Express, and MongoDB. Implemented video upload, metadata storage, user registration & login with JWT auth. Structured REST APIs to handle likes, comments, views, and subscriptions. Deployed with Postman testing and MongoDB Atlas.",
-    imageUrl: "/images/youtube-backend-project.png",
-    liveUrl: "#",
-    githubUrl: "https://github.com/anupPradhan0/YouTube-Clone-Backend",
-    tech: ["Node.js", "Express", "MongoDB", "JWT", "Postman", "MongoDB Atlas"],
   },
   {
     name: "AI Fiesta clone Fun projects",
@@ -303,6 +323,45 @@ export default function Projects() {
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
+      {/* Copy-to-clipboard for git clone blocks (server-rendered page) */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+(() => {
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try { document.execCommand('copy'); } finally { document.body.removeChild(ta); }
+    return Promise.resolve();
+  }
+
+  document.addEventListener('click', async (e) => {
+    const el = e.target && e.target.closest ? e.target.closest('[data-clone-cmd]') : null;
+    if (!el) return;
+    const cmd = el.getAttribute('data-clone-cmd');
+    if (!cmd) return;
+    try {
+      await copyText(cmd);
+      const label = el.querySelector('[data-copy-label]');
+      if (label) {
+        const prev = label.textContent;
+        label.textContent = 'Copied!';
+        setTimeout(() => { label.textContent = prev; }, 1200);
+      }
+    } catch {}
+  });
+})();
+          `.trim(),
+        }}
+      />
 
       <section
         id="projects-section"
@@ -389,12 +448,38 @@ export default function Projects() {
                     <p itemProp="description">{project.description}</p>
 
                     {/* Terminal command */}
-                    <div>
-                      <div>
-                        <span>$</span>
-                        <span>git clone</span>
-                        <span>{project.githubUrl.split("/").pop()}.git</span>
-                      </div>
+                    <div
+                      data-clone-cmd={`git clone ${project.githubUrl}.git`}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Copy git clone command for ${project.name}`}
+                      style={{
+                        marginTop: "12px",
+                        padding: "10px 12px",
+                        border: "1px solid rgba(34,197,94,0.25)",
+                        borderRadius: "8px",
+                        fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+                        cursor: "pointer",
+                        userSelect: "none",
+                        display: "flex",
+                        gap: "8px",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <span style={{ color: "#22c55e" }} aria-hidden="true">
+                        $
+                      </span>
+                      <span style={{ color: "#9ca3af" }}>git clone</span>
+                      <span style={{ color: "#60a5fa", wordBreak: "break-all", flex: "1 1 auto" }}>
+                        {project.githubUrl}.git
+                      </span>
+                      <span
+                        data-copy-label
+                        style={{ color: "rgba(229,231,235,0.8)", fontSize: "12px", whiteSpace: "nowrap" }}
+                      >
+                        Click to copy
+                      </span>
                     </div>
 
                     {/* Links Section */}

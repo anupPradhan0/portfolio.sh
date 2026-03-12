@@ -13,24 +13,26 @@ interface Project {
   tech: string[];
 }
 
-// --- Data for your 6 projects ---
+// --- Projects data ---
 const projectsData: Project[] = [
   {
-    name: "WhatsApp Campaign Management Platform",
+    name: "AutoPulse",
     description:
-      "A full-stack MERN application for managing WhatsApp marketing campaigns with role-based access for admins and resellers. Features include client onboarding, financial transaction tracking with credit/debit records, and an integrated complaint management system. Built with React and TypeScript, featuring hierarchical user tree visualization with collapsible nodes and modal views. Backend powered by Node.js, Express, and MongoDB with Mongoose ODM for handling transactions, user management, and campaign operations. Integrated Cloudinary for image storage with automated cleanup scheduling.",
-    imageUrl: "/images/whatsApp-Campaign.png",
-    liveUrl: "https://whats-app-campaigner.vercel.app",
-    githubUrl: "https://github.com/anupPradhan0/WhatsApp-Campaigner",
+      "A multi-tenant dealership and automotive management application for showroom visitor management with WhatsApp integration, digital & field enquiries, delivery updates, vehicle models, lead sources, and templates. Includes RBAC, organization-level feature toggles, lead/CRM workflows, and has been deployed to 5+ showrooms with 5000+ visitor entries.",
+    imageUrl: "/images/autopulse.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/anupPradhan0/AutoPulseOLD",
     tech: [
-      "React",
-      "Tailwind CSS",
+      "Next.js 16",
+      "React 19",
+      "Tailwind CSS 4",
+      "Radix UI",
+      "Express.js",
       "TypeScript",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Mongoose(ODM)",
-      "Cloudinary",
+      "Prisma",
+      "PostgreSQL",
+      "JWT",
+      "RabbitMQ",
     ],
   },
   {
@@ -51,6 +53,24 @@ const projectsData: Project[] = [
     ],
   },
   {
+    name: "WhatsApp Campaign Management Platform",
+    description:
+      "A full-stack MERN application for managing WhatsApp marketing campaigns with role-based access for admins and resellers. Features include client onboarding, financial transaction tracking with credit/debit records, and an integrated complaint management system. Built with React and TypeScript, featuring hierarchical user tree visualization with collapsible nodes and modal views. Backend powered by Node.js, Express, and MongoDB with Mongoose ODM for handling transactions, user management, and campaign operations. Integrated Cloudinary for image storage with automated cleanup scheduling.",
+    imageUrl: "/images/whatsApp-Campaign.png",
+    liveUrl: "https://whats-app-campaigner.vercel.app",
+    githubUrl: "https://github.com/anupPradhan0/WhatsApp-Campaigner",
+    tech: [
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Mongoose(ODM)",
+      "Cloudinary",
+    ],
+  },
+  {
     name: "Neural Network From Scratch (in Python)",
     description:
       "Tech: Python, NumPy,Matplotlib,Tensorflow Implemented a basic neural network from the ground up using only Python and NumPy—no external ML libraries. Designed input, hidden, and output layers; implemented forward propagation, activation functions (Sigmoid/ReLU), and backpropagation manually. Trained on sample data to demonstrate model learning.",
@@ -58,6 +78,15 @@ const projectsData: Project[] = [
     liveUrl: "https://digit-recognizer-fullstack.vercel.app/",
     githubUrl: "https://github.com/anupPradhan0/digit-recognition-neural-network",
     tech: ["Python", "NumPy", "Matplotlib", "Tensorflow", "Jupyter Notebook"],
+  },
+  {
+    name: "YouTube Backend",
+    description:
+      "Designed and built a backend system simulating YouTube features using Node.js, Express, and MongoDB. Implemented video upload, metadata storage, user registration & login with JWT auth Structured REST APIs to handle likes, comments, views, and subscriptions Deployed with Postman testing and MongoDB Atlas",
+    imageUrl: "/images/youtube-backend-project.png",
+    liveUrl: "#",
+    githubUrl: "https://github.com/anupPradhan0/YouTube-Clone-Backend",
+    tech: ["Node.js", "Express", "MongoDB", "JWT", "Postman", "MongoDB Atlas"],
   },
   {
     name: "Network Marketing Full-stack",
@@ -75,15 +104,6 @@ const projectsData: Project[] = [
       "JavaScript",
       "Tailwind",
     ],
-  },
-  {
-    name: "YouTube Backend",
-    description:
-      "Designed and built a backend system simulating YouTube features using Node.js, Express, and MongoDB. Implemented video upload, metadata storage, user registration & login with JWT auth Structured REST APIs to handle likes, comments, views, and subscriptions Deployed with Postman testing and MongoDB Atlas",
-    imageUrl: "/images/youtube-backend-project.png",
-    liveUrl: "#",
-    githubUrl: "https://github.com/anupPradhan0/YouTube-Clone-Backend",
-    tech: ["Node.js", "Express", "MongoDB", "JWT", "Postman", "MongoDB Atlas"],
   },
   {
     name: "Ai Fiesta clone Fun projects",
@@ -142,6 +162,25 @@ const ExternalLinkIcon: React.FC = () => (
   </svg>
 );
 
+const CopyIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className={className}
+  >
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+  </svg>
+);
+
 const TerminalIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -194,6 +233,7 @@ const Projects: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [projectsPerPage, setProjectsPerPage] = useState<number>(2);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   // Handle responsive projects per page
   useEffect(() => {
@@ -224,6 +264,35 @@ const Projects: React.FC = () => {
   const prevPage = (): void => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const copyCloneCommand = async (project: Project, globalIndex: number): Promise<void> => {
+    const cloneCmd = `git clone ${project.githubUrl}.git`;
+    try {
+      await navigator.clipboard.writeText(cloneCmd);
+      setCopiedIndex(globalIndex);
+      window.setTimeout(() => {
+        setCopiedIndex((prev) => (prev === globalIndex ? null : prev));
+      }, 1200);
+    } catch {
+      // Fallback: best-effort selection-less copy (older browsers)
+      const ta = document.createElement("textarea");
+      ta.value = cloneCmd;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand("copy");
+        setCopiedIndex(globalIndex);
+        window.setTimeout(() => {
+          setCopiedIndex((prev) => (prev === globalIndex ? null : prev));
+        }, 1200);
+      } finally {
+        document.body.removeChild(ta);
+      }
     }
   };
 
@@ -367,10 +436,19 @@ const Projects: React.FC = () => {
 
                   {/* Terminal-style command line - Mobile responsive */}
                   <div
-                    className="bg-gray-800/50 rounded-md p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden"
+                    className="bg-gray-800/50 rounded-md p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden cursor-pointer select-none hover:border-green-400/40 transition-colors"
                     role="code"
+                    tabIndex={0}
+                    aria-label={`Copy git clone command for ${project.name}`}
+                    onClick={() => copyCloneCommand(project, globalIndex)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        copyCloneCommand(project, globalIndex);
+                      }
+                    }}
                   >
-                    <div className="flex items-center space-x-1 sm:space-x-2 text-green-400">
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-green-400 min-w-0">
                       <span
                         className="text-green-500 flex-shrink-0"
                         aria-hidden="true"
@@ -380,8 +458,20 @@ const Projects: React.FC = () => {
                       <span className="text-gray-400 flex-shrink-0">
                         git clone
                       </span>
-                      <span className="text-blue-400 truncate min-w-0">
-                        {project.githubUrl.split("/").pop()}.git
+                      <span className="text-blue-400 truncate min-w-0 flex-1">
+                        {project.githubUrl}.git
+                      </span>
+                      <span className="flex items-center space-x-2 flex-shrink-0">
+                        {copiedIndex === globalIndex ? (
+                          <span className="text-green-400/80 text-[10px] sm:text-xs">
+                            Copied!
+                          </span>
+                        ) : (
+                          <span className="text-gray-400/80 text-[10px] sm:text-xs hidden sm:inline">
+                            Click to copy
+                          </span>
+                        )}
+                        <CopyIcon className={copiedIndex === globalIndex ? "text-green-400" : "text-gray-400"} />
                       </span>
                     </div>
                   </div>
