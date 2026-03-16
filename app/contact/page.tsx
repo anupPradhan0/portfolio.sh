@@ -437,7 +437,7 @@ export default function Contact() {
 
                 {/* Resume Button */}
                 <a
-                  href="https://drive.google.com/file/d/1s4BHphGSLMZjhUY5IXJbxySOiKFUaaAZ/view?usp=sharing"
+                  href="https://docs.google.com/document/d/17j42jMRIdxD2HG9eWuUKHr0StgfkClw0/edit?usp=sharing&ouid=108009276343665861649&rtpof=true&sd=true"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Download resume (opens in new tab)"

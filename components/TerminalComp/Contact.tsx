@@ -409,7 +409,7 @@ const Contact: React.FC = () => {
 
             {/* Resume Button */}
             <a
-              href="https://drive.google.com/file/d/1s4BHphGSLMZjhUY5IXJbxySOiKFUaaAZ/view?usp=sharing"
+              href="https://docs.google.com/document/d/17j42jMRIdxD2HG9eWuUKHr0StgfkClw0/edit?usp=sharing&ouid=108009276343665861649&rtpof=true&sd=true"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative p-3 sm:p-4 bg-white/5 border border-white/10 rounded-lg sm:rounded-xl hover:bg-white/10 hover:border-orange-400/50 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-lg hover:shadow-orange-400/20 active:scale-[0.98] block"

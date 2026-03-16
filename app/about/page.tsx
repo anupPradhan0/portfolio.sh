@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.anuppradhan.in"),
   title: "About Me | Software Developer & Machine Learning Enthusiast",
   description:
-    "Experienced Software Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment. Pursuing BCA at Amity University with CGPA 8.96.",
+    "Experienced Software Developer from Bhubaneswar, India specializing in backend development, RESTful APIs, MongoDB, Express.js, React, Node.js, and TypeScript. Currently expanding skills in Machine Learning with TensorFlow and scikit-learn. Building production-ready applications with JWT authentication and cloud deployment. Pursuing BCA at Amity University with CGPA 8.93.",
   keywords: [
     "Software Developer",
     "Software Developer Bhubaneswar",
@@ -252,7 +252,7 @@ export default function About() {
                   delivery. Comfortable augmenting products with AI/ML libraries
                   (TensorFlow, NumPy, pandas) and shipping to Vercel/Render,
                   guided by a build‑to‑learn mindset and ongoing BCA studies
-                  (CGPA 8.96).
+                  (CGPA 8.93).
                 </p>
 
                 <div role="list" aria-label="Technical skills">
@@ -302,7 +302,7 @@ export default function About() {
                     academic performance.
                   </p>
                   <div>
-                    <span itemProp="credentialCategory">CGPA: 8.96</span>
+                    <span itemProp="credentialCategory">CGPA: 8.93</span>
                   </div>
                 </article>
 

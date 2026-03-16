@@ -14,9 +14,9 @@ const CONTEXT_PARTS = {
 
   experience: `Current roles: (1) CHATI — Software Developer (Internship), Oct 2025–Present, Bhubaneswar. Work: AI meeting assistant (joins calls, transcripts, summaries), Zoom/Teams/Google Meet, custom CMS, data pipeline migrating 1.2M+ records. (2) Prominds Digital — Software Developer (Part-time), Jul 2024–Present, Bhubaneswar. Work: SaaS showroom visitor management for dealerships, 5+ deployments, 5k+ entries/month, WhatsApp integration, lead pipelines, CRM migration.`,
 
-  contact: `Contact: Email anuppradhan929@gmail.com. LinkedIn linkedin.com/in/anup-pradhan77. GitHub github.com/anupPradhan0. Twitter/X x.com/AnupPradhan0. Instagram instagram.com/anup.pradhan_. YouTube youtube.com/@morscode7. LeetCode leetcode.com/u/Anuppradhan. Resume: Google Drive link on his contact page. Location: Bhubaneswar, Odisha, India.`,
+  contact: `Contact: Email anuppradhan929@gmail.com. LinkedIn linkedin.com/in/anup-pradhan77. GitHub github.com/anupPradhan0. Twitter/X x.com/AnupPradhan0. Instagram instagram.com/anup.pradhan_. YouTube youtube.com/@morscode7. LeetCode leetcode.com/u/Anuppradhan. Resume: docs.google.com/document/d/17j42jMRIdxD2HG9eWuUKHr0StgfkClw0 (also linked on contact page). Location: Bhubaneswar, Odisha, India.`,
 
-  education: `Education: BCA at Amity University (2024–2027, CGPA 8.96). Higher secondary (11th & 12th, I.T.) at Autonomous College Khariar (2022–2024). Schooling from village school (2009–2022).`,
+  education: `Education: BCA at Amity University (2024–2027, CGPA 8.93). Higher secondary (11th & 12th, I.T.) at Autonomous College Khariar (2022–2024). Schooling from village school (2009–2022).`,
 };
 
 function getRelevantContext(question: string): string {
