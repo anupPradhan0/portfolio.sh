@@ -88,7 +88,8 @@ export default function Home() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Anup Pradhan Portfolio",
+    name: "Anup Pradhan",
+    alternateName: "Anup Pradhan Portfolio",
     url: "https://www.anuppradhan.in",
     description:
       "Software Developer portfolio showcasing projects, skills, and experience",

@@ -54,6 +54,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Anup Pradhan", url: "https://www.anuppradhan.in" }],
   creator: "Anup Pradhan",
+  applicationName: "Anup Pradhan",
   formatDetection: {
     email: true,
     telephone: true,
@@ -131,6 +132,24 @@ export default function RootLayout({
           type="text/plain"
           title="LLMs Description"
           href="https://www.anuppradhan.in/llms.txt"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Anup Pradhan",
+              alternateName: "Anup Pradhan Portfolio",
+              url: "https://www.anuppradhan.in/",
+              inLanguage: "en-IN",
+              publisher: {
+                "@type": "Person",
+                name: "Anup Pradhan",
+                url: "https://www.anuppradhan.in/",
+              },
+            }),
+          }}
         />
       </head>
       <body
