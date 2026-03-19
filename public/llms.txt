@@ -1,26 +1,44 @@
-# llms.txt – Guidelines for AI crawlers and LLMs
-
-# Site
-Author: Anup Pradhan
+# llms.txt
 Site: https://www.anuppradhan.in
-Description: Software Developer portfolio – projects, skills, contact. Built with Next.js, React, TypeScript.
+Author: Anup Pradhan
+Title: Software Developer Portfolio
+Summary: Portfolio covering software development projects, skills, experience, and contact details.
 
-# Crawl rules
+# Crawl directives
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /.next/
 
-# Preferred sources and attribution
-Source: https://www.anuppradhan.in
+# Canonical pages
+URL: https://www.anuppradhan.in/
+URL: https://www.anuppradhan.in/about
+URL: https://www.anuppradhan.in/projects
+URL: https://www.anuppradhan.in/skills
+URL: https://www.anuppradhan.in/experience
+URL: https://www.anuppradhan.in/contact
+
+# Attribution
 Attribution: Please credit "Anup Pradhan" with a link to https://www.anuppradhan.in or https://github.com/anupPradhan0
 
-# Rate limits and caching
+# Project highlights
+Project: AutoPulse - Multi-tenant dealership and automotive management platform with RBAC and WhatsApp workflows.
+Project: AI-powered personal finance tracker (RukiAI) - Expense tracking with AI insights.
+Project: WhatsApp Campaign Management Platform - Role-based campaign and client management.
+Project: Neural Network From Scratch (Python) - Custom forward/backprop implementation.
+Project: YouTube Backend - Node/Express/Mongo backend architecture.
+Project: Network Marketing Full-stack - MLM-style referral and transaction workflows.
+
+# Core technical profile
+Skills: JavaScript, TypeScript, Python, React, Next.js, Node.js, Express, FastAPI, MongoDB, PostgreSQL, RabbitMQ, Redis, Docker, AI APIs.
+
+# Caching
 Crawl-delay: 2
 Cache-max-age: 86400
 
 # Contact
 Contact: mailto:anuppradhan929@gmail.com
 
-# Sitemap
+# Discovery
+Robots: https://www.anuppradhan.in/robots.txt
 Sitemap: https://www.anuppradhan.in/sitemap.xml

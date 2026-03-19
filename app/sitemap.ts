@@ -1,36 +1,51 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
+
+const BASE_URL = "https://www.anuppradhan.in";
+const now = new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://www.anuppradhan.in',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${BASE_URL}/`,
+      lastModified: now,
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: 'https://www.anuppradhan.in/about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${BASE_URL}/about`,
+      lastModified: now,
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: 'https://www.anuppradhan.in/projects',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
+      url: `${BASE_URL}/projects`,
+      lastModified: now,
+      changeFrequency: "weekly",
       priority: 0.95,
     },
     {
-      url: 'https://www.anuppradhan.in/skills',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+      url: `${BASE_URL}/skills`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/experience`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: now,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: 'https://www.anuppradhan.in/contact',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      url: `${BASE_URL}/llms.txt`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
     },
   ];
 }

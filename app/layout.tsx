@@ -126,6 +126,12 @@ export default function RootLayout({
         <link rel="icon" href="/images/logo.jpg" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="canonical" href="https://www.anuppradhan.in" />
+        <link
+          rel="alternate"
+          type="text/plain"
+          title="LLMs Description"
+          href="https://www.anuppradhan.in/llms.txt"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
