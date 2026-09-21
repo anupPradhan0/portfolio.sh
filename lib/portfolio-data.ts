@@ -45,7 +45,7 @@ export const projects: Project[] = [
     description:
       "RukiAI is an AI-driven personal finance tracker designed to help users log expenses, set budgets, and receive smart, personalized financial advice. Built with Node.js, MongoDB, and EJS, it integrates Cohere's AI API to deliver real-time insights while also featuring a custom local AI model to demonstrate advanced AI capabilities for recruiters. The project showcases both cloud-based AI integration and self-hosted model development in one application.",
     imageUrl: "/images/ruki-ai-project.png",
-    liveUrl: "https://www.rukiai.online/",
+    liveUrl: "https://ruki.anuppradhan.in/",
     githubUrl: "https://github.com/anupPradhan0/AI-Personal-Finance-Tracker",
     tech: [
       "Node.js",
@@ -208,7 +208,7 @@ export const skillCommands: Record<keyof SkillsCategory, string> = {
 export const CONTACT_EMAIL = "anuppradhan929@gmail.com";
 export const CONTACT_LOCATION = "Bhubaneswar, Odisha, India";
 export const RESUME_URL =
-  "https://docs.google.com/document/d/17j42jMRIdxD2HG9eWuUKHr0StgfkClw0/edit?usp=sharing&ouid=108009276343665861649&rtpof=true&sd=true";
+  "https://drive.google.com/file/d/14VsKNKYOgkwxUzV8RUUslFsyw8_lGltr/view?usp=sharing";
 
 // Icon rendering differs between the static page and the terminal pane, so each
 // side keys its own icon set off `name`; only the link metadata lives here.
