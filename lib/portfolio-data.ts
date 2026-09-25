@@ -219,7 +219,7 @@ export interface SocialLinkData {
 }
 
 export const socialLinks: SocialLinkData[] = [
-  { name: "YouTube", href: "https://www.youtube.com/@morscode7", color: "red" },
+  { name: "YouTube", href: "https://www.youtube.com/@mors.dev7", color: "red" },
   { name: "Twitter / X", href: "https://x.com/AnupPradhan0", color: "blue" },
   { name: "Instagram", href: "https://www.instagram.com/anuppradhan.in", color: "pink" },
   { name: "LinkedIn", href: "https://www.linkedin.com/in/anuppradhan0", color: "blue" },

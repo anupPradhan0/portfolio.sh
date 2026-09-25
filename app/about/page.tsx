@@ -206,7 +206,7 @@ const structuredData = {
     "https://x.com/AnupPradhan0",
     "https://twitter.com/AnupPradhan0",
     "https://www.instagram.com/anuppradhan.in",
-    "https://www.youtube.com/@morscode7",
+    "https://www.youtube.com/@mors.dev7",
     "https://leetcode.com/u/Anuppradhan/",
   ],
 };

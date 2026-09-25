@@ -62,7 +62,7 @@ export default function Home() {
       "https://www.linkedin.com/in/anuppradhan0",
       "https://github.com/anupPradhan0",
       "https://x.com/AnupPradhan0",
-      "https://www.youtube.com/@morscode7",
+      "https://www.youtube.com/@mors.dev7",
       "https://www.instagram.com/anuppradhan.in",
       "https://leetcode.com/u/Anuppradhan/",
     ],
