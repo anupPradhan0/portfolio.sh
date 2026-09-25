@@ -21,6 +21,61 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    name: "PipesHub",
+    description:
+      "Open-source workplace AI / enterprise context layer for permissioned search, RAG, and agentic workflows across 50+ connectors. Contributing as an SDE — helping extend the governed context layer for explainable enterprise search, MCP, and self-hosted AI automation.",
+    imageUrl: "/images/pipeshub-project.png",
+    liveUrl: "https://pipeshub.com",
+    githubUrl: "https://github.com/pipeshub-ai/pipeshub-ai",
+    tech: [
+      "Python",
+      "Express.js",
+      "MongoDB",
+      "Qdrant",
+      "ArangoDB",
+      "Redis",
+      "Docker",
+      "RAG",
+      "MCP",
+    ],
+  },
+  {
+    name: "Yuviz",
+    description:
+      "Open-source voice AI platform: real-time STT → LLM (tool-calling, RAG, human transfer) → TTS over SIP telephony or browser testing. Contributing as an SDE on the voice pipeline, gateway, and self-hosted Docker stack.",
+    imageUrl: "/images/yuviz-project.png",
+    liveUrl: "https://github.com/yuviz-ai/yuviz",
+    githubUrl: "https://github.com/yuviz-ai/yuviz",
+    tech: [
+      "Python",
+      "SIP",
+      "STT",
+      "LLM",
+      "TTS",
+      "Docker",
+      "RAG",
+      "Tool Calling",
+    ],
+  },
+  {
+    name: "Dograh",
+    description:
+      "Open-source, self-hostable voice AI platform (Vapi/Retell alternative) with a visual workflow builder, BYOK LLM/STT/TTS, telephony, and MCP. Contributing as an SDE on production voice-agent orchestration and self-hosted deployments.",
+    imageUrl: "/images/dograh-project.png",
+    liveUrl: "https://www.dograh.com",
+    githubUrl: "https://github.com/dograh-hq/dograh",
+    tech: [
+      "FastAPI",
+      "Next.js",
+      "PostgreSQL",
+      "Redis",
+      "MinIO",
+      "Pipecat",
+      "Docker",
+      "MCP",
+    ],
+  },
+  {
     name: "AutoPulse",
     description:
       "A multi-tenant dealership and automotive management application for showroom visitor management with WhatsApp integration, digital & field enquiries, delivery updates, vehicle models, lead sources, and templates. Includes RBAC, organization-level feature toggles, lead/CRM workflows, and has been deployed to 5+ showrooms with 5000+ visitor entries.",
@@ -234,6 +289,10 @@ export const socialLinks: SocialLinkData[] = [
 // after the last verified work date instead of continuing to "Present".
 // ---------------------------------------------------------------------------
 
+export const OPEN_SOURCE_START = new Date(2026, 8, 1); // Sep 2026
+/** Rolling "today" so duration labels stay current for ongoing roles. */
+export const OPEN_SOURCE_END = new Date();
+
 export const CHATI_INTERN_START = new Date(2025, 9, 1); // Oct 2025
 export const CHATI_INTERN_END = new Date(2026, 2, 31); // Mar 2026
 export const CHATI_JR_START = new Date(2026, 3, 1); // Apr 2026
@@ -251,6 +310,8 @@ export type ExperienceRole = {
   employmentType: string;
   start: Date;
   end: Date;
+  /** When true, UI shows "Present" instead of the end month. */
+  ongoing?: boolean;
   mode?: string;
   bullets: string[];
 };
@@ -264,6 +325,25 @@ export type ExperienceCompany = {
 };
 
 export const experienceCompanies: ExperienceCompany[] = [
+  {
+    name: "Open Source",
+    logo: "/images/open-source.jpeg",
+    location: "Remote",
+    roles: [
+      {
+        title: "SDE",
+        employmentType: "Open Source",
+        start: OPEN_SOURCE_START,
+        end: OPEN_SOURCE_END,
+        ongoing: true,
+        bullets: [
+          "PipesHub: Contributing to the open-source enterprise context layer for permissioned search, RAG, MCP, and agentic workplace AI workflows.",
+          "Yuviz: Building on the voice AI stack — real-time STT → LLM (tool-calling/RAG/transfer) → TTS over SIP and browser testing.",
+          "Dograh: Contributing to the self-hosted open-source voice agent platform (Vapi/Retell alternative) with workflow builder, telephony, and MCP.",
+        ],
+      },
+    ],
+  },
   {
     name: "Crunchy Media Pvt Ltd",
     logo: "/images/Crunchy-Media-Pvt-Ltd.jpeg",

@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { durationLabel, formatMonths, monthsBetween } from "@/lib/duration";
 import {
+  OPEN_SOURCE_START,
+  OPEN_SOURCE_END,
   CHATI_INTERN_START,
   CHATI_INTERN_END,
   CHATI_JR_START,
@@ -23,11 +25,15 @@ export const revalidate = 86400;
 // SEO Metadata for Experience page
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.anuppradhan.in"),
-  title: "Experience | SDE-1 @ Crunchy Media Pvt Ltd · FreeSWITCH + WebRTC",
+  title: "Experience | Open Source SDE · PipesHub, Yuviz, Dograh",
   description:
-    "Experience of Anup Pradhan: SDE-1 at Crunchy Media Pvt Ltd (Apr 2026–Aug 2026) architecting a B2B AI Voice Calling SaaS with FreeSWITCH, ESL, and WebRTC; part-time at Prominds Digital — shipped AutoPulse, a multi-tenant B2B CRM for automotive dealerships with RBAC, WhatsApp automation, and RabbitMQ.",
+    "Experience of Anup Pradhan: Open Source SDE (Sep 2026–Present) contributing to PipesHub, Yuviz, and Dograh; previously SDE-1 at Crunchy Media Pvt Ltd (Apr 2026–Aug 2026) on B2B AI Voice Calling with FreeSWITCH/WebRTC; part-time at Prominds Digital on AutoPulse CRM.",
   keywords: [
     "Anup Pradhan Experience",
+    "Open Source SDE",
+    "PipesHub",
+    "Yuviz",
+    "Dograh",
     "SDE-1",
     "SDE-1 Crunchy Media Pvt Ltd",
     "SDE Intern Crunchy Media Pvt Ltd",
@@ -51,9 +57,9 @@ export const metadata: Metadata = {
   creator: "Anup Pradhan",
   publisher: "Anup Pradhan",
   openGraph: {
-    title: "Experience | SDE-1 @ Crunchy Media Pvt Ltd · FreeSWITCH + WebRTC",
+    title: "Experience | Open Source SDE · PipesHub, Yuviz, Dograh",
     description:
-      "SDE-1 at Crunchy Media Pvt Ltd (Apr 2026–Aug 2026) — B2B AI Voice Calling SaaS on FreeSWITCH + WebRTC. Part-time at Prominds Digital — AutoPulse B2B CRM.",
+      "Open Source SDE (Sep 2026–Present) on PipesHub, Yuviz, and Dograh. Previously SDE-1 at Crunchy Media Pvt Ltd — B2B AI Voice Calling on FreeSWITCH + WebRTC.",
     type: "profile",
     url: "https://www.anuppradhan.in/experience",
     siteName: "Anup Pradhan - Developer Portfolio",
@@ -63,7 +69,7 @@ export const metadata: Metadata = {
         url: "https://www.anuppradhan.in/images/logo.jpg",
         width: 1200,
         height: 630,
-        alt: "Anup Pradhan — SDE-1 experience",
+        alt: "Anup Pradhan — Open Source SDE experience",
         type: "image/jpeg",
       },
     ],
@@ -72,9 +78,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@AnupPradhan0",
     creator: "@AnupPradhan0",
-    title: "Experience | SDE-1 @ Crunchy Media Pvt Ltd · FreeSWITCH + WebRTC",
+    title: "Experience | Open Source SDE · PipesHub, Yuviz, Dograh",
     description:
-      "SDE-1 at Crunchy Media Pvt Ltd — B2B AI Voice Calling SaaS on FreeSWITCH + WebRTC. Part-time at Prominds Digital — AutoPulse B2B CRM.",
+      "Open Source SDE contributing to PipesHub, Yuviz, and Dograh. Previously SDE-1 at Crunchy Media Pvt Ltd — AI Voice Calling on FreeSWITCH + WebRTC.",
     images: ["https://www.anuppradhan.in/images/logo.jpg"],
   },
   robots: {
@@ -112,8 +118,17 @@ function buildStructuredData() {
     url: SITE_URL,
     mainEntityOfPage: `${SITE_URL}/experience`,
     image: `${SITE_URL}/images/logo.jpg`,
-    jobTitle: "SDE-1",
+    jobTitle: "Open Source SDE",
     hasOccupation: [
+      {
+        "@type": "EmployeeRole",
+        roleName: "SDE",
+        startDate: toIso(OPEN_SOURCE_START),
+        worksFor: {
+          "@type": "Organization",
+          name: "Open Source",
+        },
+      },
       {
         "@type": "EmployeeRole",
         roleName: "SDE-1",
@@ -176,6 +191,7 @@ function buildStructuredData() {
 export default function Experience() {
   const { personSchema, breadcrumbSchema } = buildStructuredData();
 
+  const openSourceTotal = durationLabel(OPEN_SOURCE_START, OPEN_SOURCE_END);
   const chatiTotal = durationLabel(CHATI_INTERN_START, CHATI_JR_END);
   const chatiJr = durationLabel(CHATI_JR_START, CHATI_JR_END);
   const chatiIntern = formatMonths(monthsBetween(CHATI_INTERN_START, CHATI_INTERN_END));
@@ -212,14 +228,56 @@ export default function Experience() {
               Experience
             </h1>
             <p>
-              Professional roles as a Software Engineer at Crunchy Media Pvt Ltd and Prominds
-              Digital — architecting B2B AI Voice Calling SaaS on FreeSWITCH/WebRTC,
-              scalable multi-tenant CRM for automotive dealerships, and large-scale
-              data pipelines.
+              Professional roles as a Software Engineer — Open Source SDE
+              contributing to PipesHub, Yuviz, and Dograh; previously at Crunchy
+              Media Pvt Ltd architecting B2B AI Voice Calling SaaS on
+              FreeSWITCH/WebRTC, and at Prominds Digital on scalable multi-tenant
+              CRM for automotive dealerships.
             </p>
           </header>
 
           <div>
+            {/* Open Source */}
+            <article
+              aria-labelledby="open-source-heading"
+              itemScope
+              itemType="https://schema.org/Organization"
+            >
+              <header>
+                <h2 id="open-source-heading" itemProp="name">
+                  Open Source
+                </h2>
+                <p>
+                  <strong>{openSourceTotal}</strong> · Remote
+                </p>
+              </header>
+
+              <section aria-labelledby="open-source-sde-heading">
+                <h3 id="open-source-sde-heading">SDE · Open Source</h3>
+                <p>
+                  <time dateTime={toIso(OPEN_SOURCE_START)}>Sep 2026</time> —{" "}
+                  Present · {openSourceTotal}
+                </p>
+                <ul itemProp="description">
+                  <li>
+                    PipesHub: Contributing to the open-source enterprise context
+                    layer for permissioned search, RAG, MCP, and agentic
+                    workplace AI workflows.
+                  </li>
+                  <li>
+                    Yuviz: Building on the voice AI stack — real-time STT → LLM
+                    (tool-calling/RAG/transfer) → TTS over SIP and browser
+                    testing.
+                  </li>
+                  <li>
+                    Dograh: Contributing to the self-hosted open-source voice
+                    agent platform (Vapi/Retell alternative) with workflow
+                    builder, telephony, and MCP.
+                  </li>
+                </ul>
+              </section>
+            </article>
+
             {/* Crunchy Media Pvt Ltd */}
             <article
               aria-labelledby="chati-heading"

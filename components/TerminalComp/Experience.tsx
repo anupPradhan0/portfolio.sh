@@ -22,19 +22,24 @@ const Experience: React.FC = () => {
         ...company,
         totalDuration: durationLabel(
           company.roles[company.roles.length - 1].start,
-          company.roles[0].end
+          company.roles[0].ongoing ? new Date() : company.roles[0].end
         ),
         roles: company.roles.map((role) => ({
           ...role,
-          durationText: durationLabel(role.start, role.end),
+          durationText: durationLabel(
+            role.start,
+            role.ongoing ? new Date() : role.end
+          ),
           startLabel: role.start.toLocaleString("en-US", {
             month: "short",
             year: "numeric",
           }),
-          endLabel: role.end.toLocaleString("en-US", {
-            month: "short",
-            year: "numeric",
-          }),
+          endLabel: role.ongoing
+            ? "Present"
+            : role.end.toLocaleString("en-US", {
+                month: "short",
+                year: "numeric",
+              }),
           metaLabel: [...new Set([role.employmentType, role.mode].filter(Boolean))].join(" · "),
         })),
       })),

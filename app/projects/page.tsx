@@ -7,10 +7,14 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.anuppradhan.in"),
   title: "Projects | Software Engineer Portfolio",
   description:
-    "Explore Anup Pradhan's portfolio of web applications including WhatsApp Campaign Management, AI-powered finance tracker, neural networks, and more. Built with TypeScript, Python, and modern web technologies. All projects are open-source and available on GitHub.",
+    "Explore Anup Pradhan's portfolio including open-source work on PipesHub, Yuviz, and Dograh, plus WhatsApp Campaign Management, AI-powered finance tracker, neural networks, and more. Built with TypeScript, Python, and modern web technologies.",
   keywords: [
     "Software Engineer Projects",
     "Developer Portfolio",
+    "PipesHub",
+    "Yuviz",
+    "Dograh",
+    "Open Source Voice AI",
     "WhatsApp Campaign Management",
     "AI Finance Tracker",
     "Neural Network Projects",
