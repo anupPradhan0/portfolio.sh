@@ -46,7 +46,7 @@ export default function StickerPicker({
       <button
         type="button"
         onClick={toggleOpen}
-        className={`rounded border font-mono text-xs transition-colors ${
+        className={`rounded border text-xs transition-colors ${
           selectedId
             ? "p-1 border-green-400/60 bg-green-900/30"
             : "px-2.5 py-1.5 border-green-800/40 text-green-400/80 hover:border-green-400/60"
@@ -60,17 +60,17 @@ export default function StickerPicker({
       {open && (
         <div className="mt-2 max-h-48 overflow-y-auto border border-green-800/40 bg-black/60 rounded-lg p-2">
           {loadState === "loading" && (
-            <p className="text-gray-500 font-mono text-xs px-1 py-2">
+            <p className="text-gray-500 text-xs px-1 py-2">
               Loading stickers…
             </p>
           )}
           {loadState === "error" && (
-            <p className="text-red-400 font-mono text-xs px-1 py-2">
+            <p className="text-red-400 text-xs px-1 py-2">
               Failed to load stickers.
             </p>
           )}
           {loadState === "ready" && stickers.length === 0 && (
-            <p className="text-gray-500 font-mono text-xs px-1 py-2">
+            <p className="text-gray-500 text-xs px-1 py-2">
               No stickers available.
             </p>
           )}

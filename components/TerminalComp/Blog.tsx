@@ -117,18 +117,10 @@ const Recommendations: React.FC<RecommendationsProps> = ({
   return (
     <section
       aria-label="More posts to read"
-      className="terminal-blog-read-next mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-green-800/40"
+      className="terminal-blog-read-next pt-5 sm:pt-6 border-t border-green-800/40"
     >
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-green-400 font-mono text-sm sm:text-base">
-          $ ls ./read-next/
-        </span>
-        <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-      </div>
-      <p className="text-gray-500 font-mono text-xs sm:text-sm mb-3">
-        Continue reading — pick another post:
-      </p>
-      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 list-none p-0 m-0">
+      <h3 className="pane-subtitle mb-3">Read next</h3>
+      <ul className="pane-grid list-none p-0 m-0">
         {items.map((p) => (
           <li key={p.slug}>
             <BlogCard
@@ -276,13 +268,13 @@ const Blog: React.FC<BlogProps> = ({
 
   if (activeSlug) {
     return (
-      <div className="terminal-blog" ref={articleRef}>
-        <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <div className="pane terminal-blog" ref={articleRef}>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           {syncUrls ? (
             <Link
               href="/blog"
               title="Press Esc to go back"
-              className="text-xs sm:text-sm text-green-400/80 font-mono hover:text-green-300 transition-colors py-1"
+              className="text-xs sm:text-sm text-green-400/80 hover:text-green-300 transition-colors py-1"
             >
               ← back to posts{" "}
               <kbd className="hidden sm:inline ml-1 px-1.5 py-0.5 text-[10px] border border-green-800/60 rounded bg-black/40 text-green-400/70">
@@ -294,7 +286,7 @@ const Blog: React.FC<BlogProps> = ({
               type="button"
               onClick={() => goToSlug(null)}
               title="Press Esc to go back"
-              className="text-xs sm:text-sm text-green-400/80 font-mono hover:text-green-300 transition-colors cursor-pointer py-1"
+              className="text-xs sm:text-sm text-green-400/80 hover:text-green-300 transition-colors cursor-pointer py-1"
             >
               ← back to posts{" "}
               <kbd className="hidden sm:inline ml-1 px-1.5 py-0.5 text-[10px] border border-green-800/60 rounded bg-black/40 text-green-400/70">
@@ -303,55 +295,49 @@ const Blog: React.FC<BlogProps> = ({
             </button>
           )}
           {post && (
-            <span className="text-xs sm:text-sm text-gray-500 font-mono truncate min-w-0">
+            <span className="text-xs sm:text-sm text-gray-500 truncate min-w-0">
               {post.slug}.mdx
             </span>
           )}
         </div>
 
         {postState === "loading" && (
-          <p className="text-green-400/70 font-mono text-sm">Loading post…</p>
+          <p className="text-green-400/70 text-sm">Loading post…</p>
         )}
         {postState === "error" && notFound && (
-          <p className="text-red-400 font-mono text-sm break-words">
+          <p className="text-red-400 text-sm break-words">
             cat: {activeSlug}.mdx: No such file or directory
           </p>
         )}
         {postState === "error" && !notFound && (
-          <p className="text-red-400 font-mono text-sm break-words">
+          <p className="text-red-400 text-sm break-words">
             Failed to load post: {errorMsg}
           </p>
         )}
         {postState === "ready" && post && (
-          <article className="space-y-3">
-            <header className="border-b border-green-800/40 pb-3">
-              <h2 className="text-base sm:text-lg text-green-400 font-bold font-mono break-words">
-                {post.title}
-              </h2>
-              <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-gray-500 font-mono mt-2">
+          <article className="flex flex-col gap-6">
+            <header className="pane-header flex-col">
+              <h2 className="pane-title">{post.title}</h2>
+              <div className="pane-meta flex flex-wrap gap-x-3 mt-1">
                 {post.date && (
                   <time dateTime={post.date}>{formatPostDate(post.date)}</time>
                 )}
-                {post.tags && post.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 bg-green-900/30 border border-green-800/50 rounded-full text-green-400"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <span>·</span>
                 <ViewStats slug={post.slug} />
               </div>
+              {post.tags && post.tags.length > 0 && (
+                <div className="pane-tags mt-2">
+                  {post.tags.map((tag) => (
+                    <span key={tag} className="pane-tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
             </header>
 
             <div
               ref={contentRef}
-              className="terminal-blog-content text-gray-300"
+              className="terminal-blog-content"
               dangerouslySetInnerHTML={{ __html: post.html }}
             />
 
@@ -369,40 +355,39 @@ const Blog: React.FC<BlogProps> = ({
   }
 
   return (
-    <div className="terminal-blog">
-      <div className="mb-3 flex items-center gap-3">
-        <span className="text-green-400 font-mono text-sm">BLOG.log</span>
-        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-      </div>
+    <div className="pane terminal-blog">
+      <header className="pane-header">
+        <h2 className="pane-title">~/blog</h2>
+        {listState === "ready" && posts.length > 0 && (
+          <span className="pane-meta">
+            {posts.length} post{posts.length === 1 ? "" : "s"}
+          </span>
+        )}
+      </header>
 
       {listState === "loading" && (
-        <p className="text-green-400/70 font-mono text-sm">Loading posts…</p>
+        <p className="text-green-400/70 text-sm">Loading posts…</p>
       )}
       {listState === "error" && (
-        <p className="text-red-400 font-mono text-sm break-words">
+        <p className="text-red-400 text-sm break-words">
           Failed to load posts: {errorMsg}
         </p>
       )}
       {listState === "ready" && posts.length === 0 && (
-        <p className="text-gray-400 text-sm font-mono">No posts yet.</p>
+        <p className="text-gray-400 text-sm">No posts yet.</p>
       )}
       {listState === "ready" && posts.length > 0 && (
-        <>
-          <p className="text-gray-500 font-mono text-xs sm:text-sm mb-3">
-            {posts.length} post{posts.length === 1 ? "" : "s"} — tap to read
-          </p>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 list-none p-0 m-0">
-            {posts.map((p) => (
-              <li key={p.slug} className="min-w-0">
-                <BlogCard
-                  post={p}
-                  href={syncUrls ? `/blog/${p.slug}` : undefined}
-                  onClick={syncUrls ? undefined : () => goToSlug(p.slug)}
-                />
-              </li>
-            ))}
-          </ul>
-        </>
+        <ul className="pane-grid list-none p-0 m-0">
+          {posts.map((p) => (
+            <li key={p.slug} className="min-w-0">
+              <BlogCard
+                post={p}
+                href={syncUrls ? `/blog/${p.slug}` : undefined}
+                onClick={syncUrls ? undefined : () => goToSlug(p.slug)}
+              />
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

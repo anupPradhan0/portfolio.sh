@@ -9,8 +9,8 @@ import { projects as projectsData, type Project } from "@/lib/portfolio-data";
 const GitHubIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width="14"
+    height="14"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -26,8 +26,8 @@ const GitHubIcon: React.FC = () => (
 const ExternalLinkIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width="14"
+    height="14"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -42,11 +42,11 @@ const ExternalLinkIcon: React.FC = () => (
   </svg>
 );
 
-const CopyIcon: React.FC<{ className?: string }> = ({ className }) => (
+const CopyIcon: React.FC = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
+    width="14"
+    height="14"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -54,64 +54,16 @@ const CopyIcon: React.FC<{ className?: string }> = ({ className }) => (
     strokeLinecap="round"
     strokeLinejoin="round"
     aria-hidden="true"
-    className={className}
+    className="shrink-0"
   >
     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
   </svg>
 );
 
-const TerminalIcon: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-  >
-    <path d="M3 3h18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM3 7v12h18V7H3zm6.5 6l-2-2 2-2L8 7.5 5.5 10 8 12.5 9.5 11zm6 2h-3v-2h3v2z" />
-  </svg>
-);
-
-const ChevronLeftIcon: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <polyline points="15 18 9 12 15 6"></polyline>
-  </svg>
-);
-
-const ChevronRightIcon: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <polyline points="9 18 15 12 9 6"></polyline>
-  </svg>
-);
-
 // --- The Main Projects Component ---
 const Projects: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [projectsPerPage, setProjectsPerPage] = useState<number>(2);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
@@ -127,25 +79,14 @@ const Projects: React.FC = () => {
   }, []);
 
   const totalPages = Math.ceil(projectsData.length / projectsPerPage);
+  // Widening the window lowers totalPages, so the stored page can be out of range.
+  const page = Math.min(currentPage, totalPages - 1);
 
-  // Get current projects to display
-  const startIndex = currentPage * projectsPerPage;
+  const startIndex = page * projectsPerPage;
   const currentProjects = projectsData.slice(
     startIndex,
     startIndex + projectsPerPage
   );
-
-  const nextPage = (): void => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = (): void => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
 
   const copyCloneCommand = async (project: Project, globalIndex: number): Promise<void> => {
     const cloneCmd = `git clone ${project.githubUrl}.git`;
@@ -177,300 +118,109 @@ const Projects: React.FC = () => {
   };
 
   return (
-    <section
-      className="text-white space-y-4 sm:space-y-8 max-w-7xl mx-auto p-3 sm:p-4"
-      aria-label="Projects showcase"
-    >
-      {/* Header with terminal-style decoration */}
-      <header className="flex items-center space-x-2 sm:space-x-4 mb-4 sm:mb-8">
-        <TerminalIcon />
-        <h2 className="text-lg sm:text-2xl text-green-400 font-bold font-mono tracking-wider">
-          ~/projects
-        </h2>
-        <div
-          className="flex-1 h-px bg-gradient-to-r from-green-400/50 to-transparent"
-          aria-hidden="true"
-        ></div>
-        <span className="text-green-400/60 text-xs sm:text-sm font-mono">
-          {projectsData.length} repos
-        </span>
+    <div className="pane" aria-label="Projects showcase">
+      <header className="pane-header">
+        <h2 className="pane-title">~/projects</h2>
+        <span className="pane-meta">{projectsData.length} repos</span>
       </header>
 
-      {/* Page indicator - Mobile optimized */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
-        <div
-          className="flex items-center space-x-2 text-green-400 font-mono"
-          aria-live="polite"
-        >
-          <span className="text-xs sm:text-sm">
-            Page {currentPage + 1} of {totalPages}
-          </span>
-          <div
-            className="flex space-x-1"
-            role="tablist"
-            aria-label="Page navigation"
-          >
-            {Array.from({ length: totalPages }, (_, i) => (
-              <div
-                key={i}
-                role="tab"
-                aria-selected={i === currentPage}
-                aria-label={`Page ${i + 1}`}
-                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all duration-300 ${
-                  i === currentPage ? "bg-green-400" : "bg-gray-600"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="text-green-400/60 text-xs sm:text-sm font-mono">
-          Showing {startIndex + 1}-
-          {Math.min(startIndex + projectsPerPage, projectsData.length)} of{" "}
-          {projectsData.length}
-        </div>
-      </div>
-
-      {/* Grid container - Responsive: 1 column on mobile, 2 on desktop */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 min-h-[400px] sm:min-h-[600px]">
+      <div className="pane-grid">
         {currentProjects.map((project, index) => {
           const globalIndex = startIndex + index;
+          const copied = copiedIndex === globalIndex;
+          // Placeholder "#" and repo-only projects have no separate live site.
+          const hasLiveSite =
+            project.liveUrl !== "#" && project.liveUrl !== project.githubUrl;
           return (
-            <article
-              key={globalIndex}
-              className="relative group cursor-pointer"
-              onMouseEnter={() => setHoveredIndex(globalIndex)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              {/* Glassmorphism card */}
-              <div className="backdrop-blur-md bg-gray-900/30 border border-green-500/20 rounded-lg sm:rounded-xl overflow-hidden transform transition-all duration-300 hover:scale-[1.01] sm:hover:scale-[1.02] hover:border-green-400/40 hover:shadow-2xl hover:shadow-green-500/10">
-                {/* Terminal header bar */}
-                <header className="bg-gray-800/50 px-3 sm:px-4 py-2 border-b border-green-500/20 flex items-center space-x-2">
-                  <div
-                    className="flex space-x-1 sm:space-x-2"
-                    aria-hidden="true"
-                  >
-                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/60"></div>
-                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500/60"></div>
-                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500/60"></div>
-                  </div>
-                  <div className="flex-1 text-center overflow-hidden">
-                    <span className="text-green-400/70 text-xs font-mono block truncate">
-                      {project.name.toLowerCase().replace(/\s+/g, "-")}
-                    </span>
-                  </div>
-                </header>
-
-                {/* Project Image with overlay */}
-                <div className="relative h-40 sm:h-56 overflow-hidden">
-                  <Image
-                    src={project.imageUrl}
-                    alt={`${project.name} project screenshot`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div
-                    className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent"
-                    aria-hidden="true"
-                  ></div>
-
-                  {/* Hover overlay with glitch effect */}
-                  <div
-                    className={`absolute inset-0 bg-green-500/5 transition-all duration-300 ${
-                      hoveredIndex === globalIndex ? "opacity-100" : "opacity-0"
-                    }`}
-                    aria-hidden="true"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 to-cyan-400/10"></div>
-                  </div>
-                </div>
-
-                {/* Project Content - Mobile optimized */}
-                <div className="p-4 sm:p-8 space-y-3 sm:space-y-5">
-                  <div className="flex items-start justify-between">
-                    <h3 className="font-semibold text-green-400 text-base sm:text-xl mb-2 sm:mb-3 font-mono group-hover:text-green-300 transition-colors leading-tight">
-                      {project.name}
-                    </h3>
-                  </div>
-
-                  {/* Tech stack badges - Mobile responsive */}
-                  <div
-                    className="flex flex-wrap gap-1 sm:gap-2"
-                    role="list"
-                    aria-label="Technologies used"
-                  >
-                    {project.tech.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        role="listitem"
-                        className="px-1.5 py-0.5 sm:px-2 sm:py-1 text-xs bg-green-500/20 text-green-400 rounded-full border border-green-500/30 font-mono"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Terminal-style command line - Mobile responsive */}
-                  <div
-                    className="bg-gray-800/50 rounded-md p-2 sm:p-4 font-mono text-xs sm:text-sm border border-gray-700/50 overflow-hidden cursor-pointer select-none hover:border-green-400/40 transition-colors"
-                    role="code"
-                    tabIndex={0}
-                    aria-label={`Copy git clone command for ${project.name}`}
-                    onClick={() => copyCloneCommand(project, globalIndex)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        copyCloneCommand(project, globalIndex);
-                      }
-                    }}
-                  >
-                    <div className="flex items-center space-x-1 sm:space-x-2 text-green-400 min-w-0">
-                      <span
-                        className="text-green-500 flex-shrink-0"
-                        aria-hidden="true"
-                      >
-                        $
-                      </span>
-                      <span className="text-gray-400 flex-shrink-0">
-                        git clone
-                      </span>
-                      <span className="text-blue-400 min-w-0 flex-1 break-all sm:truncate">
-                        {project.githubUrl}.git
-                      </span>
-                      <span className="flex items-center space-x-2 flex-shrink-0">
-                        {copiedIndex === globalIndex ? (
-                          <span className="text-green-400/80 text-[10px] sm:text-xs">
-                            Copied!
-                          </span>
-                        ) : (
-                          <span className="text-gray-400/80 text-[10px] sm:text-xs hidden sm:inline">
-                            Click to copy
-                          </span>
-                        )}
-                        <CopyIcon className={copiedIndex === globalIndex ? "text-green-400" : "text-gray-400"} />
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Links Section - Mobile optimized */}
-                  <footer className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 border-t border-gray-700/30 space-y-2 sm:space-y-0">
-                    <nav
-                      className="flex space-x-4 sm:space-x-6"
-                      aria-label="Project links"
-                    >
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-sm sm:text-base"
-                        aria-label={`View ${project.name} live demo`}
-                      >
-                        <ExternalLinkIcon />
-                        <span>live</span>
-                      </a>
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-1 sm:space-x-2 text-gray-400 hover:text-green-400 transition-all duration-200 hover:scale-105 font-mono text-sm sm:text-base"
-                        aria-label={`View ${project.name} source code on GitHub`}
-                      >
-                        <GitHubIcon />
-                        <span>code</span>
-                      </a>
-                    </nav>
-
-                    {/* Status indicator */}
-                    <div className="flex items-center space-x-2">
-                      <div
-                        className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"
-                        aria-hidden="true"
-                      ></div>
-                      <span className="text-green-400 text-xs font-mono">
-                        active
-                      </span>
-                    </div>
-                  </footer>
-                </div>
+            <article key={project.name} className="pane-card">
+              <div className="relative aspect-[2/1] overflow-hidden rounded-md border border-green-800/40 bg-black/40">
+                <Image
+                  src={project.imageUrl}
+                  alt={`${project.name} project screenshot`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 440px"
+                  className="object-contain"
+                />
               </div>
 
-              {/* Glow effect on hover */}
-              <div
-                className={`absolute inset-0 rounded-lg sm:rounded-xl transition-all duration-300 pointer-events-none ${
-                  hoveredIndex === globalIndex
-                    ? "shadow-xl sm:shadow-2xl shadow-green-500/20 ring-1 ring-green-500/20"
-                    : ""
-                }`}
-                aria-hidden="true"
-              ></div>
+              <h3 className="pane-item-title">{project.name}</h3>
+
+              <div className="pane-tags" aria-label="Technologies used">
+                {project.tech.map((tech) => (
+                  <span key={tech} className="pane-tag">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <p>{project.description}</p>
+
+              <div className="mt-auto flex flex-col gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => copyCloneCommand(project, globalIndex)}
+                  className="pane-button flex w-full cursor-pointer items-center gap-2 text-left"
+                  aria-label={`Copy git clone command for ${project.name}`}
+                >
+                  <span className="min-w-0 flex-1 truncate text-gray-400">
+                    $ git clone {project.githubUrl}.git
+                  </span>
+                  {copied && <span className="shrink-0">Copied!</span>}
+                  <CopyIcon />
+                </button>
+
+                <nav className="flex gap-4" aria-label="Project links">
+                  {hasLiveSite && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="pane-link inline-flex items-center gap-1.5"
+                      aria-label={`View ${project.name} live demo`}
+                    >
+                      <ExternalLinkIcon />
+                      live
+                    </a>
+                  )}
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pane-link inline-flex items-center gap-1.5"
+                    aria-label={`View ${project.name} source code on GitHub`}
+                  >
+                    <GitHubIcon />
+                    code
+                  </a>
+                </nav>
+              </div>
             </article>
           );
         })}
       </div>
 
-      {/* Navigation Controls - Mobile responsive */}
-      <nav
-        className="flex flex-col sm:flex-row items-center justify-between mt-4 sm:mt-8 space-y-4 sm:space-y-0"
-        aria-label="Pagination"
-      >
+      <nav className="flex items-center justify-between gap-3" aria-label="Pagination">
         <button
-          onClick={prevPage}
-          disabled={currentPage === 0}
-          className={`flex items-center space-x-2 px-3 py-2 sm:px-4 rounded-lg border font-mono text-xs sm:text-sm transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start ${
-            currentPage === 0
-              ? "border-gray-700/50 text-gray-600 cursor-not-allowed"
-              : "border-green-500/30 text-green-400 hover:border-green-400 hover:bg-green-500/10 hover:scale-105"
-          }`}
-          aria-label="Previous page"
+          type="button"
+          onClick={() => setCurrentPage(page - 1)}
+          disabled={page === 0}
+          className="pane-button cursor-pointer"
         >
-          <ChevronLeftIcon />
-          <span>prev</span>
+          ← prev
         </button>
-
-        {/* Terminal-style page info - Mobile responsive */}
-        <div
-          className="px-3 py-2 sm:px-6 sm:py-3 bg-gray-900/30 backdrop-blur-sm border border-green-500/20 rounded-lg w-full sm:w-auto"
-          role="status"
-          aria-live="polite"
-        >
-          <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm font-mono">
-            <div className="flex items-center space-x-2">
-              <span className="text-green-400">~/projects</span>
-              <span className="text-gray-500" aria-hidden="true">
-                $
-              </span>
-            <span className="text-gray-400 hidden sm:inline">
-                anuppradhan.in
-              </span>
-            </div>
-            <div className="flex-1 hidden sm:block"></div>
-            <span className="text-green-400/60">
-              {startIndex + 1}-
-              {Math.min(startIndex + projectsPerPage, projectsData.length)} of{" "}
-              {projectsData.length}
-            </span>
-          </div>
-        </div>
-
+        <span className="pane-meta">
+          {page + 1} / {totalPages}
+        </span>
         <button
-          onClick={nextPage}
-          disabled={currentPage === totalPages - 1}
-          className={`flex items-center space-x-2 px-3 py-2 sm:px-4 rounded-lg border font-mono text-xs sm:text-sm transition-all duration-300 w-full sm:w-auto justify-center sm:justify-start ${
-            currentPage === totalPages - 1
-              ? "border-gray-700/50 text-gray-600 cursor-not-allowed"
-              : "border-green-500/30 text-green-400 hover:border-green-400 hover:bg-green-500/10 hover:scale-105"
-          }`}
-          aria-label="Next page"
+          type="button"
+          onClick={() => setCurrentPage(page + 1)}
+          disabled={page === totalPages - 1}
+          className="pane-button cursor-pointer"
         >
-          <span>next</span>
-          <ChevronRightIcon />
+          next →
         </button>
       </nav>
-    </section>
+    </div>
   );
 };
 

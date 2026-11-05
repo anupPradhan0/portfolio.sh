@@ -13,14 +13,14 @@ export default function BlogSearchResults({
 }: BlogSearchResultsProps) {
   if (posts.length === 0) {
     return (
-      <p className="text-gray-400 font-mono text-sm">
+      <p className="text-gray-400 text-sm">
         No blog posts found{query ? ` for "${query}"` : ""}.
       </p>
     );
   }
 
   return (
-    <div className="blog-search-results font-mono text-sm">
+    <div className="blog-search-results text-sm">
       <p className="text-green-400/90 mb-2">
         $ blog search{query ? ` "${query}"` : ""} — {posts.length} result
         {posts.length === 1 ? "" : "s"}

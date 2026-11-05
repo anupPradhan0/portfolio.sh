@@ -1135,7 +1135,7 @@ export default function Terminal({
     if (
       target &&
       !target.closest("#terminal-input") &&
-      target.closest("input, textarea, select, button, a, [contenteditable]")
+      target.closest("input, textarea, select, button, a, [contenteditable], .pane")
     ) {
       return;
     }
@@ -1271,6 +1271,18 @@ export default function Terminal({
         el.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
         return;
       }
+      // A freshly opened section starts at its own prompt, not at its last line.
+      const lastLine = [...el.querySelectorAll(".history-line")].at(-1);
+      const sectionPrompt = lastLine?.querySelector(":scope > .pane") && lastLine.previousElementSibling;
+      if (sectionPrompt) {
+        const top =
+          el.scrollTop +
+          sectionPrompt.getBoundingClientRect().top -
+          el.getBoundingClientRect().top -
+          8;
+        el.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        return;
+      }
       el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
     });
     return () => cancelAnimationFrame(id);
@@ -1353,7 +1365,6 @@ export default function Terminal({
               }}
               onKeyDown={handleKeyDown}
               className="terminal-input"
-              onFocus={focusInput}
               autoComplete="off"
               spellCheck="false"
               aria-label="Terminal command input"

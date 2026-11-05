@@ -86,7 +86,6 @@ interface SocialLink {
   icon: () => React.ReactNode;
   name: string;
   href: string;
-  color: string;
 }
 
 // Simplified SVG Icons
@@ -320,7 +319,7 @@ const breadcrumbStructuredData = {
 
 // Main Server Component - Lightweight Version
 export default function Contact() {
-  // Link metadata (name/href/color) is shared; icons stay local to this page.
+  // Link metadata (name/href) is shared; icons stay local to this page.
   const socialIcons: Record<string, () => React.ReactNode> = {
     YouTube: YoutubeIcon,
     "Twitter / X": TwitterIcon,

@@ -270,16 +270,15 @@ export const RESUME_URL =
 export interface SocialLinkData {
   name: string;
   href: string;
-  color: string;
 }
 
 export const socialLinks: SocialLinkData[] = [
-  { name: "YouTube", href: "https://www.youtube.com/@mors.dev7", color: "red" },
-  { name: "Twitter / X", href: "https://x.com/AnupPradhan0", color: "blue" },
-  { name: "Instagram", href: "https://www.instagram.com/anuppradhan.in", color: "pink" },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/anuppradhan0", color: "blue" },
-  { name: "GitHub", href: "https://github.com/anupPradhan0", color: "purple" },
-  { name: "LeetCode", href: "https://leetcode.com/u/Anuppradhan/", color: "yellow" },
+  { name: "YouTube", href: "https://www.youtube.com/@mors.dev7" },
+  { name: "Twitter / X", href: "https://x.com/AnupPradhan0" },
+  { name: "Instagram", href: "https://www.instagram.com/anuppradhan.in" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/anuppradhan0" },
+  { name: "GitHub", href: "https://github.com/anupPradhan0" },
+  { name: "LeetCode", href: "https://leetcode.com/u/Anuppradhan/" },
 ];
 
 // ---------------------------------------------------------------------------

@@ -125,13 +125,11 @@ export default function CommentSection({ slug }: CommentSectionProps) {
   return (
     <section
       aria-label="Comments"
-      className="terminal-blog-comments mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-green-800/40"
+      className="terminal-blog-comments pt-5 sm:pt-6 border-t border-green-800/40"
     >
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-green-400 font-mono text-sm sm:text-base">
-          $ cat ./comments/ — {total} comment{total === 1 ? "" : "s"}
-        </span>
-      </div>
+      <h3 className="pane-subtitle mb-3">
+        {total} comment{total === 1 ? "" : "s"}
+      </h3>
 
       <form onSubmit={handleSubmit} className="mb-6 space-y-2">
         <input
@@ -140,7 +138,7 @@ export default function CommentSection({ slug }: CommentSectionProps) {
           onChange={(e) => setAuthorName(e.target.value)}
           placeholder="Name (optional)"
           maxLength={40}
-          className="w-full bg-black/40 border border-green-800/40 focus:border-green-400/60 outline-none rounded-lg px-3 py-1.5 text-sm text-gray-200 font-mono placeholder:text-gray-600"
+          className="w-full bg-black/40 border border-green-800/40 focus:border-green-400/60 outline-none rounded-lg px-3 py-1.5 text-sm text-gray-200 placeholder:text-gray-600"
         />
         <textarea
           value={body}
@@ -148,35 +146,35 @@ export default function CommentSection({ slug }: CommentSectionProps) {
           placeholder="Write a comment…"
           maxLength={2000}
           rows={3}
-          className="w-full bg-black/40 border border-green-800/40 focus:border-green-400/60 outline-none rounded-lg px-3 py-2 text-sm text-gray-200 font-mono placeholder:text-gray-600 resize-none"
+          className="w-full bg-black/40 border border-green-800/40 focus:border-green-400/60 outline-none rounded-lg px-3 py-2 text-sm text-gray-200 placeholder:text-gray-600 resize-none"
         />
         <StickerPicker selectedId={stickerId} onSelect={setStickerId} />
         <div className="flex justify-end">
           <button
             type="submit"
             disabled={!canSubmit}
-            className="px-3 py-1.5 rounded border border-green-800/40 text-green-400 font-mono text-xs hover:border-green-400/60 hover:text-green-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-green-800/40"
+            className="pane-button cursor-pointer"
           >
             {submitting ? "Posting…" : "Post comment"}
           </button>
         </div>
         {submitError && (
-          <p className="text-red-400 font-mono text-xs">{submitError}</p>
+          <p className="text-red-400 text-xs">{submitError}</p>
         )}
       </form>
 
       {listState === "loading" && (
-        <p className="text-green-400/70 font-mono text-sm">
+        <p className="text-green-400/70 text-sm">
           Loading comments…
         </p>
       )}
       {listState === "error" && (
-        <p className="text-red-400 font-mono text-sm">
+        <p className="text-red-400 text-sm">
           Failed to load comments.
         </p>
       )}
       {listState === "ready" && comments.length === 0 && (
-        <p className="text-gray-500 font-mono text-sm">
+        <p className="text-gray-500 text-sm">
           No comments yet — be the first.
         </p>
       )}
@@ -185,21 +183,16 @@ export default function CommentSection({ slug }: CommentSectionProps) {
           {comments.map((c) => (
             <li
               key={c.id}
-              className="border border-green-800/40 bg-gradient-to-br from-green-900/10 to-black/40 rounded-lg p-3"
+              className="pane-card"
             >
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <span className="text-green-400 font-mono text-sm font-semibold">
-                  {c.authorName}
-                </span>
-                <time
-                  dateTime={c.createdAt}
-                  className="text-gray-500 font-mono text-xs shrink-0"
-                >
+              <div className="flex items-center justify-between gap-2">
+                <span className="pane-item-title">{c.authorName}</span>
+                <time dateTime={c.createdAt} className="pane-meta shrink-0">
                   {formatRelativeTime(c.createdAt)}
                 </time>
               </div>
               {c.body && (
-                <p className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words">
+                <p className="text-gray-300 text-sm whitespace-pre-wrap break-words">
                   {c.body}
                 </p>
               )}
@@ -218,7 +211,7 @@ export default function CommentSection({ slug }: CommentSectionProps) {
           type="button"
           onClick={loadMore}
           disabled={loadingMore}
-          className="mt-4 text-green-400/80 font-mono text-xs hover:text-green-300 transition-colors disabled:opacity-50"
+          className="mt-4 text-green-400/80 text-xs hover:text-green-300 transition-colors disabled:opacity-50"
         >
           {loadingMore ? "Loading…" : "→ read more comments"}
         </button>
