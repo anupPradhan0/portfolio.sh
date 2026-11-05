@@ -14,7 +14,7 @@ store or filesystem database.
 | Similarity queries and vector inserts | Parameterized Prisma SQL |
 | Embedding | `gemini-embedding-001`, 768 dimensions, normalized |
 | Document/query tasks | `RETRIEVAL_DOCUMENT` / `RETRIEVAL_QUERY` |
-| Answer generation | `gemini-2.5-flash-lite`, thinking disabled, 350 output tokens |
+| Answer generation | `gemini-3.5-flash-lite`, minimal thinking, 350 output tokens |
 | Google SDK | `@google/genai` |
 
 Both models currently offer a standard API free tier. Your project's actual
@@ -67,6 +67,8 @@ questions such as `ai explain the Hyprland socket fix` use semantic retrieval.
 5. Run `npm run knowledge:index` to generate and store embeddings.
 6. Run `npm run knowledge:check` to check for stale, missing, or deleted sources.
 7. Run `npm run dev` and try the terminal's `ai` command.
+8. Production Vercel deployments using `npm run build` automatically apply
+   migrations and refresh the index after Next.js builds successfully.
 
 These commands load environment variables using Next.js precedence, including
 `.env.local`. If your host requires a direct connection for migrations, supply
@@ -78,7 +80,8 @@ for the app and indexing. Never commit API keys or connection strings.
 - Edit `content/knowledge/profile.md` for biography and education.
 - Edit `lib/portfolio-data.ts` for projects, skills, experience, and contact data.
 - Add, update, or remove `content/blog/*.mdx` files as usual.
-- Run `npm run knowledge:index`, then `npm run knowledge:check`.
+- Deploy to Vercel production: its build automatically refreshes the index.
+- For a local/manual refresh, run `npm run knowledge:index`, then `npm run knowledge:check`.
 
 The original content files remain the source of truth. Content hashes include
 source metadata. The indexer skips unchanged documents and generates vectors
@@ -90,7 +93,7 @@ completed documents are skipped and existing unfinished documents are preserved.
 
 Embeddings run sequentially with a 6.5-second pause and up to three attempts on
 429/500/503 responses. Persistent quota errors stop the run. No website request
-runs the indexer. For this collection, the first run normally makes a few dozen
+runs the indexer. Production Vercel builds invoke it after compilation. For this collection, the first run normally makes a few dozen
 embedding requests and takes several minutes, subject to the project's quota.
 
 The chunker targets 1,800 characters (approximately 300–500 tokens for ordinary
@@ -104,7 +107,7 @@ changing them requires reindexing. Retrieval excludes incompatible versions.
 The query uses the same embedding model and dimensions as indexing. pgvector's
 `<=>` operator computes cosine distance. The API retrieves 12 candidates, then
 keeps at most four chunks, no more than two per document, within a 7,200-character
-text budget. It deduplicates text and applies `RAG_MIN_SIMILARITY` (default 0.45).
+text budget. It deduplicates text and applies `RAG_MIN_SIMILARITY` (default 0.60).
 This cutoff is an initial setting, not a probability of correctness; calibrate
 it against representative supported and unsupported questions after indexing.
 
@@ -133,11 +136,19 @@ message without calling the answer model.
 - Use your provider's pooled connection URL. Keep the function and DB near each
   other where possible. The chat function has a 60-second maximum duration;
   Google calls have a 20-second timeout each.
-- Apply migrations and index locally against the hosted database before enabling
-  chat in that deployment. Indexing is intentionally not part of `next build`.
-- Update the database after content changes using the index command from the
-  corresponding checkout. Preview deployments should use a separate database
-  if their content differs from production; otherwise they share one index.
+- Keep Vercel's Build Command set to `npm run build` (or `pnpm build`). The script
+  runs Next.js first, then `knowledge:sync`. With `VERCEL_ENV=production`, it
+  applies pending migrations and runs the incremental indexer against that
+  deployment's content. Keep both required environment variables available to
+  the production build as well as the running function.
+- A failed migration or indexing run fails the build so a new deployment isn't
+  published with an unfinished index. Successful changed documents may already
+  have been indexed before a later document fails; retrying skips completed work.
+- Local and preview builds skip synchronization and do not modify the production
+  index. Preview deployments should use a separate database if their content
+  differs from production; otherwise their chat reads the production index.
+- Changes synchronize on production deployment, not merely when a local file is
+  saved. The explicit index command is still available for manual refreshes.
 - The API returns 503 while the index is empty or a dependency is unavailable,
   400 for invalid input, 413 for oversized input, and 429 for exhausted quotas.
 

@@ -317,3 +317,5 @@ npm run knowledge:index -- --dry-run
 npm run knowledge:index
 npm run knowledge:check
 ```
+
+Production Vercel builds automatically refresh the knowledge index after compilation. Unchanged content is skipped; preview and local builds leave the hosted index unchanged. Keep the Vercel Build Command set to `npm run build` or `pnpm build`.
