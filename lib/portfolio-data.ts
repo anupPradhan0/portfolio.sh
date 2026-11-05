@@ -15,16 +15,30 @@ export interface Project {
   description: string;
   imageUrl: string;
   liveUrl: string;
-  githubUrl: string;
+  githubUrl?: string;
   tech: string[];
 }
 
 export const projects: Project[] = [
   {
+    name: "OpenPing",
+    description:
+      "OpenPing is a WhatsApp messaging platform built on the official Meta WhatsApp Business Cloud API, providing businesses with a centralized dashboard to manage contacts, message templates, and automated WhatsApp communication.",
+    imageUrl: "/images/openping-project.png",
+    liveUrl: "https://openping.in",
+    tech: [
+      "WhatsApp Cloud API",
+      "Broadcasts",
+      "Shared inbox",
+      "Contacts",
+      "Templates",
+    ],
+  },
+  {
     name: "PipesHub",
     description:
       "Open-source workplace AI / enterprise context layer for permissioned search, RAG, and agentic workflows across 50+ connectors. Contributing as an SDE — helping extend the governed context layer for explainable enterprise search, MCP, and self-hosted AI automation.",
-    imageUrl: "/images/pipeshub-project.png",
+    imageUrl: "/images/pipeshub-connectors.png",
     liveUrl: "https://pipeshub.com",
     githubUrl: "https://github.com/pipeshub-ai/pipeshub-ai",
     tech: [
@@ -43,7 +57,7 @@ export const projects: Project[] = [
     name: "Yuviz",
     description:
       "Open-source voice AI platform: real-time STT → LLM (tool-calling, RAG, human transfer) → TTS over SIP telephony or browser testing. Contributing as an SDE on the voice pipeline, gateway, and self-hosted Docker stack.",
-    imageUrl: "/images/yuviz-project.png",
+    imageUrl: "/images/yuviz-dashboard.png",
     liveUrl: "https://github.com/yuviz-ai/yuviz",
     githubUrl: "https://github.com/yuviz-ai/yuviz",
     tech: [
@@ -270,16 +284,15 @@ export const RESUME_URL =
 export interface SocialLinkData {
   name: string;
   href: string;
-  color: string;
 }
 
 export const socialLinks: SocialLinkData[] = [
-  { name: "YouTube", href: "https://www.youtube.com/@mors.dev7", color: "red" },
-  { name: "Twitter / X", href: "https://x.com/AnupPradhan0", color: "blue" },
-  { name: "Instagram", href: "https://www.instagram.com/anuppradhan.in", color: "pink" },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/anuppradhan0", color: "blue" },
-  { name: "GitHub", href: "https://github.com/anupPradhan0", color: "purple" },
-  { name: "LeetCode", href: "https://leetcode.com/u/Anuppradhan/", color: "yellow" },
+  { name: "YouTube", href: "https://www.youtube.com/@mors.dev7" },
+  { name: "Twitter / X", href: "https://x.com/AnupPradhan0" },
+  { name: "Instagram", href: "https://www.instagram.com/anuppradhan.in" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/anuppradhan0" },
+  { name: "GitHub", href: "https://github.com/anupPradhan0" },
+  { name: "LeetCode", href: "https://leetcode.com/u/Anuppradhan/" },
 ];
 
 // ---------------------------------------------------------------------------

@@ -259,10 +259,10 @@ const HELP_ITEMS: HelpItem[] = [
 ];
 
 const WELCOME_LINES: string[] = [
-  "Hi, I'm Anup Pradhan, a Software Engineer.",
-  "Welcome to my interactive portfolio terminal!",
-  "Type 'help' or 'ls' for commands. Use 'cd <name>' to open sections (e.g. cd about, cd blog, cd projects).",
-  "✨ NEW: Try 'ai <your question>' to chat with AI assistant!",
+  "Hi, I'm Anup Pradhan. I build backends, voice AI and open-source products.",
+  "This whole portfolio is a terminal, so feel free to poke around.",
+  "Start with 'cd projects', or type 'help' to see everything.",
+  "Got a question? Ask: ai what are you working on?",
 ];
 
 // Tab completion: full-line completions (for backward compatibility)
@@ -1033,7 +1033,15 @@ export default function Terminal({
       git: (a) => pre(getGitStatus((a[0] ?? "").toLowerCase())),
 
       // --- Easter egg ---
-      sl: () => pre(getSlTrain()),
+      sl: () => (
+        <>
+          <pre className="pre-output pre-art">{getSlTrain()}</pre>
+          <p className="output-line mt-3">
+            Choo choo! You typed &apos;sl&apos;, the classic typo for &apos;ls&apos;.
+            Type &apos;ls&apos; to see the files.
+          </p>
+        </>
+      ),
 
       // --- Privileged / mutating commands: refused on a read-only terminal ---
       sudo: () => stderr(`${user} is not in the sudoers file. This incident will be reported.`),
@@ -1135,7 +1143,7 @@ export default function Terminal({
     if (
       target &&
       !target.closest("#terminal-input") &&
-      target.closest("input, textarea, select, button, a, [contenteditable]")
+      target.closest("input, textarea, select, button, a, [contenteditable], .pane")
     ) {
       return;
     }
@@ -1143,7 +1151,8 @@ export default function Terminal({
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    if (inputRef.current && !isTouchDevice) {
+    // On touch, only a tap on the prompt line opens the keyboard.
+    if (inputRef.current && (!isTouchDevice || target?.closest(".input-form"))) {
       inputRef.current.focus();
     }
 
@@ -1261,6 +1270,23 @@ export default function Terminal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Fit the shell to the area the on-screen keyboard leaves, and keep the prompt in view.
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    const sync = (): void => {
+      if (viewport.scale > 1) return; // pinch zoom shrinks the viewport too
+      document.documentElement.style.setProperty("--app-height", `${viewport.height}px`);
+      window.scrollTo(0, 0);
+      if (navigator.maxTouchPoints > 0 && document.activeElement === inputRef.current) {
+        terminalRef.current?.scrollTo({ top: terminalRef.current.scrollHeight });
+      }
+    };
+    sync();
+    viewport.addEventListener("resize", sync);
+    return () => viewport.removeEventListener("resize", sync);
+  }, []);
+
   useEffect(() => {
     const el = terminalRef.current;
     if (!el) return;
@@ -1268,6 +1294,18 @@ export default function Terminal({
       const blogEl = el.querySelector(".terminal-blog");
       if (blogEl && blogRoute) {
         const top = (blogEl as HTMLElement).offsetTop - 8;
+        el.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        return;
+      }
+      // A freshly opened section starts at its own prompt, not at its last line.
+      const lastLine = [...el.querySelectorAll(".history-line")].at(-1);
+      const sectionPrompt = lastLine?.querySelector(":scope > .pane") && lastLine.previousElementSibling;
+      if (sectionPrompt) {
+        const top =
+          el.scrollTop +
+          sectionPrompt.getBoundingClientRect().top -
+          el.getBoundingClientRect().top -
+          8;
         el.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
         return;
       }
@@ -1353,8 +1391,10 @@ export default function Terminal({
               }}
               onKeyDown={handleKeyDown}
               className="terminal-input"
-              onFocus={focusInput}
               autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              enterKeyHint="go"
               spellCheck="false"
               aria-label="Terminal command input"
               disabled={isAILoading}
