@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { getAllPostSlugs, getPostBySlug } from "../blog";
 import {
@@ -9,6 +9,7 @@ import { SITE_URL } from "../seo-config";
 import type { SourceDocument } from "./types";
 
 export function collectSources(): SourceDocument[] {
+  if (!existsSync(path.join(process.cwd(), "content/blog"))) throw new Error("Blog source directory is missing");
   const portfolio = (id: string, title: string, path: string, content: string): SourceDocument => ({
     id: `portfolio:${id}`, kind: "portfolio", title, sourceUrl: `${SITE_URL}${path}`, content,
   });

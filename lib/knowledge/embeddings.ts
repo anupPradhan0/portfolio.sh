@@ -12,7 +12,7 @@ export function normalizeEmbedding(values: number[]): number[] {
     throw new Error("Invalid embedding dimensions or values");
   }
   const norm = Math.hypot(...values);
-  if (norm === 0) throw new Error("Empty embedding vector");
+  if (!Number.isFinite(norm) || norm === 0) throw new Error("Empty embedding vector");
   return values.map(v => v / norm);
 }
 

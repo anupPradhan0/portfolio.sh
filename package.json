@@ -11,7 +11,7 @@
     "knowledge:index": "tsx scripts/index-knowledge.ts",
     "knowledge:check": "tsx scripts/check-knowledge.ts",
     "test:rag": "tsx --test tests/knowledge.test.ts",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "tsx scripts/deploy-knowledge.ts"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",

@@ -39,9 +39,11 @@ test("sources include all local blogs, stable current experience and source-awar
 });
 
 const testUrl = process.env.RAG_TEST_DB_URL;
-test("PostgreSQL indexing is incremental, atomic on failure, and removes deleted sources", { skip: !testUrl }, async () => {
-  const url = new URL(testUrl!);
+if (testUrl) {
+  const url = new URL(testUrl);
   assert.ok(["localhost", "127.0.0.1"].includes(url.hostname) && url.pathname === "/rag_test", "Use an isolated local rag_test database");
+}
+test("PostgreSQL indexing is incremental, atomic on failure, and removes deleted sources", { skip: !testUrl }, async () => {
   const db = new PrismaClient({ datasources: { db: { url: testUrl } } });
   let calls = 0;
   const embed = async () => { calls++; return [1, ...Array(767).fill(0)]; };

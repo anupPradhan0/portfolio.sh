@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, randomInt } from "node:crypto";
 import { Prisma, type PrismaClient } from "@prisma/client";
 import { chunkContent } from "./chunk";
 import { INDEXING_VERSION } from "./config";
@@ -22,9 +22,10 @@ export async function indexKnowledge(db: PrismaClient, sources: SourceDocument[]
   let updated = 0;
   let skipped = 0;
   // Separate indexer processes must not overwrite each other's source snapshots.
+  const owner = randomInt(1, 2_147_483_647);
   const lease = await db.$queryRaw<{ acquired: boolean }[]>`INSERT INTO "ChatRateLimit" ("key", "count", "expiresAt")
-    VALUES ('knowledge-index-lock', 1, NOW() + INTERVAL '2 hours')
-    ON CONFLICT ("key") DO UPDATE SET "expiresAt" = EXCLUDED."expiresAt"
+    VALUES ('knowledge-index-lock', ${owner}, NOW() + INTERVAL '2 hours')
+    ON CONFLICT ("key") DO UPDATE SET "expiresAt" = EXCLUDED."expiresAt", "count" = EXCLUDED."count"
     WHERE "ChatRateLimit"."expiresAt" < NOW() RETURNING true AS acquired`;
   if (!lease.length) throw new Error("Another knowledge indexer is running (lock expires after 2 hours)");
   try {
@@ -53,6 +54,11 @@ export async function indexKnowledge(db: PrismaClient, sources: SourceDocument[]
         vectors.push(vector!);
         if (delayMs) await new Promise(resolve => setTimeout(resolve, delayMs));
       }
+      const renewed = await db.chatRateLimit.updateMany({
+        where: { key: "knowledge-index-lock", count: owner },
+        data: { expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000) },
+      });
+      if (!renewed.count) throw new Error("Indexer lease expired; rerun indexing");
       await db.$transaction(async tx => {
         const data = { kind: source.kind, title: source.title, sourceUrl: source.sourceUrl, contentHash: hash, indexingVersion: INDEXING_VERSION };
         await tx.knowledgeDocument.upsert({ where: { id: source.id }, create: { id: source.id, ...data }, update: data });
@@ -67,6 +73,6 @@ export async function indexKnowledge(db: PrismaClient, sources: SourceDocument[]
     const removed = await db.knowledgeDocument.deleteMany({ where: { id: { notIn: sources.map(s => s.id) } } });
     return { updated, skipped, removed: removed.count };
   } finally {
-    await db.chatRateLimit.delete({ where: { key: "knowledge-index-lock" } });
+    await db.chatRateLimit.deleteMany({ where: { key: "knowledge-index-lock", count: owner } });
   }
 }
