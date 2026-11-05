@@ -31,7 +31,8 @@ ${JSON.stringify(context)}`,
       { role: "user", parts: [{ text: message }] },
     ],
   });
-  const answer = result.text?.trim();
+  // Strip before the empty check: a blank answer stored in history makes every later request a 400.
+  const answer = result.text?.replace(/\s*\[\d+(?:\s*,\s*\d+)*\]/g, "").trim();
   if (!answer) throw new Error("Gemini returned an empty answer");
   return answer;
 }

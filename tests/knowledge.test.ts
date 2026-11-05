@@ -18,6 +18,11 @@ test("chunking handles empty input, long code, Unicode and preserves overlapping
   assert.ok(chunks[1].includes(chunks[0].slice(-150)));
   assert.ok(chunkContent("x".repeat(6000)).every(c => c.length <= 1800));
   assert.throws(() => chunkContent("text", 100, 100));
+  for (const emoji of ["x" + "🔧".repeat(2000), "🔧".repeat(800) + "z " + "word ".repeat(400)]) {
+    const split = chunkContent(emoji);
+    assert.ok(split.length > 1);
+    assert.ok(split.every(c => !/\p{Cs}/u.test(c)), "chunk boundary split an emoji");
+  }
 });
 
 test("embedding validation rejects malformed vectors and normalizes valid ones", () => {
@@ -110,6 +115,9 @@ test("context selection rejects weak and duplicate matches, diversifies sources 
   assert.ok(!selected.context.includes("Weak fact"));
   assert.equal(selectContext([{ ...match, content: "x".repeat(8000) }]).context, "");
   assert.equal(selectContext([{ ...match, similarity: 0.1 }]).context, "");
+  process.env.RAG_MIN_SIMILARITY = "";
+  assert.equal(selectContext([{ ...match, similarity: 0.1 }]).context, "", "empty setting must not disable the cutoff");
+  delete process.env.RAG_MIN_SIMILARITY;
   assert.ok(selectContext([{ ...match, documentId: CURRENT_WORK_DOCUMENT_ID, content: "Current role: active OSS work", similarity: 0.1, preferred: true }]).context.includes("active OSS work"));
 });
 
@@ -152,6 +160,8 @@ test("database rate limits hold under concurrent visitors and reset the followin
     assert.equal(others.filter(Boolean).length, 10);
     assert.equal(await takeChatRequest(db, "visitor-new", now), false);
     assert.equal(await takeChatRequest(db, "visitor-a", new Date("2099-01-02T12:00:00Z")), true);
+    process.env.RAG_DAILY_REQUEST_LIMIT = "";
+    assert.equal(await takeChatRequest(db, "visitor-a", new Date("2099-01-03T12:00:00Z")), true, "empty setting must use the default");
     assert.ok((await db.chatRateLimit.findMany()).every(row => !row.key.includes("visitor-a")));
   } finally {
     await db.chatRateLimit.deleteMany({ where: { key: { startsWith: "chat:" } } });

@@ -38,9 +38,7 @@ export async function POST(request: NextRequest) {
     if (!context) {
       return json({ success: true, response: "I couldn't find information about that in Anup's portfolio or blog posts. Try asking about his projects, experience, skills, or a blog topic." });
     }
-    const answer = await generateAnswer(message, history, context);
-    const response = answer.replace(/\s*\[\d+(?:\s*,\s*\d+)*\]/g, "").trim();
-    return json({ success: true, response });
+    return json({ success: true, response: await generateAnswer(message, history, context) });
   } catch (error) {
     const status = (error as { status?: number }).status;
     // Avoid logging database connection strings or request contents.

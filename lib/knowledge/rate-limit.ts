@@ -6,7 +6,7 @@ export async function takeChatRequest(db: PrismaClient, visitor: string, now = n
   const expiresAt = new Date(`${day}T00:00:00.000Z`);
   expiresAt.setUTCDate(expiresAt.getUTCDate() + 1);
   const visitorHash = createHash("sha256").update(`${day}:${visitor}`).digest("hex");
-  const configured = Number(process.env.RAG_DAILY_REQUEST_LIMIT ?? "20");
+  const configured = Number(process.env.RAG_DAILY_REQUEST_LIMIT || "20");
   if (!Number.isInteger(configured) || configured < 1 || configured > 1000) throw new Error("Invalid RAG_DAILY_REQUEST_LIMIT");
   return db.$transaction(async tx => {
     await tx.chatRateLimit.deleteMany({ where: { key: { startsWith: "chat:" }, expiresAt: { lt: now } } });

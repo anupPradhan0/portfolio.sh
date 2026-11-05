@@ -7,7 +7,7 @@ export const MAX_HISTORY_TURNS = 4;
 export const CURRENT_WORK_DOCUMENT_ID = "portfolio:current-work";
 
 export function minimumSimilarity(): number {
-  const value = Number(process.env.RAG_MIN_SIMILARITY ?? "0.60");
+  const value = Number(process.env.RAG_MIN_SIMILARITY || "0.60");
   if (!Number.isFinite(value) || value < 0 || value > 1) {
     throw new Error("RAG_MIN_SIMILARITY must be between 0 and 1");
   }
