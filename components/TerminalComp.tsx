@@ -661,7 +661,7 @@ export default function Terminal({
         aiConversation.current = [...aiConversation.current, { question: trimmedQuestion, answer: answer.slice(0, 1600) }].slice(-MAX_HISTORY_TURNS);
         setHistory(prev => [
           ...prev.slice(0, -1),
-          { type: "output", content: <AIResponse text={answer} sources={data.sources} /> },
+          { type: "output", content: <AIResponse text={answer} /> },
         ]);
       } else {
         setHistory(prev => [...prev.slice(0, -1), { type: "output", content: `AI Error: ${data.error ?? "AI temporarily unavailable. Please try again."}` }]);
