@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { INDEXING_VERSION } from "@/lib/knowledge/config";
 import { embedText } from "@/lib/knowledge/embeddings";
-import { parseChatInput, isBlogCatalogQuestion, retrievalQuestion } from "@/lib/knowledge/input";
+import { parseChatInput, isBlogCatalogQuestion, isCurrentWorkQuestion, retrievalQuestion } from "@/lib/knowledge/input";
 import { retrieveChunks, selectContext, blogCatalog } from "@/lib/knowledge/retrieve";
 import { takeChatRequest } from "@/lib/knowledge/rate-limit";
 import { generateAnswer } from "@/lib/knowledge/answer";
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     const { message, history } = input;
     if (isBlogCatalogQuestion(message)) return json({ success: true, ...await blogCatalog(prisma) });
     const vector = await embedText(retrievalQuestion(message, history), "RETRIEVAL_QUERY");
-    const { context } = selectContext(await retrieveChunks(prisma, vector));
+    const { context } = selectContext(await retrieveChunks(prisma, vector, isCurrentWorkQuestion(message)));
     if (!context) {
       return json({ success: true, response: "I couldn't find information about that in Anup's portfolio or blog posts. Try asking about his projects, experience, skills, or a blog topic." });
     }

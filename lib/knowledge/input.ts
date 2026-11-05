@@ -22,8 +22,19 @@ export function isBlogCatalogQuestion(question: string): boolean {
 }
 
 export function retrievalQuestion(message: string, history: ChatTurn[]): string {
+  if (isCurrentWorkQuestion(message)) {
+    return `${message}\nAnup Pradhan's current role, ongoing work, and active professional contributions.`;
+  }
   const previous = history.at(-1)?.question;
   // Use user questions for follow-ups; model answers must not become evidence.
-  const followUp = /\b(it|its|that|those|there|they|them|these|he|his)\b/i.test(message);
+  const followUp = /\b(it|its|that|those|there|they|them|these)\b|^\s*(?:tell me more|go on|continue)\b/i.test(message);
   return previous && followUp ? `Previous question: ${previous}\nCurrent question: ${message}` : message;
+}
+
+export function isCurrentWorkQuestion(question: string): boolean {
+  const temporal = /\b(current(?:ly)?|nowadays|now\s*days|these\s+days|at\s+present|right\s+now|now|today|lately)\b/i.test(question);
+  const work = /\b(work(?:ing)?|jobs?|roles?|position|career|doing|up\s+to|focus(?:ed|ing)?|companies|company|employ(?:ed|ment|er)?)\b/i.test(question);
+  if (temporal && work) return true;
+  if (/\b(previous(?:ly)?|former|past|before|used\s+to|did|was|worked)\b/i.test(question)) return false;
+  return /\b(?:working\s+on|work\s+at|work\s+for)\b|\bwhere\s+(?:does|is)\s+(?:anup|he|you)\b.*\bwork(?:ing)?\b|\bwhat(?:'s|\s+is)\s+(?:anup|he|you)\s+up\s+to\b/i.test(question);
 }

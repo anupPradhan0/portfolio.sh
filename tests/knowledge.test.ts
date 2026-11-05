@@ -5,6 +5,7 @@ import { chunkContent } from "../lib/knowledge/chunk";
 import { normalizeEmbedding } from "../lib/knowledge/embeddings";
 import { collectSources } from "../lib/knowledge/sources";
 import { indexKnowledge, sourceHash } from "../lib/knowledge/index";
+import { CURRENT_WORK_DOCUMENT_ID } from "../lib/knowledge/config";
 import type { SourceDocument } from "../lib/knowledge/types";
 
 test("chunking handles empty input, long code, Unicode and preserves overlapping content", () => {
@@ -32,6 +33,11 @@ test("sources include all local blogs, stable current experience and source-awar
   assert.ok(sources.some(s => s.id === "blog:hyprland-socket-fix" && s.content.includes("socket")));
   assert.ok(sources.some(s => s.content.includes("SDE, Full-time") || s.content.includes("SDE, ")));
   assert.ok(sources.find(s => s.id === "portfolio:experience-0")?.content.includes("Present"));
+  const current = sources.find(s => s.id === CURRENT_WORK_DOCUMENT_ID)!;
+  assert.match(current.content, /Current ongoing role: SDE/);
+  assert.match(current.content, /PipesHub/);
+  assert.ok(!current.content.includes("Crunchy Media"));
+  assert.match(sources.find(s => s.id === "portfolio:experience-1")!.content, /Previous role \(ended\)/);
   assert.equal(new Set(sources.map(s => s.id)).size, sources.length);
   const source = sources[0];
   assert.equal(sourceHash(source), sourceHash({ ...source }));
@@ -68,7 +74,7 @@ test("PostgreSQL indexing is incremental, atomic on failure, and removes deleted
 });
 
 test("chat input bounds history and separates follow-ups from blog catalog requests", async () => {
-  const { parseChatInput, isBlogCatalogQuestion, retrievalQuestion } = await import("../lib/knowledge/input");
+  const { parseChatInput, isBlogCatalogQuestion, isCurrentWorkQuestion, retrievalQuestion } = await import("../lib/knowledge/input");
   for (const body of [null, {}, { message: " " }, { message: "x".repeat(1001) }, { message: "hi", history: [null] }, { message: "hi", history: Array(5).fill({ question: "q", answer: "a" }) }]) {
     assert.throws(() => parseChatInput(body));
   }
@@ -80,7 +86,15 @@ test("chat input bounds history and separates follow-ups from blog catalog reque
   const turns = [{ question: "Tell me about AutoPulse", answer: "Untrusted old answer" }];
   assert.ok(retrievalQuestion("What technologies does it use?", turns).includes("AutoPulse"));
   assert.ok(!retrievalQuestion("What technologies does it use?", turns).includes("Untrusted"));
-  assert.equal(retrievalQuestion("What is his education?", []), "What is his education?");
+  assert.equal(retrievalQuestion("What is his education?", turns), "What is his education?");
+  for (const q of ["anup is doing what now days", "What is he doing nowadays?", "What is his current role?", "Where does Anup work?", "What is Anup working on?", "What is he up to?"]) {
+    assert.ok(isCurrentWorkQuestion(q), q);
+    assert.match(retrievalQuestion(q, turns), /ongoing work/);
+  }
+  for (const q of ["What did Anup do at Crunchy Media?", "What are his current skills?", "List his latest blog posts", "What was his previous job?", "What is his education?", "What does AutoPulse do?"]) {
+    assert.equal(isCurrentWorkQuestion(q), false, q);
+  }
+  assert.match(retrievalQuestion("Tell me more", turns), /AutoPulse/);
 });
 
 test("context selection rejects weak and duplicate matches, diversifies sources and bounds size", async () => {
@@ -94,12 +108,14 @@ test("context selection rejects weak and duplicate matches, diversifies sources 
   assert.ok(!selected.context.includes("Weak fact"));
   assert.equal(selectContext([{ ...match, content: "x".repeat(8000) }]).context, "");
   assert.equal(selectContext([{ ...match, similarity: 0.1 }]).context, "");
+  assert.ok(selectContext([{ ...match, documentId: CURRENT_WORK_DOCUMENT_ID, content: "Current role: active OSS work", similarity: 0.1, preferred: true }]).context.includes("active OSS work"));
 });
 
 test("pgvector orders actual vectors, excludes old models, and lists every blog", { skip: !testUrl }, async () => {
-  const { retrieveChunks, blogCatalog } = await import("../lib/knowledge/retrieve");
+  const { retrieveChunks, selectContext, blogCatalog } = await import("../lib/knowledge/retrieve");
   const db = new PrismaClient({ datasources: { db: { url: testUrl } } });
   const docs: SourceDocument[] = Array.from({ length: 6 }, (_, i) => ({ id: `blog:test-${i}`, kind: "blog", title: `Blog ${i}`, sourceUrl: `https://example.com/${i}`, content: `Example text ${i}` }));
+  docs.push({ id: CURRENT_WORK_DOCUMENT_ID, kind: "portfolio", title: "Current work", sourceUrl: "https://example.com/experience", content: "Current role: active OSS work" });
   const first = [1, ...Array(767).fill(0)];
   const second = [0, 1, ...Array(766).fill(0)];
   try {
@@ -107,6 +123,11 @@ test("pgvector orders actual vectors, excludes old models, and lists every blog"
     const matches = await retrieveChunks(db, first);
     assert.equal(matches[0].documentId, "blog:test-0");
     assert.ok(matches[0].similarity > 0.99);
+    assert.equal(matches[0].preferred, false);
+    const currentMatches = await retrieveChunks(db, first, true);
+    assert.equal(currentMatches[0].documentId, CURRENT_WORK_DOCUMENT_ID);
+    assert.equal(currentMatches[0].similarity, 0);
+    assert.ok(selectContext(currentMatches).context.startsWith("Current work"));
     const catalog = await blogCatalog(db);
     assert.equal(catalog.response.split("\n").length, 7);
     assert.ok(!("sources" in catalog));

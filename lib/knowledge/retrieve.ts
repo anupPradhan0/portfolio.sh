@@ -1,5 +1,5 @@
 import type { PrismaClient } from "@prisma/client";
-import { INDEXING_VERSION, minimumSimilarity } from "./config";
+import { CURRENT_WORK_DOCUMENT_ID, INDEXING_VERSION, minimumSimilarity } from "./config";
 import { vectorLiteral } from "./embeddings";
 
 export interface RetrievedChunk {
@@ -7,15 +7,17 @@ export interface RetrievedChunk {
   title: string;
   content: string;
   similarity: number;
+  preferred?: boolean;
 }
 
-export async function retrieveChunks(db: PrismaClient, vector: number[]): Promise<RetrievedChunk[]> {
+export async function retrieveChunks(db: PrismaClient, vector: number[], currentWork = false): Promise<RetrievedChunk[]> {
   return db.$queryRaw<RetrievedChunk[]>`
     SELECT d."id" AS "documentId", d."title", c."content",
-      1 - (c."embedding" <=> ${vectorLiteral(vector)}::vector) AS similarity
+      1 - (c."embedding" <=> ${vectorLiteral(vector)}::vector) AS similarity,
+      (${currentWork} AND d."id" = ${CURRENT_WORK_DOCUMENT_ID}) AS preferred
     FROM "KnowledgeChunk" c JOIN "KnowledgeDocument" d ON d."id" = c."documentId"
     WHERE d."indexingVersion" = ${INDEXING_VERSION}
-    ORDER BY c."embedding" <=> ${vectorLiteral(vector)}::vector LIMIT 12`;
+    ORDER BY preferred DESC, c."embedding" <=> ${vectorLiteral(vector)}::vector LIMIT 12`;
 }
 
 export function selectContext(candidates: RetrievedChunk[], threshold = minimumSimilarity()) {
@@ -24,7 +26,7 @@ export function selectContext(candidates: RetrievedChunk[], threshold = minimumS
   const seen = new Set<string>();
   let chars = 0;
   for (const chunk of candidates) {
-    if (chunk.similarity < threshold || seen.has(chunk.content) || (perDocument.get(chunk.documentId) ?? 0) >= 2) continue;
+    if ((!chunk.preferred && chunk.similarity < threshold) || seen.has(chunk.content) || (perDocument.get(chunk.documentId) ?? 0) >= 2) continue;
     if (chars + chunk.content.length > 7200) continue;
     sections.push(`${chunk.title}\n${chunk.content}`);
     chars += chunk.content.length;
