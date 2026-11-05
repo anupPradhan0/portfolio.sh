@@ -29,3 +29,35 @@ model BlogView {
   @@index([postSlug])
   @@index([visitorId, postSlug, viewedAt])
 }
+
+model KnowledgeDocument {
+  id              String           @id
+  kind            String
+  title           String
+  sourceUrl       String
+  contentHash     String
+  indexingVersion String
+  updatedAt       DateTime         @updatedAt
+  chunks          KnowledgeChunk[]
+
+  @@index([kind])
+}
+
+model KnowledgeChunk {
+  id         Int                        @id @default(autoincrement())
+  documentId String
+  position   Int
+  content    String
+  embedding  Unsupported("vector(768)")
+  document   KnowledgeDocument          @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, position])
+}
+
+model ChatRateLimit {
+  key       String   @id
+  count     Int
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
