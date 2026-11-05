@@ -45,6 +45,7 @@ export default function Tag() {
           scene.environment = null;
         }}
       >
+        <FitCamera />
         <ambientLight intensity={5} />
         <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
           <Band />
@@ -66,6 +67,19 @@ export default function Tag() {
       </div>
     </div>
   );
+}
+
+// The default framing leaves the card tiny in the short pane phones get.
+function FitCamera() {
+  const camera = useThree((state) => state.camera);
+  const height = useThree((state) => state.size.height);
+
+  useEffect(() => {
+    const short = height < 500;
+    camera.position.set(0, short ? -0.4 : 0, short ? 7 : 13);
+  }, [camera, height]);
+
+  return null;
 }
 
 function Band({ maxSpeed = 50, minSpeed = 10 }) {

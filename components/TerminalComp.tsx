@@ -1033,7 +1033,15 @@ export default function Terminal({
       git: (a) => pre(getGitStatus((a[0] ?? "").toLowerCase())),
 
       // --- Easter egg ---
-      sl: () => pre(getSlTrain()),
+      sl: () => (
+        <>
+          <pre className="pre-output pre-art">{getSlTrain()}</pre>
+          <p className="output-line mt-3">
+            Choo choo! You typed &apos;sl&apos;, the classic typo for &apos;ls&apos;.
+            Type &apos;ls&apos; to see the files.
+          </p>
+        </>
+      ),
 
       // --- Privileged / mutating commands: refused on a read-only terminal ---
       sudo: () => stderr(`${user} is not in the sudoers file. This incident will be reported.`),
@@ -1143,7 +1151,8 @@ export default function Terminal({
     const isTouchDevice =
       "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    if (inputRef.current && !isTouchDevice) {
+    // On touch, only a tap on the prompt line opens the keyboard.
+    if (inputRef.current && (!isTouchDevice || target?.closest(".input-form"))) {
       inputRef.current.focus();
     }
 
@@ -1261,6 +1270,23 @@ export default function Terminal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Fit the shell to the area the on-screen keyboard leaves, and keep the prompt in view.
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    const sync = (): void => {
+      if (viewport.scale > 1) return; // pinch zoom shrinks the viewport too
+      document.documentElement.style.setProperty("--app-height", `${viewport.height}px`);
+      window.scrollTo(0, 0);
+      if (navigator.maxTouchPoints > 0 && document.activeElement === inputRef.current) {
+        terminalRef.current?.scrollTo({ top: terminalRef.current.scrollHeight });
+      }
+    };
+    sync();
+    viewport.addEventListener("resize", sync);
+    return () => viewport.removeEventListener("resize", sync);
+  }, []);
+
   useEffect(() => {
     const el = terminalRef.current;
     if (!el) return;
@@ -1366,6 +1392,9 @@ export default function Terminal({
               onKeyDown={handleKeyDown}
               className="terminal-input"
               autoComplete="off"
+              autoCapitalize="none"
+              autoCorrect="off"
+              enterKeyHint="go"
               spellCheck="false"
               aria-label="Terminal command input"
               disabled={isAILoading}

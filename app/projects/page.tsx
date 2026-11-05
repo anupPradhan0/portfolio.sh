@@ -260,7 +260,7 @@ export default function Projects() {
             <h1 id="projects-heading" itemProp="name">
               Projects
             </h1>
-            <span>{projectsData.length} repos</span>
+            <span>{projectsData.length} projects</span>
           </header>
 
           {/* Projects Grid */}
