@@ -111,6 +111,16 @@ text budget. It deduplicates text and applies `RAG_MIN_SIMILARITY` (default 0.60
 This cutoff is an initial setting, not a probability of correctness; calibrate
 it against representative supported and unsupported questions after indexing.
 
+Current-work questions (including “now days”, “nowadays”, “current role”, and
+“working on”) also retrieve the dedicated `portfolio:current-work` document first.
+That document is generated from roles marked `ongoing` in the shared experience
+data, so it follows future job changes rather than embedding a fixed answer.
+This explicit current-work match is kept even if an awkwardly worded question
+scores below the normal semantic threshold. Other results retain the threshold.
+Ended roles are labeled as previous work, and the answer prompt prioritizes active
+roles for current-status questions. Generic references to “he” or “his” alone no
+longer pull an unrelated preceding question into retrieval.
+
 Exact nearest-neighbor search is used for this small collection. An HNSW index
 can be added later if measurement shows that the collection needs it.
 

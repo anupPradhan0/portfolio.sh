@@ -43,3 +43,12 @@
 - All eight automated tests passed against isolated PostgreSQL + pgvector after the catalog/context changes. TypeScript and targeted lint checks passed.
 - Live `/api/chat` requests for the blog catalog and Hyprland explanation returned only `success` and `response`, with no source metadata or numeric citations.
 - Retrieval still supplies relevant knowledge text to Gemini but no longer fetches source URLs for chat or adds source-number labels to its context.
+
+## Current-work retrieval update — November 6, 2026
+
+- All eight tests passed against isolated PostgreSQL + pgvector, including prioritizing the current-work document even when a synthetic vector match ranks lower. Current-work intent tests cover the reported wording, ongoing-role questions, historical-role exclusions, and unrelated follow-ups.
+- Added a current-work document generated from ongoing shared experience records and explicit current/previous labels for all experience entries. It refreshes through the existing incremental deployment indexer.
+- Calendar-month assertions passed in both Asia/Kolkata and UTC; the indexing formatter now preserves September 2026 rather than shifting local midnight into August UTC.
+- TypeScript and targeted lint checks passed. The hosted index was refreshed incrementally with the current-work entry and corrected experience dates.
+- Live Gemini verification of the exact reported question now starts with the current Open Source SDE role and September 2026, and names PipesHub, Yuviz, and Dograh. A separate Crunchy Media question returns the historical role in past tense.
+- Final knowledge check reports 21 documents, 35 chunks, and no pending updates or deleted sources.
