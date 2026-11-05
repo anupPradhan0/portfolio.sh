@@ -6,6 +6,9 @@ import "@/public/css/TerminalComp.css";
 import type { BlogInitialPost } from "@/components/BlogTerminalPage.types";
 
 import About from "./TerminalComp/About";
+import AIResponse from "./TerminalComp/AIResponse";
+import type { ChatResponse, ChatTurn } from "@/lib/knowledge/types";
+import { MAX_HISTORY_TURNS, MAX_QUESTION_CHARS } from "@/lib/knowledge/config";
 import Projects from "./TerminalComp/Projects";
 import Skills from "./TerminalComp/Skills";
 import Contact from "./TerminalComp/Contact";
@@ -87,59 +90,6 @@ const HOME_CD_SECTIONS = [
   "welcome",
 ] as const;
 
-// ============ NEW: AI Rate Limiting Helper ============
-const AI_RATE_LIMIT = {
-  maxRequests: 10,
-  maxOutputTokens: 1000,
-  timeWindow: 24 * 60 * 60 * 1000,
-};
-
-const getAIUsage = (): { count: number; timestamp: number } => {
-  if (typeof window === "undefined") return { count: 0, timestamp: Date.now() };
-
-  const stored = localStorage.getItem("ai_usage");
-  if (!stored) return { count: 0, timestamp: Date.now() };
-
-  return JSON.parse(stored);
-};
-
-const incrementAIUsage = (): boolean => {
-  const usage = getAIUsage();
-  const now = Date.now();
-
-  // Reset if 24 hours have passed
-  if (now - usage.timestamp > AI_RATE_LIMIT.timeWindow) {
-    localStorage.setItem(
-      "ai_usage",
-      JSON.stringify({ count: 1, timestamp: now })
-    );
-    return true;
-  }
-
-  // Check if limit reached
-  if (usage.count >= AI_RATE_LIMIT.maxRequests) {
-    return false;
-  }
-
-  // Increment count
-  localStorage.setItem(
-    "ai_usage",
-    JSON.stringify({ count: usage.count + 1, timestamp: usage.timestamp })
-  );
-  return true;
-};
-
-const getRemainingRequests = (): number => {
-  const usage = getAIUsage();
-  const now = Date.now();
-
-  if (now - usage.timestamp > AI_RATE_LIMIT.timeWindow) {
-    return AI_RATE_LIMIT.maxRequests;
-  }
-
-  return Math.max(0, AI_RATE_LIMIT.maxRequests - usage.count);
-};
-
 // ============ Typewriter Text Component ============
 const TypewriterText: React.FC<{ text: string; speed?: number; onComplete?: () => void }> = ({ text, speed = 20, onComplete }) => {
   const [displayedText, setDisplayedText] = useState<string>("");
@@ -167,42 +117,11 @@ const TypewriterText: React.FC<{ text: string; speed?: number; onComplete?: () =
   );
 };
 
-// ============ NEW: AI Response Component with Typewriter ============
-const AIResponse: React.FC<{ text: string }> = ({ text }) => {
-  const [displayedText, setDisplayedText] = useState<string>("");
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + text[currentIndex]);
-        setCurrentIndex((prev) => prev + 1);
-      }, 20); // Fast typewriter speed
-
-      return () => clearTimeout(timeout);
-    }
-  }, [currentIndex, text]);
-
-  return (
-    <div className="ai-response">
-      <div className="flex items-center space-x-2 mb-2">
-        <span className="text-green-400 font-mono text-sm">AI Assistant:</span>
-      </div>
-      <div className="text-gray-300 font-mono text-sm leading-relaxed whitespace-pre-wrap">
-        {displayedText}
-        {currentIndex < text.length && (
-          <span className="animate-pulse text-green-400">|</span>
-        )}
-      </div>
-    </div>
-  );
-};
-
 // ============ NEW: Loading Indicator ============
 const AILoading: React.FC = () => {
   return (
     <div className="flex items-center space-x-2 text-green-400 font-mono text-sm">
-      <span>AI thinking</span>
+      <span role="status">Searching Anup&apos;s portfolio and blogs</span>
       <span className="animate-pulse">...</span>
     </div>
   );
@@ -313,7 +232,7 @@ const HELP_ITEMS: HelpItem[] = [
   { type: "command", command: "cowsay [msg]", description: "Cow says your message." },
   { type: "command", command: "banner <text>", description: "Print text in large ASCII." },
   { type: "command", command: "yes [string]", description: "Repeat string (limited)." },
-  { type: "command", command: "ai <question>", description: "Chat with AI assistant (10 requests/day)." },
+  { type: "command", command: "ai <question>", description: "Ask about my portfolio and blogs (up to 10 requests/day)." },
   { type: "command", command: "clear", description: "Clear the terminal screen." },
   { type: "command", command: "exit", description: "Close this tab/window." },
   { type: "title", text: "System & files:" },
@@ -671,6 +590,8 @@ export default function Terminal({
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const savedInputRef = useRef<string>("");
+  const aiConversation = useRef<ChatTurn[]>([]);
+  const aiRequestPending = useRef(false);
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [blogPostsCache, setBlogPostsCache] = useState<BlogSearchPost[]>([]);
@@ -713,17 +634,12 @@ export default function Terminal({
       return;
     }
 
-    const remaining = getRemainingRequests();
-    if (remaining <= 0) {
-      setHistory([
-        ...historyWithPrompt,
-        {
-          type: "output",
-          content: "Daily AI request limit reached (10/day). Try again tomorrow!",
-        },
-      ]);
+    if (aiRequestPending.current) return;
+    if (trimmedQuestion.length > MAX_QUESTION_CHARS) {
+      setHistory([...historyWithPrompt, { type: "output", content: `Please keep your question under ${MAX_QUESTION_CHARS + 1} characters.` }]);
       return;
     }
+    aiRequestPending.current = true;
 
     setIsAILoading(true);
     setHistory([
@@ -735,33 +651,22 @@ export default function Terminal({
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmedQuestion }),
+        body: JSON.stringify({ message: trimmedQuestion, history: aiConversation.current }),
+        signal: AbortSignal.timeout(60_000),
       });
 
-      const data = await response.json();
-      setIsAILoading(false);
-
-      setHistory((prev) => {
-        const withoutLoading = prev.slice(0, -1);
-        if (data.success) {
-          incrementAIUsage();
-          const newRemaining = getRemainingRequests();
-          return [
-            ...withoutLoading,
-            { type: "output", content: <AIResponse text={data.response} /> },
-            {
-              type: "output",
-              content: `\n Remaining AI requests today: ${newRemaining}/10`,
-            },
-          ];
-        }
-        return [
-          ...withoutLoading,
-          { type: "output", content: `AI Error: ${data.error}` },
-        ];
-      });
+      const data: ChatResponse = await response.json();
+      if (response.ok && data.success && typeof data.response === "string") {
+        const answer = data.response;
+        aiConversation.current = [...aiConversation.current, { question: trimmedQuestion, answer: answer.slice(0, 1600) }].slice(-MAX_HISTORY_TURNS);
+        setHistory(prev => [
+          ...prev.slice(0, -1),
+          { type: "output", content: <AIResponse text={answer} /> },
+        ]);
+      } else {
+        setHistory(prev => [...prev.slice(0, -1), { type: "output", content: `AI Error: ${data.error ?? "AI temporarily unavailable. Please try again."}` }]);
+      }
     } catch {
-      setIsAILoading(false);
       setHistory((prev) => [
         ...prev.slice(0, -1),
         {
@@ -769,6 +674,9 @@ export default function Terminal({
           content: "Failed to connect to AI. Please try again.",
         },
       ]);
+    } finally {
+      aiRequestPending.current = false;
+      setIsAILoading(false);
     }
   };
 
@@ -814,6 +722,7 @@ export default function Terminal({
     cmd: string,
     isAuto: boolean = false
   ): Promise<void> => {
+    if (aiRequestPending.current) return;
     const trimmedCmd = cmd.trim();
 
     if (!isAuto && blogRoute && trimmedCmd) {
@@ -917,6 +826,7 @@ export default function Terminal({
 
     // clear — wipe the screen, no output line
     if (commandName === "clear") {
+      aiConversation.current = [];
       setHistory([]);
       return;
     }
@@ -1248,6 +1158,7 @@ export default function Terminal({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.ctrlKey && e.key === "l") {
       e.preventDefault();
+      aiConversation.current = [];
       setHistory([]);
       setHistoryIndex(-1);
       return;
@@ -1392,6 +1303,7 @@ export default function Terminal({
             <button
               key={cmd}
               onClick={() => handleNav(cmd)}
+              disabled={isAILoading}
               className="nav-button"
               type="button"
               aria-label={`Navigate to ${cmd}`}

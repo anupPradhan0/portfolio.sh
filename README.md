@@ -121,7 +121,9 @@ yarn install
 Create a `.env.local` file in the root directory:
 
 ```env
+DB_URL=your_postgresql_connection_string
 GEMINI_API_KEY=your_google_gemini_api_key_here
+RAG_DAILY_REQUEST_LIMIT=20
 ```
 
 4. **Run the development server**
@@ -304,3 +306,16 @@ If you like this project, please consider giving it a ⭐ on GitHub!
 **Built with 💚 by [Anup Pradhan](https://github.com/anupPradhan0)**
 
 _Last Updated: November 2025_
+
+## Knowledge base and RAG
+
+The terminal AI searches portfolio data and MDX blogs using PostgreSQL + pgvector and Gemini free-tier models. See [setup, indexing, Vercel deployment, and tests](docs/knowledge-base.md).
+
+```bash
+npm run db:deploy
+npm run knowledge:index -- --dry-run
+npm run knowledge:index
+npm run knowledge:check
+```
+
+Production Vercel builds automatically refresh the knowledge index after compilation. Unchanged content is skipped; preview and local builds leave the hosted index unchanged. Keep the Vercel Build Command set to `npm run build` or `pnpm build`.
