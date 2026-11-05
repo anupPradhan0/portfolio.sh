@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run knowledge:sync",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
     "knowledge:index": "tsx scripts/index-knowledge.ts",
     "knowledge:check": "tsx scripts/check-knowledge.ts",
     "test:rag": "tsx --test tests/knowledge.test.ts",
-    "db:deploy": "tsx scripts/deploy-knowledge.ts"
+    "db:deploy": "tsx scripts/deploy-knowledge.ts",
+    "knowledge:sync": "tsx scripts/sync-knowledge-on-build.ts"
   },
   "dependencies": {
     "@google/genai": "^2.32.0",
