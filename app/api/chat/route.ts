@@ -34,13 +34,13 @@ export async function POST(request: NextRequest) {
     const { message, history } = input;
     if (isBlogCatalogQuestion(message)) return json({ success: true, ...await blogCatalog(prisma) });
     const vector = await embedText(retrievalQuestion(message, history), "RETRIEVAL_QUERY");
-    const { sources, context } = selectContext(await retrieveChunks(prisma, vector));
-    if (!sources.length) {
-      return json({ success: true, response: "I couldn't find information about that in Anup's portfolio or blog posts. Try asking about his projects, experience, skills, or a blog topic.", sources: [] });
+    const { context } = selectContext(await retrieveChunks(prisma, vector));
+    if (!context) {
+      return json({ success: true, response: "I couldn't find information about that in Anup's portfolio or blog posts. Try asking about his projects, experience, skills, or a blog topic." });
     }
     const answer = await generateAnswer(message, history, context);
-    const response = answer.replace(/\[(\d+)\]/g, (citation, id) => sources.some(s => s.id === Number(id)) ? citation : "");
-    return json({ success: true, response, sources });
+    const response = answer.replace(/\s*\[\d+(?:\s*,\s*\d+)*\]/g, "").trim();
+    return json({ success: true, response });
   } catch (error) {
     const status = (error as { status?: number }).status;
     // Avoid logging database connection strings or request contents.

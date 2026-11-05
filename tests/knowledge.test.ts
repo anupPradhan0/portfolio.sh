@@ -87,12 +87,13 @@ test("context selection rejects weak and duplicate matches, diversifies sources 
   const { selectContext } = await import("../lib/knowledge/retrieve");
   const match = { documentId: "a", title: "A", sourceUrl: "https://example.com/a", content: "A fact", similarity: 0.9 };
   const selected = selectContext([match, match, { ...match, content: "Another fact" }, { ...match, content: "Third fact" }, { ...match, documentId: "b", sourceUrl: "https://example.com/b", content: "B fact" }, { ...match, content: "Weak fact", similarity: 0.1 }], 0.45);
-  assert.equal(selected.sources.length, 2);
-  assert.ok(selected.context.includes("[2]"));
+  assert.ok(selected.context.includes("A fact"));
+  assert.ok(selected.context.includes("B fact"));
+  assert.ok(!/\[\d+\]/.test(selected.context));
   assert.ok(!selected.context.includes("Third fact"));
   assert.ok(!selected.context.includes("Weak fact"));
   assert.equal(selectContext([{ ...match, content: "x".repeat(8000) }]).context, "");
-  assert.equal(selectContext([{ ...match, similarity: 0.1 }]).sources.length, 0);
+  assert.equal(selectContext([{ ...match, similarity: 0.1 }]).context, "");
 });
 
 test("pgvector orders actual vectors, excludes old models, and lists every blog", { skip: !testUrl }, async () => {
@@ -106,7 +107,10 @@ test("pgvector orders actual vectors, excludes old models, and lists every blog"
     const matches = await retrieveChunks(db, first);
     assert.equal(matches[0].documentId, "blog:test-0");
     assert.ok(matches[0].similarity > 0.99);
-    assert.equal((await blogCatalog(db)).sources.length, 6);
+    const catalog = await blogCatalog(db);
+    assert.equal(catalog.response.split("\n").length, 7);
+    assert.ok(!("sources" in catalog));
+    assert.ok(!/\[\d+\]/.test(catalog.response));
     await db.knowledgeDocument.update({ where: { id: "blog:test-0" }, data: { indexingVersion: "old-model" } });
     assert.ok((await retrieveChunks(db, first)).every(row => row.documentId !== "blog:test-0"));
   } finally { await db.knowledgeDocument.deleteMany(); await db.$disconnect(); }
