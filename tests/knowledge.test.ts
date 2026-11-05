@@ -35,6 +35,8 @@ test("sources include all local blogs, stable current experience and source-awar
   assert.ok(sources.find(s => s.id === "portfolio:experience-0")?.content.includes("Present"));
   const current = sources.find(s => s.id === CURRENT_WORK_DOCUMENT_ID)!;
   assert.match(current.content, /Current ongoing role: SDE/);
+  assert.match(current.content, /since 2026-09/);
+  assert.match(sources.find(s => s.id === "portfolio:experience-1")!.content, /2026-04 to 2026-08/);
   assert.match(current.content, /PipesHub/);
   assert.ok(!current.content.includes("Crunchy Media"));
   assert.match(sources.find(s => s.id === "portfolio:experience-1")!.content, /Previous role \(ended\)/);
