@@ -37,3 +37,9 @@
 - `VERCEL_ENV=production npm run knowledge:sync` successfully checked migrations and skipped all 20 unchanged documents without new embedding calls.
 - Preview/local synchronization checks exited successfully without invoking migrations/indexing; a production invocation with empty required configuration failed before database access.
 - `npm run build` passed and its post-build sync hook correctly skipped synchronization outside production.
+
+## Answer-only UI update — November 6, 2026
+
+- All eight automated tests passed against isolated PostgreSQL + pgvector after the catalog/context changes. TypeScript and targeted lint checks passed.
+- Live `/api/chat` requests for the blog catalog and Hyprland explanation returned only `success` and `response`, with no source metadata or numeric citations.
+- Retrieval still supplies relevant knowledge text to Gemini but no longer fetches source URLs for chat or adds source-number labels to its context.

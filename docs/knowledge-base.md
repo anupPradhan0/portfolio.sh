@@ -47,7 +47,7 @@ flowchart TD
   D --> S
   S --> K[Up to four relevant chunks]
   K --> G[Gemini Flash-Lite]
-  G --> U[Answer and source links]
+  G --> U[Answer only]
 ```
 
 Catalog questions such as `ai list all blog posts` read document metadata and
@@ -121,10 +121,12 @@ heuristic, not an extra LLM rewriting call. Assistant history is not used as
 retrieval evidence. History stays in browser memory and clears with the terminal
 or page reload; it is not stored in the database.
 
-The generation prompt treats retrieved text/history as untrusted data, requests
-citations, and asks the model to decline unsupported claims. Unknown citation
-numbers are removed. Source links come from database metadata, not generated
-URLs. This reduces hallucinations but does not guarantee model accuracy.
+The generation prompt treats retrieved text/history as untrusted data and asks
+the model to decline unsupported claims. It returns only the answer, without
+citations or source lists; numeric citation markers are also stripped by the API.
+Retrieval reads relevant text and titles, without fetching source URLs. The public
+chat response does not include source metadata, and the UI displays only the
+answer. Grounding reduces hallucinations but does not guarantee model accuracy.
 If nothing meets the relevance cutoff, the API returns an unsupported-question
 message without calling the answer model.
 
