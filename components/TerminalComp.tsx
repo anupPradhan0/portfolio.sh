@@ -259,10 +259,10 @@ const HELP_ITEMS: HelpItem[] = [
 ];
 
 const WELCOME_LINES: string[] = [
-  "Hi, I'm Anup Pradhan, a Software Engineer.",
-  "Welcome to my interactive portfolio terminal!",
-  "Type 'help' or 'ls' for commands. Use 'cd <name>' to open sections (e.g. cd about, cd blog, cd projects).",
-  "✨ NEW: Try 'ai <your question>' to chat with AI assistant!",
+  "Hi, I'm Anup Pradhan. I build backends, voice AI and open-source products.",
+  "This whole portfolio is a terminal, so feel free to poke around.",
+  "Start with 'cd projects', or type 'help' to see everything.",
+  "Got a question? Ask: ai what are you working on?",
 ];
 
 // Tab completion: full-line completions (for backward compatibility)

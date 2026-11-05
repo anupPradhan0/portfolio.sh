@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useMemo } from "react";
 import { durationLabel } from "@/lib/duration";
+import { PaneHeader } from "@/components/TerminalComp/ui";
 import { experienceCompanies } from "@/lib/portfolio-data";
 
 const Experience: React.FC = () => {
@@ -38,23 +39,18 @@ const Experience: React.FC = () => {
 
   return (
     <div className="pane">
-      <header className="pane-header">
-        <h2 className="pane-title">~/experience</h2>
-        <span className="pane-meta">
-          {experienceData.length} organizations
-        </span>
-      </header>
+      <PaneHeader title="~/experience" lede="Where I've worked and what I shipped there." />
 
-      <div className="pane-section">
+      <div className="pane-divided">
         {experienceData.map((company) => (
-          <article key={company.name} className="pane-card">
+          <article key={company.name} className="pane-section">
             <div className="flex items-center gap-3">
               <Image
                 src={company.logo}
                 alt=""
                 width={64}
                 height={64}
-                className="h-12 w-12 shrink-0 rounded-lg border border-green-800/50 bg-black/40 object-contain"
+                className="h-9 w-9 shrink-0 rounded-sm object-contain"
               />
               <div className="min-w-0">
                 <h3 className="pane-item-title">{company.name}</h3>
@@ -65,18 +61,13 @@ const Experience: React.FC = () => {
               </div>
             </div>
 
-            <ol className="ml-1.5 space-y-5 border-l border-green-800/50">
-              {company.roles.map((role, roleIndex) => (
-                <li key={`${company.name}-${role.title}`} className="relative pl-4 sm:pl-5">
-                  <span
-                    aria-hidden="true"
-                    className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full ${
-                      roleIndex === 0
-                        ? "bg-green-400"
-                        : "border border-green-700 bg-black"
-                    }`}
-                  />
-                  <h4 className="font-semibold text-gray-100">{role.title}</h4>
+            <ol className="pane-timeline">
+              {company.roles.map((role) => (
+                <li
+                  key={`${company.name}-${role.title}`}
+                  className={role.ongoing ? "is-current" : undefined}
+                >
+                  <h4 className="pane-strong">{role.title}</h4>
                   <p className="pane-meta">
                     {role.metaLabel ? `${role.metaLabel} · ` : ""}
                     {role.startLabel} — {role.endLabel} · {role.durationText}

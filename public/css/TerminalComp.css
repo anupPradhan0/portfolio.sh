@@ -484,58 +484,64 @@
   margin: 0.5rem 0;
 }
 
-/* === Section panes: shared look for about, projects, skills, experience, contact, blog === */
+/* === Section panes: flat terminal output for about, projects, skills, experience, contact, blog === */
+.terminal-container {
+  --pane-accent: #4ade80;
+  --pane-border: rgba(255, 255, 255, 0.14);
+  --pane-text: #d4d4d8;
+  --pane-strong: #f4f4f5;
+  --pane-muted: #9ca3af;
+}
+
 .pane {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
   max-width: 56rem;
-  padding: 0.75rem 0 1.5rem;
-  color: #d1d5db;
+  padding: 0.5rem 0 1.25rem;
+  color: var(--pane-text);
   line-height: 1.6;
-  animation: pane-in 0.25s ease-out;
-}
-
-@keyframes pane-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pane {
-    animation: none;
-  }
 }
 
 .pane a:focus-visible,
 .pane button:focus-visible {
-  outline: 2px solid #4ade80;
+  outline: 1px solid var(--pane-accent);
   outline-offset: 2px;
 }
 
 .pane-header {
   display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--pane-border);
+}
+
+.pane-header-top,
+.pane-spread {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.25rem 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(22, 101, 52, 0.4);
+  gap: 0 1rem;
 }
 
 .pane-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  line-height: 1.35;
-  color: #4ade80;
+  line-height: 1.4;
+  color: var(--pane-accent);
   overflow-wrap: anywhere;
 }
 
 .pane-meta {
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--pane-muted);
+}
+
+.pane-strong {
+  font-weight: 600;
+  color: var(--pane-strong);
 }
 
 .pane-status {
@@ -543,29 +549,54 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.75rem;
-  color: #86efac;
+  color: var(--pane-muted);
 }
 
 .pane-status::before {
   content: "";
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.4375rem;
+  height: 0.4375rem;
   border-radius: 9999px;
-  background: #4ade80;
+  background: var(--pane-accent);
 }
 
-.pane-section {
+.pane-section,
+.pane-stack {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  min-width: 0;
 }
 
+/* "# education ─────": reads as a comment line in terminal output */
 .pane-subtitle {
-  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #86efac;
+  color: var(--pane-strong);
+}
+
+.pane-subtitle::before {
+  content: "#";
+  margin-right: -0.25rem;
+  color: var(--pane-accent);
+}
+
+.pane-subtitle::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--pane-border);
+}
+
+.pane-item-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--pane-strong);
+  overflow-wrap: anywhere;
 }
 
 .pane-grid {
@@ -574,39 +605,29 @@
   gap: 0.75rem;
 }
 
-.pane-grid-compact {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-}
-
 .pane-card {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   min-width: 0;
-  padding: 1rem;
-  text-align: left;
-  background: rgba(20, 83, 45, 0.08);
-  border: 1px solid rgba(22, 101, 52, 0.4);
-  border-radius: 0.5rem;
-  transition: border-color 0.15s;
+  padding: 0.875rem;
+  border: 1px solid var(--pane-border);
+  border-radius: 0.25rem;
 }
 
-.pane-row {
-  flex-direction: row;
-  align-items: center;
+.pane-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  align-items: start;
+  gap: 1rem;
 }
 
-a.pane-card:hover,
-button.pane-card:hover {
-  border-color: rgba(74, 222, 128, 0.6);
-}
-
-.pane-item-title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: #4ade80;
-  overflow-wrap: anywhere;
+.pane-media {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border: 1px solid var(--pane-border);
+  border-radius: 0.1875rem;
 }
 
 .pane-tags {
@@ -616,44 +637,137 @@ button.pane-card:hover {
 }
 
 .pane-tag {
-  padding: 0.0625rem 0.5rem;
+  padding: 0 0.4375rem;
   font-size: 0.75rem;
-  color: #4ade80;
-  background: rgba(20, 83, 45, 0.3);
-  border: 1px solid rgba(22, 101, 52, 0.5);
-  border-radius: 9999px;
+  color: var(--pane-text);
+  border: 1px solid var(--pane-border);
+  border-radius: 0.1875rem;
 }
 
 .pane-link {
-  color: #4ade80;
+  color: var(--pane-accent);
   text-decoration: underline;
+  text-decoration-color: rgba(74, 222, 128, 0.4);
   text-underline-offset: 3px;
-  text-decoration-color: rgba(22, 101, 52, 0.6);
-  transition: color 0.15s, text-decoration-color 0.15s;
+  overflow-wrap: anywhere;
 }
 
 .pane-link:hover {
-  color: #86efac;
-  text-decoration-color: rgba(74, 222, 128, 0.8);
+  text-decoration-color: var(--pane-accent);
 }
 
+/* Inverts on hover, like a selected line in a terminal UI */
 .pane-button {
-  padding: 0.375rem 0.75rem;
+  padding: 0.1875rem 0.625rem;
   font-size: 0.75rem;
-  color: #4ade80;
-  border: 1px solid rgba(22, 101, 52, 0.5);
-  border-radius: 0.375rem;
-  transition: color 0.15s, border-color 0.15s;
+  color: var(--pane-text);
+  border: 1px solid var(--pane-border);
+  border-radius: 0.1875rem;
+  cursor: pointer;
 }
 
 .pane-button:hover:not(:disabled) {
-  color: #86efac;
-  border-color: rgba(74, 222, 128, 0.6);
+  color: #000;
+  background: var(--pane-accent);
+  border-color: var(--pane-accent);
 }
 
 .pane-button:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+}
+
+.pane-code {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  font-size: 0.75rem;
+  text-align: left;
+  color: var(--pane-muted);
+  cursor: pointer;
+}
+
+.pane-code:hover {
+  color: var(--pane-strong);
+}
+
+.pane-prompt {
+  color: var(--pane-accent);
+}
+
+/* key  value rows: skills and contact */
+.pane-rows > div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 0.25rem 1rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--pane-border);
+}
+
+.pane-rows > div:last-child {
+  border-bottom: 0;
+}
+
+.pane-rows dt {
+  color: var(--pane-muted);
+}
+
+.pane-divided > * + * {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--pane-border);
+}
+
+.pane-divided {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pane-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pane-entry:hover .pane-item-title {
+  color: var(--pane-accent);
+}
+
+/* Roles and education */
+.pane-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0 0 0 0.875rem;
+  list-style: none;
+  border-left: 1px solid var(--pane-border);
+}
+
+.pane-timeline > li {
+  position: relative;
+}
+
+.pane-timeline > li::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: calc(-0.875rem - 3px);
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--pane-muted);
+}
+
+.pane-timeline > li.is-current::before {
+  background: var(--pane-accent);
 }
 
 @media (max-width: 640px) {
@@ -661,12 +775,12 @@ button.pane-card:hover {
     gap: 1.25rem;
   }
 
-  .pane-title {
-    font-size: 1.1rem;
+  .pane-feature {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .pane-card {
-    padding: 0.75rem;
+  .pane-rows > div {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -772,15 +886,13 @@ button.pane-card:hover {
 .terminal-blog-content code {
   padding: 0.1rem 0.4rem;
   border-radius: 0.25rem;
-  background: rgba(20, 83, 45, 0.3);
-  border: 1px solid rgba(22, 101, 52, 0.5);
-  color: #86efac;
+  background: rgba(255, 255, 255, 0.07);
+  color: #e5e7eb;
   font-size: 0.85em;
 }
 
 .terminal-blog-content pre {
-  background: rgba(17, 24, 39, 0.6);
-  border: 1px solid rgba(22, 101, 52, 0.4);
+  border: 1px solid var(--pane-border);
   border-radius: 0.5rem;
   padding: 1rem;
   margin: 1rem 0;
@@ -790,7 +902,6 @@ button.pane-card:hover {
 
 .terminal-blog-content pre code {
   padding: 0;
-  border: 0;
   background: transparent;
 }
 
@@ -803,20 +914,19 @@ button.pane-card:hover {
 
 .terminal-blog-content th,
 .terminal-blog-content td {
-  border: 1px solid rgba(22, 101, 52, 0.4);
+  border: 1px solid var(--pane-border);
   padding: 0.5rem 0.75rem;
   text-align: left;
   vertical-align: top;
 }
 
 .terminal-blog-content th {
-  background: rgba(20, 83, 45, 0.3);
-  color: #86efac;
+  color: #f4f4f5;
   font-weight: 600;
 }
 
 .terminal-blog-content blockquote {
-  border-left: 3px solid rgba(21, 128, 61, 0.6);
+  border-left: 2px solid var(--pane-border);
   padding-left: 1rem;
   margin: 1rem 0;
   color: #9ca3af;
@@ -825,9 +935,9 @@ button.pane-card:hover {
 
 .terminal-blog-content hr {
   border: 0;
-  border-top: 1px solid rgba(22, 101, 52, 0.4);
+  border-top: 1px solid var(--pane-border);
   margin: 1.5rem 0;
 }
 
-.terminal-blog-content strong { color: #d1fae5; }
+.terminal-blog-content strong { color: #f4f4f5; }
 .terminal-blog-content em { color: #d1d5db; }

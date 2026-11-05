@@ -125,7 +125,7 @@ export default function CommentSection({ slug }: CommentSectionProps) {
   return (
     <section
       aria-label="Comments"
-      className="terminal-blog-comments pt-5 sm:pt-6 border-t border-green-800/40"
+      className="terminal-blog-comments"
     >
       <h3 className="pane-subtitle mb-3">
         {total} comment{total === 1 ? "" : "s"}
@@ -138,7 +138,7 @@ export default function CommentSection({ slug }: CommentSectionProps) {
           onChange={(e) => setAuthorName(e.target.value)}
           placeholder="Name (optional)"
           maxLength={40}
-          className="w-full bg-black/40 border border-green-800/40 focus:border-green-400/60 outline-none rounded-lg px-3 py-1.5 text-sm text-gray-200 placeholder:text-gray-600"
+          className="w-full bg-transparent border border-white/15 focus:border-green-400/60 outline-none rounded-sm px-3 py-1.5 text-sm text-gray-200 placeholder:text-gray-600"
         />
         <textarea
           value={body}
@@ -146,14 +146,14 @@ export default function CommentSection({ slug }: CommentSectionProps) {
           placeholder="Write a comment…"
           maxLength={2000}
           rows={3}
-          className="w-full bg-black/40 border border-green-800/40 focus:border-green-400/60 outline-none rounded-lg px-3 py-2 text-sm text-gray-200 placeholder:text-gray-600 resize-none"
+          className="w-full bg-transparent border border-white/15 focus:border-green-400/60 outline-none rounded-sm px-3 py-2 text-sm text-gray-200 placeholder:text-gray-600 resize-none"
         />
         <StickerPicker selectedId={stickerId} onSelect={setStickerId} />
         <div className="flex justify-end">
           <button
             type="submit"
             disabled={!canSubmit}
-            className="pane-button cursor-pointer"
+            className="pane-button"
           >
             {submitting ? "Posting…" : "Post comment"}
           </button>
@@ -179,12 +179,9 @@ export default function CommentSection({ slug }: CommentSectionProps) {
         </p>
       )}
       {listState === "ready" && comments.length > 0 && (
-        <ul className="space-y-3 list-none p-0 m-0">
+        <ul className="pane-divided">
           {comments.map((c) => (
-            <li
-              key={c.id}
-              className="pane-card"
-            >
+            <li key={c.id}>
               <div className="flex items-center justify-between gap-2">
                 <span className="pane-item-title">{c.authorName}</span>
                 <time dateTime={c.createdAt} className="pane-meta shrink-0">

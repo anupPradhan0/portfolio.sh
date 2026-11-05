@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import BlogCard, { formatPostDate } from "@/components/TerminalComp/BlogCard";
 import ViewStats from "@/components/TerminalComp/ViewStats";
 import CommentSection from "@/components/TerminalComp/CommentSection";
+import { PaneHeader } from "@/components/TerminalComp/ui";
 import type { BlogInitialPost } from "@/components/BlogTerminalPage.types";
 
 interface PostMeta {
@@ -117,10 +118,10 @@ const Recommendations: React.FC<RecommendationsProps> = ({
   return (
     <section
       aria-label="More posts to read"
-      className="terminal-blog-read-next pt-5 sm:pt-6 border-t border-green-800/40"
+      className="terminal-blog-read-next"
     >
       <h3 className="pane-subtitle mb-3">Read next</h3>
-      <ul className="pane-grid list-none p-0 m-0">
+      <ul className="pane-divided">
         {items.map((p) => (
           <li key={p.slug}>
             <BlogCard
@@ -274,10 +275,10 @@ const Blog: React.FC<BlogProps> = ({
             <Link
               href="/blog"
               title="Press Esc to go back"
-              className="text-xs sm:text-sm text-green-400/80 hover:text-green-300 transition-colors py-1"
+              className="text-xs sm:text-sm text-gray-400 hover:text-green-400 transition-colors py-1"
             >
               ← back to posts{" "}
-              <kbd className="hidden sm:inline ml-1 px-1.5 py-0.5 text-[10px] border border-green-800/60 rounded bg-black/40 text-green-400/70">
+              <kbd className="hidden sm:inline ml-1 px-1.5 py-0.5 text-[10px] border border-white/15 rounded text-gray-400">
                 Esc
               </kbd>
             </Link>
@@ -286,10 +287,10 @@ const Blog: React.FC<BlogProps> = ({
               type="button"
               onClick={() => goToSlug(null)}
               title="Press Esc to go back"
-              className="text-xs sm:text-sm text-green-400/80 hover:text-green-300 transition-colors cursor-pointer py-1"
+              className="text-xs sm:text-sm text-gray-400 hover:text-green-400 transition-colors cursor-pointer py-1"
             >
               ← back to posts{" "}
-              <kbd className="hidden sm:inline ml-1 px-1.5 py-0.5 text-[10px] border border-green-800/60 rounded bg-black/40 text-green-400/70">
+              <kbd className="hidden sm:inline ml-1 px-1.5 py-0.5 text-[10px] border border-white/15 rounded text-gray-400">
                 Esc
               </kbd>
             </button>
@@ -315,17 +316,16 @@ const Blog: React.FC<BlogProps> = ({
           </p>
         )}
         {postState === "ready" && post && (
-          <article className="flex flex-col gap-6">
-            <header className="pane-header flex-col">
-              <h2 className="pane-title">{post.title}</h2>
-              <div className="pane-meta flex flex-wrap gap-x-3 mt-1">
+          <article className="pane">
+            <PaneHeader title={post.title}>
+              <div className="pane-meta flex flex-wrap gap-x-3">
                 {post.date && (
                   <time dateTime={post.date}>{formatPostDate(post.date)}</time>
                 )}
                 <ViewStats slug={post.slug} />
               </div>
               {post.tags && post.tags.length > 0 && (
-                <div className="pane-tags mt-2">
+                <div className="pane-tags mt-1.5">
                   {post.tags.map((tag) => (
                     <span key={tag} className="pane-tag">
                       {tag}
@@ -333,7 +333,7 @@ const Blog: React.FC<BlogProps> = ({
                   ))}
                 </div>
               )}
-            </header>
+            </PaneHeader>
 
             <div
               ref={contentRef}
@@ -356,14 +356,16 @@ const Blog: React.FC<BlogProps> = ({
 
   return (
     <div className="pane terminal-blog">
-      <header className="pane-header">
-        <h2 className="pane-title">~/blog</h2>
-        {listState === "ready" && posts.length > 0 && (
-          <span className="pane-meta">
-            {posts.length} post{posts.length === 1 ? "" : "s"}
-          </span>
-        )}
-      </header>
+      <PaneHeader
+        title="~/blog"
+        aside={
+          listState === "ready" && posts.length > 0 ? (
+            <span className="pane-meta">
+              {posts.length} post{posts.length === 1 ? "" : "s"}
+            </span>
+          ) : null
+        }
+      />
 
       {listState === "loading" && (
         <p className="text-green-400/70 text-sm">Loading posts…</p>
@@ -377,7 +379,7 @@ const Blog: React.FC<BlogProps> = ({
         <p className="text-gray-400 text-sm">No posts yet.</p>
       )}
       {listState === "ready" && posts.length > 0 && (
-        <ul className="pane-grid list-none p-0 m-0">
+        <ul className="pane-divided">
           {posts.map((p) => (
             <li key={p.slug} className="min-w-0">
               <BlogCard

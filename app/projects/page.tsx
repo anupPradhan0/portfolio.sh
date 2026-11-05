@@ -332,6 +332,7 @@ export default function Projects() {
                     <p itemProp="description">{project.description}</p>
 
                     {/* Terminal command */}
+                    {project.githubUrl && (
                     <div
                       data-clone-cmd={`git clone ${project.githubUrl}.git`}
                       role="button"
@@ -365,6 +366,7 @@ export default function Projects() {
                         Click to copy
                       </span>
                     </div>
+                    )}
 
                     {/* Links Section */}
                     <footer>
@@ -379,16 +381,18 @@ export default function Projects() {
                           <ExternalLinkIcon />
                           <span>live</span>
                         </a>
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`View ${project.name} source code on GitHub`}
-                          itemProp="codeRepository"
-                        >
-                          <GitHubIcon />
-                          <span>code</span>
-                        </a>
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`View ${project.name} source code on GitHub`}
+                            itemProp="codeRepository"
+                          >
+                            <GitHubIcon />
+                            <span>code</span>
+                          </a>
+                        )}
                       </nav>
 
                       {/* Status indicator */}

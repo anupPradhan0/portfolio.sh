@@ -48,8 +48,8 @@ export default function StickerPicker({
         onClick={toggleOpen}
         className={`rounded border text-xs transition-colors ${
           selectedId
-            ? "p-1 border-green-400/60 bg-green-900/30"
-            : "px-2.5 py-1.5 border-green-800/40 text-green-400/80 hover:border-green-400/60"
+            ? "p-1 border-green-400/60"
+            : "px-2.5 py-1.5 border-white/15 text-green-400/80 hover:border-green-400/60"
         }`}
       >
         {selectedId ? <Sticker id={selectedId} size={48} /> : "sticker"}
@@ -58,7 +58,7 @@ export default function StickerPicker({
       {/* Inline panel (not absolutely positioned) — an overlay popover gets
           clipped by the scrolling terminal body on narrow mobile viewports. */}
       {open && (
-        <div className="mt-2 max-h-48 overflow-y-auto border border-green-800/40 bg-black/60 rounded-lg p-2">
+        <div className="mt-2 max-h-48 overflow-y-auto border border-white/15 rounded-sm p-2">
           {loadState === "loading" && (
             <p className="text-gray-500 text-xs px-1 py-2">
               Loading stickers…
@@ -86,8 +86,8 @@ export default function StickerPicker({
                   }}
                   className={`flex items-center justify-center p-1 rounded border transition-colors ${
                     selectedId === s.id
-                      ? "border-green-400/70 bg-green-900/30"
-                      : "border-transparent hover:border-green-800/60"
+                      ? "border-green-400/70"
+                      : "border-transparent hover:border-white/30"
                   }`}
                 >
                   <Sticker id={s.id} size={36} />

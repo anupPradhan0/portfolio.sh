@@ -49,45 +49,29 @@ export default function BlogCard({
   onClick,
   showBlogLabel = false,
 }: BlogCardProps) {
-  const className = "pane-card h-full w-full cursor-pointer group";
+  const className = "pane-entry";
 
   const content = (
     <>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-        <h3 className="pane-item-title group-hover:text-green-300 transition-colors">
+      <div className="pane-spread">
+        <h3 className="pane-item-title">
           {showBlogLabel ? formatBlogPostLabel(post.title) : post.title}
           {post.date && isNewPost(post.date) && (
-            <span className="ml-2 align-middle px-1.5 py-0.5 bg-green-400/20 border border-green-400/60 rounded text-green-300 text-[10px] uppercase tracking-wider">
-              new
-            </span>
+            <span className="pane-prompt ml-2 text-xs font-normal">new</span>
           )}
         </h3>
         {post.date && (
-          <time
-            dateTime={post.date}
-            className="pane-meta whitespace-nowrap"
-          >
+          <time dateTime={post.date} className="pane-meta whitespace-nowrap">
             {formatPostDate(post.date)}
           </time>
         )}
       </div>
-      {post.excerpt && (
-        <p className="text-gray-300 line-clamp-2">
-          {post.excerpt}
+      {post.excerpt && <p className="line-clamp-2">{post.excerpt}</p>}
+      {post.tags && post.tags.length > 0 && (
+        <p className="pane-meta">
+          {post.tags.slice(0, 3).map((tag) => `#${tag}`).join("  ")}
         </p>
       )}
-      {post.tags && post.tags.length > 0 && (
-        <div className="pane-tags">
-          {post.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="pane-tag">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-      <p className="mt-auto pt-1 text-green-400/80 text-xs group-hover:text-green-300">
-        → read post
-      </p>
     </>
   );
 

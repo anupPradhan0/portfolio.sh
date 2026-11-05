@@ -30,7 +30,7 @@ export function collectSources(): SourceDocument[] {
     portfolio("profile", "About Anup Pradhan", "/about", readFileSync(path.join(process.cwd(), "content/knowledge/profile.md"), "utf8")),
     portfolio("contact", "Contact Anup", "/contact", `Email: ${CONTACT_EMAIL}. Location: ${CONTACT_LOCATION}. Resume: ${RESUME_URL}.\n${socialLinks.map(s => `${s.name}: ${s.href}`).join("\n")}`),
     portfolio("skills", "Anup's technical skills", "/skills", Object.entries(skills).map(([category, items]) => `${category}: ${items.join(", ")}`).join("\n")),
-    ...projects.map((p, i) => portfolio(`project-${i}`, p.name, "/projects", `${p.name}\n${p.description}\nTechnologies: ${p.tech.join(", ")}\nWebsite: ${p.liveUrl}\nGitHub: ${p.githubUrl}`)),
+    ...projects.map((p, i) => portfolio(`project-${i}`, p.name, "/projects", `${p.name}\n${p.description}\nTechnologies: ${p.tech.join(", ")}\nWebsite: ${p.liveUrl}${p.githubUrl ? `\nGitHub: ${p.githubUrl}` : ""}`)),
     ...experienceCompanies.map((company, i) => portfolio(`experience-${i}`, `Experience at ${company.name}`, "/experience", `${company.name}, ${company.location}\n${company.roles.map(r => `${r.ongoing ? "Current ongoing role" : "Previous role (ended)"}: ${r.title}, ${r.employmentType}, ${roleMonth(r.start)} to ${r.ongoing ? "Present" : roleMonth(r.end)}\n${r.bullets.join("\n")}`).join("\n\n")}`)),
   ];
   for (const slug of getAllPostSlugs()) {
