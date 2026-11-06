@@ -12,13 +12,19 @@ if (process.env.VERCEL_ENV !== "production") {
     process.exit(1);
   }
   const require = createRequire(import.meta.url);
-  for (const script of ["scripts/deploy-knowledge.ts", "scripts/index-knowledge.ts"]) {
+  const run = (script: string): boolean => {
     const result = spawnSync(process.execPath, [require.resolve("tsx/cli"), script], {
       stdio: "inherit", env: process.env,
     });
-    if (result.error || result.status !== 0) {
-      console.error("Production knowledge sync failed. Deployment stopped; fix the error and redeploy.");
-      process.exit(result.status || 1);
-    }
+    return !result.error && result.status === 0;
+  };
+  if (!run("scripts/deploy-knowledge.ts")) {
+    console.error("Database migration failed. Deployment stopped; fix the error and redeploy.");
+    process.exit(1);
+  }
+  // Documents update transactionally, so a failed refresh leaves the previous index
+  // serving. AI chat going stale shouldn't take the whole site's deploy down with it.
+  if (!run("scripts/index-knowledge.ts")) {
+    console.warn("WARNING: knowledge index NOT refreshed; AI chat keeps its previous content. Fix the error above and redeploy.");
   }
 }

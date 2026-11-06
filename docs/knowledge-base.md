@@ -153,9 +153,11 @@ message without calling the answer model.
   applies pending migrations and runs the incremental indexer against that
   deployment's content. Keep both required environment variables available to
   the production build as well as the running function.
-- A failed migration or indexing run fails the build so a new deployment isn't
-  published with an unfinished index. Successful changed documents may already
-  have been indexed before a later document fails; retrying skips completed work.
+- A failed migration fails the build. A failed indexing run only logs a warning:
+  the site still deploys, and chat keeps answering from the previous index, so
+  check the build log for `knowledge index NOT refreshed`. Successful changed
+  documents may already have been indexed before a later document fails; the next
+  deployment or manual index run skips completed work.
 - Local and preview builds skip synchronization and do not modify the production
   index. Preview deployments should use a separate database if their content
   differs from production; otherwise their chat reads the production index.
